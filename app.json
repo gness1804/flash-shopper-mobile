@@ -1,5 +1,15 @@
 {
   "expo": {
-    "sdkVersion": "15.0.0"
-  }
+    "sdkVersion": "15.0.0",
+    "name": "Flash Shopper",
+    "icon": "images/cart.png",
+    "version": "1.0.0",
+    "slug": "flash-shopper",
+    "android": {
+      "package": "com.grahamnessler.flash-shopper",
+    },
+    "ios": {
+      "bundleIdentifier": "com.grahamnessler.flash-shopper",
+    }
+  },
 }
