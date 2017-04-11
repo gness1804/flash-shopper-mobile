@@ -42,7 +42,25 @@ export default class App extends React.Component {
   }
 
   deleteAllItems = () => {
-    this.setState({ items: [] });
+    Alert.alert(
+      'Warning',
+      'You are about to delete all items! This cannot be undone!',
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            AsyncStorage.setItem('items', JSON.stringify(
+               [],
+             ))
+             .then(() => { this.setState({ items: [] }) })
+          },
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+      ],
+    )
   }
 
   deleteItem = (id) => {
@@ -61,6 +79,10 @@ export default class App extends React.Component {
              ))
              .then(() => { this.setState({ items: newArr }) })
           },
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
         },
       ],
    )
