@@ -5,6 +5,7 @@ import {
   View,
   Button,
   ScrollView,
+  Modal,
 } from 'react-native';
 import styles from '../styles/Main-styles';
 
@@ -17,6 +18,7 @@ class Main extends Component {
       note: '',
       quantity: null,
       id: null,
+      showEditView: false,
     }
   }
 
@@ -49,6 +51,10 @@ class Main extends Component {
     this.props.deleteItem(id);
   }
 
+  editItem = (id) => {
+    this.setState({ showEditView: true })
+  }
+
   sortByAisle = () => {
     this.props.sortByAisle();
   }
@@ -75,12 +81,26 @@ class Main extends Component {
               onPress={() => { this.deleteItem(item.id) }}
             />
           </View>
+          <View style={styles.button}>
+            <Button
+              title="Edit Item"
+              onPress={() => { this.editItem(item.id) }}
+            />
+          </View>
         </View>)
       })
     }
 
     return (
       <ScrollView>
+        <Modal
+          animationType={"slide"}
+          transparent={false}
+          visible={this.state.showEditView}
+          onRequestClose={() => {alert("Modal has been closed.")}}
+          >
+          <Text>Hello world!</Text>
+        </Modal>
         <TextInput
           id="item-input"
           value={this.state.name}
@@ -126,7 +146,6 @@ class Main extends Component {
         <View style={styles.button}>
           <Button
             title="Sort by Aisle"
-            style={styles.greenButtons}
             disabled={this.props.items.length === 0}
             onPress={() => { this.sortByAisle() }}
           />
@@ -134,7 +153,6 @@ class Main extends Component {
         <View style={styles.button}>
           <Button
             title="Sort Alpha"
-            style={styles.greenButtons}
             disabled={this.props.items.length === 0}
             onPress={() => { this.sortAlpha() }}
           />
@@ -142,7 +160,6 @@ class Main extends Component {
         <View style={styles.button}>
           <Button
             title="Delete ALL Items"
-            style={styles.redButtons}
             onPress={() => { this.deleteAllItems() }}
             disabled={this.props.items.length === 0}
           />
