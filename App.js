@@ -88,6 +88,23 @@ export default class App extends React.Component {
    )
   }
 
+  saveChanges = (name, aisle, quantity, note, id) => {
+    const newArr = this.state.items.filter((item) => {
+      return item.id !== id
+    })
+    newArr.push({
+      name,
+      aisle,
+      quantity,
+      note,
+      id,
+    })
+    AsyncStorage.setItem('items', JSON.stringify(
+       newArr,
+     ))
+     .then(() => { this.setState({ items: newArr }) })
+  }
+
   sortAlpha = () => {
     const newArr = this.state.items.sort((a, b) => {
       const first = a.name.toLowerCase()
@@ -129,6 +146,7 @@ export default class App extends React.Component {
           sortByAisle={this.sortByAisle.bind(this)}
           sortAlpha={this.sortAlpha.bind(this)}
           deleteAllItems={this.deleteAllItems.bind(this)}
+          saveChanges={this.saveChanges.bind(this)}
         />
       </View>
     );

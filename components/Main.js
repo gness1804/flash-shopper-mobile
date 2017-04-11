@@ -68,6 +68,12 @@ class Main extends Component {
     this.setState({ showEditView: true })
   }
 
+  saveChanges = () => {
+    const { name, aisle, quantity, note, id } = this.state
+    this.props.saveChanges(name, aisle, quantity, note, id)
+    this.setState({ showEditView: false })
+  }
+
   sortByAisle = () => {
     this.props.sortByAisle();
   }
@@ -94,7 +100,6 @@ class Main extends Component {
   }
 
   render() {
-    // const { name, aisle, note, quantity, id } = this.state
     const { items } = this.props
 
     let itemsDisplay;
@@ -166,7 +171,15 @@ class Main extends Component {
               Cancel
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.saveChanges}
+          >
+            <Text>
+              Save Changes
+            </Text>
+          </TouchableOpacity>
         </Modal>
+
         <TextInput
           id="item-input"
           value={this.state.name}
