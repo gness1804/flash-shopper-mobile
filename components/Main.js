@@ -58,7 +58,6 @@ class Main extends Component {
   }
 
   render() {
-  // const { name, aisle, note, quantity, id } = this.state;
     const { items } = this.props;
 
     let itemsDisplay;
@@ -88,7 +87,7 @@ class Main extends Component {
           style={styles.inputField}
           ref={'itemInput'}
           placeholder="Item Name"
-          onChangeText={(name) => this.setState({name})}
+          onChangeText={name => this.setState({ name })}
         />
         <TextInput
           id="aisle-input"
@@ -96,7 +95,7 @@ class Main extends Component {
           style={styles.inputField}
           ref={'aisleInput'}
           placeholder="Aisle Name"
-          onChangeText={(aisle) => this.setState({aisle})}
+          onChangeText={aisle => this.setState({ aisle })}
         />
         <TextInput
           id="note-input"
@@ -104,7 +103,7 @@ class Main extends Component {
           style={styles.inputField}
           ref={'noteInput'}
           placeholder="Note"
-          onChangeText={(note) => this.setState({note})}
+          onChangeText={note => this.setState({ note })}
         />
         <TextInput
           id="quantity-input"
@@ -112,40 +111,40 @@ class Main extends Component {
           style={styles.inputField}
           ref={'quantityInput'}
           placeholder="Quantity"
-          onChangeText={(quantity) => this.setState({quantity})}
+          onChangeText={quantity => this.setState({ quantity })}
         />
         <View style={styles.button}>
           <Button
-          title="Submit"
-          disabled={!this.state.name}
-          onPress={
+            title="Submit"
+            disabled={!this.state.name}
+            onPress={
             (name, aisle, note, quantity) => {
               this.createItem(name, aisle, note, quantity)
             }}
-            />
-        </View>
-        <View style={styles.button}>
-          <Button
-          title="Sort by Aisle"
-          style={styles.greenButtons}
-          disabled={this.props.items.length === 0}
-          onPress={() => { this.sortByAisle() }}
           />
         </View>
         <View style={styles.button}>
           <Button
-          title="Sort Alpha"
-          style={styles.greenButtons}
-          disabled={this.props.items.length === 0}
-          onPress={() => { this.sortAlpha() }}
+            title="Sort by Aisle"
+            style={styles.greenButtons}
+            disabled={this.props.items.length === 0}
+            onPress={() => { this.sortByAisle() }}
           />
         </View>
         <View style={styles.button}>
           <Button
-          title="Delete ALL Items"
-          style={styles.redButtons}
-          onPress={() => { this.deleteAllItems() }}
-          disabled={this.props.items.length === 0}
+            title="Sort Alpha"
+            style={styles.greenButtons}
+            disabled={this.props.items.length === 0}
+            onPress={() => { this.sortAlpha() }}
+          />
+        </View>
+        <View style={styles.button}>
+          <Button
+            title="Delete ALL Items"
+            style={styles.redButtons}
+            onPress={() => { this.deleteAllItems() }}
+            disabled={this.props.items.length === 0}
           />
         </View>
         {itemsDisplay}
