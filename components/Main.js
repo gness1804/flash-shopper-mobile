@@ -24,6 +24,11 @@ class Main extends Component {
     }
   }
 
+  cancelOutOfModal = () => {
+    this.clearText()
+    this.setState({ showEditView: false })
+  }
+
   createItem = () => {
     const newItem = {
       name: this.state.name,
@@ -78,7 +83,7 @@ class Main extends Component {
       [
         {
           text: 'OK',
-          onPress: () => { this.setState({ showEditView: false }) },
+          onPress: this.cancelOutOfModal,
         },
         {
           text: 'Cancel',
@@ -133,8 +138,29 @@ class Main extends Component {
             placeholder="Item Name"
             onChangeText={name => this.setState({ name })}
           />
+          <TextInput
+            id="aisle-input"
+            value={this.state.aisle}
+            style={styles.inputField}
+            placeholder="Aisle Name"
+            onChangeText={aisle => this.setState({ aisle })}
+          />
+          <TextInput
+            id="note-input"
+            value={this.state.note}
+            style={styles.inputField}
+            placeholder="Note"
+            onChangeText={note => this.setState({ note })}
+          />
+          <TextInput
+            id="quantity-input"
+            value={this.state.quantity}
+            style={styles.inputField}
+            placeholder="Quantity"
+            onChangeText={quantity => this.setState({ quantity })}
+          />
           <TouchableOpacity
-            onPress={() => { this.setState({ showEditView: false }) }}
+            onPress={this.warnUser}
           >
             <Text>
               Cancel
