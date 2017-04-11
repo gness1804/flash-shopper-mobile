@@ -7,7 +7,6 @@ import {
   ScrollView,
   Modal,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import styles from '../styles/Main-styles';
 
@@ -72,21 +71,22 @@ class Main extends Component {
 
     if (items.length > 0) {
       itemsDisplay = items.map((item) => {
+        const { name, aisle, note, quantity, id } = item
         return (<View style={styles.eachItemContainer} key={item.id}>
-          <Text style={styles.text}>Item: {item.name}</Text>
-          <Text style={styles.text}>Aisle: {item.aisle}</Text>
-          <Text style={styles.text}>Note: {item.note}</Text>
-          <Text style={styles.text}>Quantity: {item.quantity}</Text>
+          <Text style={styles.text}>Item: {name}</Text>
+          <Text style={styles.text}>Aisle: {aisle}</Text>
+          <Text style={styles.text}>Note: {note}</Text>
+          <Text style={styles.text}>Quantity: {quantity}</Text>
           <View style={styles.button}>
             <Button
               title="Delete Item"
-              onPress={() => { this.deleteItem(item.id) }}
+              onPress={() => { this.deleteItem(id) }}
             />
           </View>
           <View style={styles.button}>
             <Button
               title="Edit Item"
-              onPress={() => { this.editItem(item.id) }}
+              onPress={() => { this.editItem(name, aisle, note, quantity, id) }}
             />
           </View>
         </View>)
