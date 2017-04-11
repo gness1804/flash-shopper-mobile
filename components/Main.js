@@ -38,11 +38,12 @@ class Main extends Component {
     this.clearText('itemInput', 'aisleInput', 'noteInput', 'quantityInput');
   }
 
-  clearText = (itemInput, aisleInput, noteInput, quantityInput) => {
-    this.refs[itemInput].setNativeProps({ text: '' });
-    this.refs[aisleInput].setNativeProps({ text: '' });
-    this.refs[noteInput].setNativeProps({ text: '' });
-    this.refs[quantityInput].setNativeProps({ text: '' });
+  clearText = () => {
+    this.state.name = ''
+    this.state.aisle = ''
+    this.state.note = ''
+    this.state.quantity = ''
+    this.state.id = null
   }
 
   deleteAllItems = () => {
@@ -125,9 +126,15 @@ class Main extends Component {
           visible={this.state.showEditView}
           onRequestClose={this.warnUser}
         >
-          <Text>{this.state.name}</Text>
+          <TextInput
+            id="item-input"
+            value={this.state.name}
+            style={styles.inputField}
+            placeholder="Item Name"
+            onChangeText={name => this.setState({ name })}
+          />
           <TouchableOpacity
-            onPress={() => { this.setState({ showEditView: false }); }}
+            onPress={() => { this.setState({ showEditView: false }) }}
           >
             <Text>
               Cancel
@@ -138,7 +145,6 @@ class Main extends Component {
           id="item-input"
           value={this.state.name}
           style={styles.inputField}
-          ref={'itemInput'}
           placeholder="Item Name"
           onChangeText={name => this.setState({ name })}
         />
@@ -146,7 +152,6 @@ class Main extends Component {
           id="aisle-input"
           value={this.state.aisle}
           style={styles.inputField}
-          ref={'aisleInput'}
           placeholder="Aisle Name"
           onChangeText={aisle => this.setState({ aisle })}
         />
@@ -154,7 +159,6 @@ class Main extends Component {
           id="note-input"
           value={this.state.note}
           style={styles.inputField}
-          ref={'noteInput'}
           placeholder="Note"
           onChangeText={note => this.setState({ note })}
         />
@@ -162,7 +166,6 @@ class Main extends Component {
           id="quantity-input"
           value={this.state.quantity}
           style={styles.inputField}
-          ref={'quantityInput'}
           placeholder="Quantity"
           onChangeText={quantity => this.setState({ quantity })}
         />
