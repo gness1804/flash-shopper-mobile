@@ -6,10 +6,10 @@
     "version": "1.0.0",
     "slug": "flash-shopper",
     "android": {
-      "package": "com.grahamnessler.flash-shopper",
+      "package": "com.grahamnessler.flashshopper",
     },
     "ios": {
-      "bundleIdentifier": "com.grahamnessler.flash-shopper",
+      "bundleIdentifier": "com.grahamnessler.flashshopper",
     }
   },
 }
