@@ -7,6 +7,7 @@ import {
   ScrollView,
   Modal,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import styles from '../styles/Main-styles';
 
@@ -52,7 +53,12 @@ class Main extends Component {
     this.props.deleteItem(id);
   }
 
-  editItem = (id) => {
+  editItem = (name, aisle, note, quantity, id) => {
+    this.setState({ name });
+    this.setState({ aisle });
+    this.setState({ note });
+    this.setState({ quantity });
+    this.setState({ id });
     this.setState({ showEditView: true })
   }
 
@@ -64,8 +70,26 @@ class Main extends Component {
     this.props.sortAlpha();
   }
 
+  warnUser = () => {
+    Alert.alert(
+      'Warning',
+      'Are you sure you want to navigate away from this view? You will lose any unsaved changes.',
+      [
+        {
+          text: 'OK',
+          onPress: () => { this.setState({ showEditView: false }) },
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+      ],
+    )
+  }
+
   render() {
-    const { items } = this.props;
+    // const { name, aisle, note, quantity, id } = this.state
+    const { items } = this.props
 
     let itemsDisplay;
 
@@ -99,9 +123,9 @@ class Main extends Component {
           animationType={'slide'}
           transparent={false}
           visible={this.state.showEditView}
-          onRequestClose={() => { alert('Modal has been closed.') }}
+          onRequestClose={this.warnUser}
         >
-          <Text>Hello world!</Text>
+          <Text>{this.state.name}</Text>
           <TouchableOpacity
             onPress={() => { this.setState({ showEditView: false }); }}
           >
