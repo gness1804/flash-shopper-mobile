@@ -1,11 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgb(134, 148, 247)',
+  },
+  text: {
+    // fontFamily: 'Helvetica-Bold',
+    fontSize: 40,
+    marginBottom: 30,
+    marginTop: 30,
   },
 });
 
