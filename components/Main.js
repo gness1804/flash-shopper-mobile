@@ -70,11 +70,12 @@ class Main extends Component {
           <Text style={styles.text}>Aisle: {item.aisle}</Text>
           <Text style={styles.text}>Note: {item.note}</Text>
           <Text style={styles.text}>Quantity: {item.quantity}</Text>
-          <Button
-            title="Delete Item"
-            style={styles.redButtons}
-            onPress={() => { this.deleteItem(item.id) }}
-          />
+          <View style={styles.button}>
+            <Button
+              title="Delete Item"
+              onPress={() => { this.deleteItem(item.id) }}
+            />
+          </View>
         </View>)
       })
     }
@@ -113,30 +114,40 @@ class Main extends Component {
           placeholder="Quantity"
           onChangeText={(quantity) => this.setState({quantity})}
         />
-        <Button
-        title="Submit"
-        style={styles.greenButtons}
-        disabled={!this.state.name}
-        onPress={(name, aisle, note, quantity) => { this.createItem(name, aisle, note, quantity) }}
-        />
-        <Button
+        <View style={styles.button}>
+          <Button
+          title="Submit"
+          disabled={!this.state.name}
+          onPress={
+            (name, aisle, note, quantity) => {
+              this.createItem(name, aisle, note, quantity)
+            }}
+            />
+        </View>
+        <View style={styles.button}>
+          <Button
           title="Sort by Aisle"
           style={styles.greenButtons}
           disabled={this.props.items.length === 0}
           onPress={() => { this.sortByAisle() }}
-        />
-        <Button
+          />
+        </View>
+        <View style={styles.button}>
+          <Button
           title="Sort Alpha"
           style={styles.greenButtons}
           disabled={this.props.items.length === 0}
           onPress={() => { this.sortAlpha() }}
-        />
-        <Button
+          />
+        </View>
+        <View style={styles.button}>
+          <Button
           title="Delete ALL Items"
           style={styles.redButtons}
           onPress={() => { this.deleteAllItems() }}
           disabled={this.props.items.length === 0}
-        />
+          />
+        </View>
         {itemsDisplay}
       </ScrollView>
     );

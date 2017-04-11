@@ -15,13 +15,8 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 250,
   },
-  greenButtons: {
-    color: 'rgb(160, 236, 175);',
-    marginTop: 10,
-  },
-  redButtons: {
-    color: 'rgb(255, 0, 0);',
-    marginTop: 10,
+  button: {
+    marginTop: 15,
   },
   text: {
     marginTop: 10,
