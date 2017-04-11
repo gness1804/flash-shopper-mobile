@@ -6,6 +6,8 @@ import {
   Button,
   ScrollView,
   Modal,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import styles from '../styles/Main-styles';
 
@@ -94,12 +96,19 @@ class Main extends Component {
     return (
       <ScrollView>
         <Modal
-          animationType={"slide"}
+          animationType={'slide'}
           transparent={false}
           visible={this.state.showEditView}
-          onRequestClose={() => {alert("Modal has been closed.")}}
-          >
+          onRequestClose={() => { alert('Modal has been closed.') }}
+        >
           <Text>Hello world!</Text>
+          <TouchableOpacity
+            onPress={() => { this.setState({ showEditView: false }); }}
+          >
+            <Text>
+              Cancel
+            </Text>
+          </TouchableOpacity>
         </Modal>
         <TextInput
           id="item-input"
