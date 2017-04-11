@@ -8,6 +8,7 @@ import {
   Modal,
   TouchableOpacity,
   Alert,
+  ToastAndroid,
 } from 'react-native';
 import styles from '../styles/Main-styles';
 
@@ -71,7 +72,9 @@ class Main extends Component {
   saveChanges = () => {
     const { name, aisle, quantity, note, id } = this.state
     this.props.saveChanges(name, aisle, quantity, note, id)
+    this.clearText()
     this.setState({ showEditView: false })
+    ToastAndroid.show('Item saved!', ToastAndroid.SHORT)
   }
 
   sortByAisle = () => {
