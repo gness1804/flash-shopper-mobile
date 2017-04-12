@@ -10,6 +10,7 @@ import {
   Alert,
   ToastAndroid,
 } from 'react-native';
+import Pantry from './Pantry';
 import styles from '../styles/Main-styles';
 
 class Main extends Component {
@@ -22,6 +23,7 @@ class Main extends Component {
       quantity: null,
       id: null,
       showEditView: false,
+      isPantryVisible: false,
     }
   }
 
@@ -139,6 +141,9 @@ class Main extends Component {
 
     return (
       <ScrollView>
+        <Pantry
+          isPantryVisible={this.state.isPantryVisible}
+        />
         <Modal
           animationType={'slide'}
           transparent={false}
