@@ -3,12 +3,36 @@ import {
   ScrollView,
   Text,
   Modal,
+  Alert,
 } from 'react-native';
 
 class Pantry extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+
+    }
+  }
+
+  cancelOutOfModal = () => {
+    this.props.makePantryInvisible()
+  }
 
   warnUser = () => {
-
+    Alert.alert(
+      'Warning',
+      'Are you sure you want to navigate away from this view? You will lose any unsaved changes.',
+      [
+        {
+          text: 'OK',
+          onPress: this.cancelOutOfModal,
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+      ],
+    )
   }
 
   render() {

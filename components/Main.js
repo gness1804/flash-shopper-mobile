@@ -75,6 +75,10 @@ class Main extends Component {
     this.setState({ isPantryVisible: true })
   }
 
+  makePantryInvisible = () => {
+    this.setState({ isPantryVisible: false });
+  }
+
   saveChanges = () => {
     const { name, aisle, quantity, note, id } = this.state
     if (!name) {
@@ -147,6 +151,7 @@ class Main extends Component {
       <ScrollView>
         <Pantry
           isPantryVisible={this.state.isPantryVisible}
+          makePantryInvisible={this.makePantryInvisible.bind(this)}
         />
         <Modal
           animationType={'slide'}
