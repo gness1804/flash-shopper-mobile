@@ -71,6 +71,10 @@ class Main extends Component {
     this.setState({ showEditView: true })
   }
 
+  goToPantry = () => {
+    this.setState({ isPantryVisible: true })
+  }
+
   saveChanges = () => {
     const { name, aisle, quantity, note, id } = this.state
     if (!name) {
@@ -258,6 +262,12 @@ class Main extends Component {
             title="Delete ALL Items"
             onPress={() => { this.deleteAllItems() }}
             disabled={this.props.items.length === 0}
+          />
+        </View>
+        <View style={styles.button}>
+          <Button
+            title="Pantry"
+            onPress={() => { this.goToPantry() }}
           />
         </View>
         {itemsDisplay}
