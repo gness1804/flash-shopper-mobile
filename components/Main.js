@@ -139,48 +139,53 @@ class Main extends Component {
           visible={this.state.showEditView}
           onRequestClose={this.warnUser}
         >
-          <TextInput
-            id="item-input"
-            value={this.state.name}
-            style={styles.inputField}
-            placeholder="Item Name"
-            onChangeText={name => this.setState({ name })}
-          />
-          <TextInput
-            id="aisle-input"
-            value={this.state.aisle}
-            style={styles.inputField}
-            placeholder="Aisle Name"
-            onChangeText={aisle => this.setState({ aisle })}
-          />
-          <TextInput
-            id="note-input"
-            value={this.state.note}
-            style={styles.inputField}
-            placeholder="Note"
-            onChangeText={note => this.setState({ note })}
-          />
-          <TextInput
-            id="quantity-input"
-            value={this.state.quantity}
-            style={styles.inputField}
-            placeholder="Quantity"
-            onChangeText={quantity => this.setState({ quantity })}
-          />
-          <TouchableOpacity
-            onPress={this.warnUser}
-          >
-            <Text>
-              Cancel
+          <ScrollView contentContainerStyle={styles.editView}>
+            <Text style={styles.editViewHeadline}>
+              Edit Item
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.saveChanges}
-          >
-            <Text>
-              Save Changes
-            </Text>
-          </TouchableOpacity>
+            <TextInput
+              id="item-input"
+              value={this.state.name}
+              style={styles.inputField}
+              placeholder="Item Name"
+              onChangeText={name => this.setState({ name })}
+            />
+            <TextInput
+              id="aisle-input"
+              value={this.state.aisle}
+              style={styles.inputField}
+              placeholder="Aisle Name"
+              onChangeText={aisle => this.setState({ aisle })}
+            />
+            <TextInput
+              id="note-input"
+              value={this.state.note}
+              style={styles.inputField}
+              placeholder="Note"
+              onChangeText={note => this.setState({ note })}
+            />
+            <TextInput
+              id="quantity-input"
+              value={this.state.quantity}
+              style={styles.inputField}
+              placeholder="Quantity"
+              onChangeText={quantity => this.setState({ quantity })}
+            />
+            <TouchableOpacity
+              onPress={this.warnUser}
+            >
+              <Text>
+                Cancel
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.saveChanges}
+            >
+              <Text>
+                Save Changes
+              </Text>
+            </TouchableOpacity>
+          </ScrollView>
         </Modal>
 
         <TextInput
