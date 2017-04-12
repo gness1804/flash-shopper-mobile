@@ -139,9 +139,9 @@ class Main extends Component {
           visible={this.state.showEditView}
           onRequestClose={this.warnUser}
         >
-          <ScrollView contentContainerStyle={styles.editView}>
+          <ScrollView contentContainerStyle={styles.editViewContainer}>
             <Text style={styles.editViewHeadline}>
-              Edit Item
+              Edit Item: {this.state.name}
             </Text>
             <TextInput
               id="item-input"
@@ -171,20 +171,22 @@ class Main extends Component {
               placeholder="Quantity"
               onChangeText={quantity => this.setState({ quantity })}
             />
-            <TouchableOpacity
-              onPress={this.warnUser}
-            >
-              <Text>
+            <View style={styles.editViewButtonContainer}>
+              <TouchableOpacity
+                onPress={this.warnUser}
+             >
+              <Text style={styles.editViewButtonCancel}>
                 Cancel
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={this.saveChanges}
-            >
-              <Text>
+              >
+              <Text style={styles.editViewButtonSave}>
                 Save Changes
               </Text>
             </TouchableOpacity>
+          </View>
           </ScrollView>
         </Modal>
 

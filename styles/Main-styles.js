@@ -1,5 +1,13 @@
 import { StyleSheet } from 'react-native'
 
+const editViewButton = {
+  borderWidth: 1,
+  color: '#FFF',
+  fontSize: 24,
+  marginRight: 30,
+  padding: 10,
+}
+
 const styles = StyleSheet.create({
   eachItemContainer: {
     backgroundColor: '#ffffff',
@@ -7,9 +15,30 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 20,
   },
-  editView: {
+  editViewContainer: {
+    backgroundColor: 'rgb(105, 210, 221)',
     flex: 1,
     alignItems: 'center',
+  },
+  editViewButtonCancel: {
+    borderWidth: editViewButton.borderWidth,
+    backgroundColor: 'rgb(215, 78, 65)',
+    color: editViewButton.color,
+    fontSize: editViewButton.fontSize,
+    marginRight: editViewButton.marginRight,
+    padding: editViewButton.padding,
+  },
+  editViewButtonContainer: {
+    flexDirection: 'row',
+    marginTop: 30,
+  },
+  editViewButtonSave: {
+    borderWidth: editViewButton.borderWidth,
+    backgroundColor: 'rgb(71, 170, 47)',
+    color: editViewButton.color,
+    fontSize: editViewButton.fontSize,
+    marginRight: editViewButton.marginRight,
+    padding: editViewButton.padding,
   },
   editViewHeadline: {
     fontSize: 30,
