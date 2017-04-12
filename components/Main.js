@@ -71,6 +71,12 @@ class Main extends Component {
 
   saveChanges = () => {
     const { name, aisle, quantity, note, id } = this.state
+    if (!name) {
+      Alert.alert(
+        'Oops! You must enter in an item name!',
+      )
+      return
+    }
     this.props.saveChanges(name, aisle, quantity, note, id)
     this.clearText()
     this.setState({ showEditView: false })
@@ -174,19 +180,19 @@ class Main extends Component {
             <View style={styles.editViewButtonContainer}>
               <TouchableOpacity
                 onPress={this.warnUser}
-             >
-              <Text style={styles.editViewButtonCancel}>
-                Cancel
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.saveChanges}
               >
-              <Text style={styles.editViewButtonSave}>
-                Save Changes
-              </Text>
-            </TouchableOpacity>
-          </View>
+                <Text style={styles.editViewButtonCancel}>
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.saveChanges}
+              >
+                <Text style={styles.editViewButtonSave}>
+                  Save Changes
+                </Text>
+              </TouchableOpacity>
+            </View>
           </ScrollView>
         </Modal>
 

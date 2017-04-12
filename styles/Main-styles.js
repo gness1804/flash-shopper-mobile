@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   editViewContainer: {
-    backgroundColor: 'rgb(105, 210, 221)',
+    backgroundColor: 'rgb(189, 228, 232)',
     flex: 1,
     alignItems: 'center',
   },
