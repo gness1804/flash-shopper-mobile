@@ -69,6 +69,10 @@ class Pantry extends Component {
     this.setState({ showItemView: true });
   }
 
+  transferItemToMainList = (item) => {
+    this.props.transferItemToMainList(item)
+  }
+
   warnUser = () => {
     Alert.alert(
       'Warning',
@@ -94,7 +98,9 @@ class Pantry extends Component {
         return (
           <View key={item.id} style={styles.itemContainer}>
             <Text style={styles.name}>{item.name}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => { this.transferItemToMainList(item) }}
+            >
               <Image
                 source={require('../images/plus-icon-small.png')}
                 style={styles.addIconSmall}

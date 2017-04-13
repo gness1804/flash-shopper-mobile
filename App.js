@@ -126,6 +126,10 @@ export default class App extends React.Component {
     this.setState({ items: newArr });
   }
 
+  transferItemToMainList = (item) => {
+    this.addNewItem(item)
+  }
+
   render() {
     const { items } = this.state
     return (
@@ -147,6 +151,7 @@ export default class App extends React.Component {
           sortAlpha={this.sortAlpha.bind(this)}
           deleteAllItems={this.deleteAllItems.bind(this)}
           saveChanges={this.saveChanges.bind(this)}
+          transferItemToMainList={this.transferItemToMainList.bind(this)}
         />
       </View>
     );

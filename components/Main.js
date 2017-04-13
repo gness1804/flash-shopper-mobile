@@ -101,6 +101,10 @@ class Main extends Component {
     this.props.sortAlpha();
   }
 
+  transferItemToMainList = (item) => {
+    this.props.transferItemToMainList(item)
+  }
+
   warnUser = () => {
     Alert.alert(
       'Warning',
@@ -152,6 +156,7 @@ class Main extends Component {
         <Pantry
           isPantryVisible={this.state.isPantryVisible}
           makePantryInvisible={this.makePantryInvisible.bind(this)}
+          transferItemToMainList={this.transferItemToMainList.bind(this)}
         />
         <Modal
           animationType={'slide'}
