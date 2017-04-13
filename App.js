@@ -4,7 +4,9 @@ import {
   View,
   AsyncStorage,
   Alert,
+  ToastAndroid,
 } from 'react-native';
+import { _ , some } from 'lodash'; // eslint-disable-line
 import styles from './styles/App-styles';
 import Main from './components/Main';
 
@@ -88,6 +90,16 @@ export default class App extends React.Component {
    )
   }
 
+  checkIfItemIsAlreadyThere = (item) => {
+    this.state.items.forEach((i) => {
+      if (i.id === item.id) {
+        Alert.alert(
+          'Oops! This item is already in your main list.',
+        )
+      }
+    });
+  }
+
   saveChanges = (name, aisle, quantity, note, id) => {
     const newArr = this.state.items.filter((item) => {
       return item.id !== id
@@ -103,6 +115,10 @@ export default class App extends React.Component {
        newArr,
      ))
      .then(() => { this.setState({ items: newArr }) })
+  }
+
+  showAddedItemMicrointeraction = () => {
+    ToastAndroid.show('Item added to main list.', ToastAndroid.SHORT)
   }
 
   sortAlpha = () => {
@@ -127,7 +143,16 @@ export default class App extends React.Component {
   }
 
   transferItemToMainList = (item) => {
+    const { items } = this.state
+    const test = _.some(items, { id: item.id })
+    if (test) {
+      Alert.alert(
+        'Oops! This item is already in your main list.',
+      )
+      return
+    }
     this.addNewItem(item)
+    this.showAddedItemMicrointeraction()
   }
 
   render() {

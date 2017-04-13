@@ -66,16 +66,11 @@ class Pantry extends Component {
     this.props.makePantryInvisible()
   }
 
-  showAddedItemMicrointeraction = () => {
-    ToastAndroid.show('Item added to main list.', ToastAndroid.SHORT)
-  }
-
   showItemView = () => {
     this.setState({ showItemView: true });
   }
 
   transferItemToMainList = (item) => {
-    this.showAddedItemMicrointeraction()
     this.props.transferItemToMainList(item)
   }
 
