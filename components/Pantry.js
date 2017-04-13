@@ -84,6 +84,16 @@ class Pantry extends Component {
     this.setState({ showItemView: false })
   }
 
+  removeItem = (item) => {
+    const newArr = this.state.items.filter((i) => {
+      return i.id !== item.id
+    })
+    AsyncStorage.setItem('pantry', JSON.stringify(
+       newArr,
+     ))
+     .then(() => { this.setState({ items: newArr }) })
+  }
+
   resetItemState = () => {
     this.setState({ name: '' })
     this.setState({ aisle: null });
@@ -131,6 +141,14 @@ class Pantry extends Component {
               <Image
                 source={require('../images/plus-icon-small.png')}
                 style={styles.addIconSmall}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => { this.removeItem(item) }}
+            >
+              <Image
+                source={require('../images/cancel-circle.png')}
+                style={styles.deleteIconSmall}
               />
             </TouchableOpacity>
           </View>

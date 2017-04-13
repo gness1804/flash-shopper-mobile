@@ -66,6 +66,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgb(200, 240, 240)',
   },
+  deleteIconSmall: {
+    height: 30,
+    marginLeft: 20,
+    width: 30,
+  },
   headline: {
     fontSize: 36,
     marginTop: 20,
