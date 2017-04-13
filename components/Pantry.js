@@ -4,13 +4,15 @@ import {
   Text,
   Modal,
   Alert,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
 
 class Pantry extends Component {
   constructor(props) {
     super(props)
     this.state = {
-
+      items: [],
     }
   }
 
@@ -36,6 +38,7 @@ class Pantry extends Component {
   }
 
   render() {
+    let itemList
     return (
       <ScrollView>
         <Modal
@@ -44,7 +47,15 @@ class Pantry extends Component {
           visible={this.props.isPantryVisible}
           onRequestClose={this.warnUser}
         >
-          <Text>I am the pantry component.</Text>
+          <Text>Pantry</Text>
+          <ScrollView>
+            {itemList}
+          </ScrollView>
+          <TouchableOpacity>
+            <Image
+              source={require('../images/circle-with-plus.png')}
+            />
+          </TouchableOpacity>
         </Modal>
       </ScrollView>
     );
