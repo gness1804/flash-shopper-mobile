@@ -63,6 +63,7 @@ class Pantry extends Component {
       ...this.state.items,
       newItem,
     ]))
+    .then(() => { this.resetItemState() })
     .then(() => { this.goBackToPantryView() })
     .catch((err) => { throw new Error(err) })
   }
@@ -73,6 +74,14 @@ class Pantry extends Component {
 
   goBackToPantryView = () => {
     this.setState({ showItemView: false })
+  }
+
+  resetItemState = () => {
+    this.setState({ name: '' })
+    this.setState({ aisle: null });
+    this.setState({ note: '' });
+    this.setState({ quantity: null });
+    this.setState({ id: null });
   }
 
   showItemView = () => {
