@@ -1,5 +1,13 @@
 import { StyleSheet } from 'react-native';
 
+const addItemViewButton = {
+  borderWidth: 1,
+  color: '#FFF',
+  fontSize: 24,
+  marginRight: 30,
+  padding: 10,
+}
+
 const styles = StyleSheet.create({
   addIconLarge: {
     alignSelf: 'flex-end',
@@ -10,6 +18,22 @@ const styles = StyleSheet.create({
   addIconSmall: {
     height: 30,
     width: 30,
+  },
+  addItemButtonCancel: {
+    borderWidth: addItemViewButton.borderWidth,
+    backgroundColor: 'rgb(215, 78, 65)',
+    color: addItemViewButton.color,
+    fontSize: addItemViewButton.fontSize,
+    marginRight: addItemViewButton.marginRight,
+    padding: addItemViewButton.padding,
+  },
+  addItemButtonSave: {
+    borderWidth: addItemViewButton.borderWidth,
+    backgroundColor: 'rgb(71, 170, 47)',
+    color: addItemViewButton.color,
+    fontSize: addItemViewButton.fontSize,
+    marginRight: addItemViewButton.marginRight,
+    padding: addItemViewButton.padding,
   },
   addItemView: {
     backgroundColor: 'rgb(189, 228, 232)',

@@ -177,14 +177,14 @@ class Pantry extends Component {
               <TouchableOpacity
                 onPress={this.addItem}
               >
-                <Text>
+                <Text style={styles.addItemButtonSave}>
                   Add
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={this.goBackToPantryView}
               >
-                <Text>
+                <Text style={styles.addItemButtonCancel}>
                   Cancel
                 </Text>
               </TouchableOpacity>
