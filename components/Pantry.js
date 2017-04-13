@@ -6,6 +6,7 @@ import {
   Alert,
   TouchableOpacity,
   Image,
+  View,
 } from 'react-native';
 import styles from '../styles/Pantry-styles';
 
@@ -15,6 +16,10 @@ class Pantry extends Component {
     this.state = {
       items: [],
     }
+  }
+
+  addItem = () => {
+
   }
 
   cancelOutOfModal = () => {
@@ -52,12 +57,24 @@ class Pantry extends Component {
           <ScrollView>
             {itemList}
           </ScrollView>
-          <TouchableOpacity>
-            <Image
-              source={require('../images/circle-with-plus.png')}
-              style={styles.addIcon}
-            />
-          </TouchableOpacity>
+          <View style={styles.bottonIconContainer}>
+            <TouchableOpacity
+              onPress={this.warnUser}
+            >
+              <Image
+                source={require('../images/arrow-left.png')}
+                style={styles.backIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.addItem}
+            >
+              <Image
+                source={require('../images/circle-with-plus.png')}
+                style={styles.addIcon}
+              />
+            </TouchableOpacity>
+          </View>
         </Modal>
       </ScrollView>
     );
