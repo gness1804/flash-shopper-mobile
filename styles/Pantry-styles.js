@@ -1,11 +1,15 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  addIcon: {
+  addIconLarge: {
     alignSelf: 'flex-end',
     height: 80,
     marginBottom: 20,
     width: 80,
+  },
+  addIconSmall: {
+    height: 30,
+    width: 30,
   },
   backIcon: {
     alignSelf: 'flex-start',
@@ -39,6 +43,13 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     flexDirection: 'row',
+    marginBottom: 30,
+  },
+  itemList: {
+    marginTop: 60,
+  },
+  name: {
+    marginRight: 20,
   },
 })
 

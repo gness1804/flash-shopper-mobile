@@ -26,6 +26,20 @@ class Pantry extends Component {
     }
   }
 
+  componentWillMount = () => {
+    AsyncStorage.getItem('pantry')
+      .then((items) => {
+        const parsedItems = JSON.parse(items)
+        if (!Array.isArray(parsedItems)) {
+          AsyncStorage.setItem('pantry', JSON.stringify([]))
+          return
+        }
+        return parsedItems // eslint-disable-line
+      })
+      .then((parsedItems) => { this.setState({ items: parsedItems }) })
+      .catch((err) => { throw new Error(err) })
+  }
+
   addItem = () => {
     const { name, aisle, note, quantity } = this.state
     const newItem = {
@@ -79,10 +93,11 @@ class Pantry extends Component {
       itemList = items.map((item) => {
         return (
           <View key={item.id} style={styles.itemContainer}>
-            <Text>{item.name}</Text>
+            <Text style={styles.name}>{item.name}</Text>
             <TouchableOpacity>
               <Image
                 source={require('../images/plus-icon-small.png')}
+                style={styles.addIconSmall}
               />
             </TouchableOpacity>
           </View>
@@ -140,7 +155,7 @@ class Pantry extends Component {
         >
           <View style={styles.container}>
             <Text style={styles.headline}>Pantry</Text>
-            <ScrollView>
+            <ScrollView style={styles.itemList}>
               {itemList}
             </ScrollView>
             <View style={styles.bottonIconContainer}>
@@ -157,7 +172,7 @@ class Pantry extends Component {
               >
                 <Image
                   source={require('../images/plus-icon-large.png')}
-                  style={styles.addIcon}
+                  style={styles.addIconLarge}
                 />
               </TouchableOpacity>
             </View>
