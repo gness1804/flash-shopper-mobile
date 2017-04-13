@@ -142,14 +142,17 @@ class Main extends Component {
             >
               <Image
                 source={require('../images/cancel-circle.png')}
+                style={styles.deleteIcon}
               />
             </TouchableOpacity>
-          </View>
-          <View style={styles.button}>
-            <Button
-              title="Edit Item"
+            <TouchableOpacity
               onPress={() => { this.editItem(name, aisle, note, quantity, id) }}
-            />
+            >
+              <Image
+                source={require('../images/pencil.png')}
+                style={styles.pencilIcon}
+              />
+            </TouchableOpacity>
           </View>
         </View>)
       })

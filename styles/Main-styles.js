@@ -12,6 +12,17 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 15,
   },
+  deleteIcon: {
+    height: 30,
+    marginRight: 30,
+    width: 30,
+  },
+  eachItemButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 30,
+    marginTop: 30,
+  },
   eachItemContainer: {
     backgroundColor: '#ffffff',
     borderColor: 'black',
@@ -60,6 +71,10 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginTop: 10,
     textAlign: 'center',
+  },
+  pencilIcon: {
+    height: 30,
+    width: 30,
   },
   text: {
     marginTop: 10,
