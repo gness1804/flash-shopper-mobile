@@ -9,7 +9,6 @@ import {
   View,
   TextInput,
   AsyncStorage,
-  ToastAndroid,
 } from 'react-native';
 import styles from '../styles/Pantry-styles';
 
