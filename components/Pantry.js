@@ -78,8 +78,13 @@ class Pantry extends Component {
     if (items.length > 0) {
       itemList = items.map((item) => {
         return (
-          <View key={item.id}>
+          <View key={item.id} style={styles.itemContainer}>
             <Text>{item.name}</Text>
+            <TouchableOpacity>
+              <Image
+                source={require('../images/plus-icon-small.png')}
+              />
+            </TouchableOpacity>
           </View>
         )
       })
@@ -151,7 +156,7 @@ class Pantry extends Component {
                 onPress={this.showItemView}
               >
                 <Image
-                  source={require('../images/circle-with-plus.png')}
+                  source={require('../images/plus-icon-large.png')}
                   style={styles.addIcon}
                 />
               </TouchableOpacity>

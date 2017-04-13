@@ -37,6 +37,9 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 250,
   },
+  itemContainer: {
+    flexDirection: 'row',
+  },
 })
 
 export default styles
