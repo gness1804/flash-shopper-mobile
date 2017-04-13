@@ -9,6 +9,7 @@ import {
   View,
   TextInput,
   AsyncStorage,
+  ToastAndroid,
 } from 'react-native';
 import styles from '../styles/Pantry-styles';
 
@@ -57,7 +58,7 @@ class Pantry extends Component {
       ...this.state.items,
       newItem,
     ]))
-    .then(() => { this.setState({ showItemView: false }); })
+    .then(() => { this.setState({ showItemView: false }) })
     .catch((err) => { throw new Error(err) })
   }
 
@@ -65,11 +66,16 @@ class Pantry extends Component {
     this.props.makePantryInvisible()
   }
 
+  showAddedItemMicrointeraction = () => {
+    ToastAndroid.show('Item added to main list.', ToastAndroid.SHORT)
+  }
+
   showItemView = () => {
     this.setState({ showItemView: true });
   }
 
   transferItemToMainList = (item) => {
+    this.showAddedItemMicrointeraction()
     this.props.transferItemToMainList(item)
   }
 
