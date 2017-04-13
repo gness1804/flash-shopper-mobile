@@ -17,10 +17,15 @@ class Pantry extends Component {
     this.state = {
       items: [],
       showItemView: false,
+      name: '',
+      aisle: null,
+      note: '',
+      quantity: null,
+      id: null,
     }
   }
 
-  addItem = () => {
+  showItemView = () => {
     this.setState({ showItemView: true });
   }
 
@@ -59,8 +64,34 @@ class Pantry extends Component {
             Add Item to Pantry
           </Text>
           <TextInput
-
+            value={this.state.name}
+            style={styles.inputField}
+            placeholder="Item Name"
+            onChangeText={name => this.setState({ name })}
           />
+          <TextInput
+            value={this.state.aisle}
+            style={styles.inputField}
+            placeholder="Item Aisle"
+            onChangeText={aisle => this.setState({ aisle })}
+          />
+          <TextInput
+            value={this.state.note}
+            style={styles.inputField}
+            placeholder="Item Note"
+            onChangeText={note => this.setState({ note })}
+          />
+          <TextInput
+            value={this.state.quantity}
+            style={styles.inputField}
+            placeholder="Item Quantity"
+            onChangeText={quantity => this.setState({ quantity })}
+          />
+          <TouchableOpacity>
+            <Text>
+              Add
+            </Text>
+          </TouchableOpacity>
         </Modal>
         <Modal
           animationType={'slide'}
@@ -82,7 +113,7 @@ class Pantry extends Component {
               />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={this.addItem}
+              onPress={this.showItemView}
             >
               <Image
                 source={require('../images/circle-with-plus.png')}
