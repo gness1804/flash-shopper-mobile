@@ -9,6 +9,9 @@ const editViewButton = {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    marginTop: 15,
+  },
   eachItemContainer: {
     backgroundColor: '#ffffff',
     borderColor: 'black',
@@ -53,8 +56,10 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 250,
   },
-  button: {
-    marginTop: 15,
+  name: {
+    fontWeight: '700',
+    marginTop: 10,
+    textAlign: 'center',
   },
   text: {
     marginTop: 10,

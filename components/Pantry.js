@@ -116,7 +116,7 @@ class Pantry extends Component {
           animationType={'slide'}
           transparent={false}
           visible={showItemView}
-          onRequestClose={this.warnUser}
+          onRequestClose={() => { this.setState({ showItemView: false }); }}
         >
           <Text>
             Add Item to Pantry
@@ -166,7 +166,7 @@ class Pantry extends Component {
             </ScrollView>
             <View style={styles.bottonIconContainer}>
               <TouchableOpacity
-                onPress={this.warnUser}
+                onPress={this.cancelOutOfModal}
               >
                 <Image
                   source={require('../images/arrow-left.png')}

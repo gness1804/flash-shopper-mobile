@@ -131,7 +131,7 @@ class Main extends Component {
       itemsDisplay = items.map((item) => {
         const { name, aisle, note, quantity, id } = item
         return (<View style={styles.eachItemContainer} key={item.id}>
-          <Text style={styles.text}>Item: {name}</Text>
+          <Text style={styles.name}>{name}</Text>
           <Text style={styles.text}>Aisle: {aisle}</Text>
           <Text style={styles.text}>Note: {note}</Text>
           <Text style={styles.text}>Quantity: {quantity}</Text>
