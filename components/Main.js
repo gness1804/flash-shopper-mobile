@@ -198,17 +198,17 @@ class Main extends Component {
             />
             <View style={styles.editViewButtonContainer}>
               <TouchableOpacity
-                onPress={this.warnUser}
-              >
-                <Text style={styles.editViewButtonCancel}>
-                  Cancel
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
                 onPress={this.saveChanges}
               >
                 <Text style={styles.editViewButtonSave}>
                   Save Changes
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.warnUser}
+              >
+                <Text style={styles.editViewButtonCancel}>
+                  Cancel
                 </Text>
               </TouchableOpacity>
             </View>

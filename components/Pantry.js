@@ -145,47 +145,51 @@ class Pantry extends Component {
           visible={showItemView}
           onRequestClose={() => { this.setState({ showItemView: false }); }}
         >
-          <Text>
-            Add Item to Pantry
-          </Text>
-          <TextInput
-            value={this.state.name}
-            style={styles.inputField}
-            placeholder="Item Name"
-            onChangeText={name => this.setState({ name })}
-          />
-          <TextInput
-            value={this.state.aisle}
-            style={styles.inputField}
-            placeholder="Item Aisle"
-            onChangeText={aisle => this.setState({ aisle })}
-          />
-          <TextInput
-            value={this.state.note}
-            style={styles.inputField}
-            placeholder="Item Note"
-            onChangeText={note => this.setState({ note })}
-          />
-          <TextInput
-            value={this.state.quantity}
-            style={styles.inputField}
-            placeholder="Item Quantity"
-            onChangeText={quantity => this.setState({ quantity })}
-          />
-          <TouchableOpacity
-            onPress={this.addItem}
-          >
-            <Text>
-              Add
+          <ScrollView contentContainerStyle={styles.addItemView}>
+            <Text style={styles.addItemViewHeadline}>
+              Add Item to Pantry
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.goBackToPantryView}
-          >
-            <Text>
-              Cancel
-            </Text>
-          </TouchableOpacity>
+            <TextInput
+              value={this.state.name}
+              style={styles.inputField}
+              placeholder="Item Name"
+              onChangeText={name => this.setState({ name })}
+            />
+            <TextInput
+              value={this.state.aisle}
+              style={styles.inputField}
+              placeholder="Item Aisle"
+              onChangeText={aisle => this.setState({ aisle })}
+            />
+            <TextInput
+              value={this.state.note}
+              style={styles.inputField}
+              placeholder="Item Note"
+              onChangeText={note => this.setState({ note })}
+            />
+            <TextInput
+              value={this.state.quantity}
+              style={styles.inputField}
+              placeholder="Item Quantity"
+              onChangeText={quantity => this.setState({ quantity })}
+            />
+            <View style={styles.addItemViewButtonContainer}>
+              <TouchableOpacity
+                onPress={this.addItem}
+              >
+                <Text>
+                  Add
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.goBackToPantryView}
+              >
+                <Text>
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </Modal>
         <Modal
           animationType={'slide'}
@@ -198,7 +202,7 @@ class Pantry extends Component {
             <ScrollView style={styles.itemList}>
               {itemList}
             </ScrollView>
-            <View style={styles.bottonIconContainer}>
+            <View style={styles.bottomIconContainer}>
               <TouchableOpacity
                 onPress={this.cancelOutOfModal}
               >

@@ -11,6 +11,20 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
+  addItemView: {
+    backgroundColor: 'rgb(189, 228, 232)',
+    flex: 1,
+    alignItems: 'center',
+  },
+  addItemViewButtonContainer: {
+    flexDirection: 'row',
+    marginTop: 30,
+  },
+  addItemViewHeadline: {
+    fontSize: 30,
+    marginBottom: 30,
+    marginTop: 30,
+  },
   backIcon: {
     alignSelf: 'flex-start',
     height: 80,
@@ -18,7 +32,7 @@ const styles = StyleSheet.create({
     marginRight: 120,
     width: 80,
   },
-  bottonIconContainer: {
+  bottomIconContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
