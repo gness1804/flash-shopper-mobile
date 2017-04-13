@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   View,
+  TextInput,
 } from 'react-native';
 import styles from '../styles/Pantry-styles';
 
@@ -15,11 +16,12 @@ class Pantry extends Component {
     super(props)
     this.state = {
       items: [],
+      showItemView: false,
     }
   }
 
   addItem = () => {
-
+    this.setState({ showItemView: true });
   }
 
   cancelOutOfModal = () => {
@@ -47,6 +49,19 @@ class Pantry extends Component {
     let itemList
     return (
       <ScrollView>
+        <Modal
+          animationType={'slide'}
+          transparent={false}
+          visible={this.state.showItemView}
+          onRequestClose={this.warnUser}
+        >
+          <Text>
+            Add Item to Pantry
+          </Text>
+          <TextInput
+
+          />
+        </Modal>
         <Modal
           animationType={'slide'}
           transparent={false}
