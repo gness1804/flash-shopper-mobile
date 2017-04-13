@@ -18,6 +18,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgb(200, 240, 240)',
+  },
+  headline: {
+    fontSize: 36,
+    marginTop: 20,
+    textAlign: 'center',
+  },
   inputField: {
     borderColor: 'black',
     borderWidth: 1,

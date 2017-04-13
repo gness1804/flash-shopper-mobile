@@ -8,6 +8,7 @@ import {
   Image,
   View,
   TextInput,
+  AsyncStorage,
 } from 'react-native';
 import styles from '../styles/Pantry-styles';
 
@@ -25,12 +26,33 @@ class Pantry extends Component {
     }
   }
 
-  showItemView = () => {
-    this.setState({ showItemView: true });
+  addItem = () => {
+    const { name, aisle, note, quantity } = this.state
+    const newItem = {
+      name,
+      aisle,
+      note,
+      quantity,
+      id: Date.now(),
+    }
+    this.setState({ items: [
+      ...this.state.items,
+      newItem,
+    ] })
+    AsyncStorage.setItem('pantry', JSON.stringify([
+      ...this.state.items,
+      newItem,
+    ]))
+    .then(() => { this.setState({ showItemView: false }); })
+    .catch((err) => { throw new Error(err) })
   }
 
   cancelOutOfModal = () => {
     this.props.makePantryInvisible()
+  }
+
+  showItemView = () => {
+    this.setState({ showItemView: true });
   }
 
   warnUser = () => {
@@ -51,13 +73,23 @@ class Pantry extends Component {
   }
 
   render() {
+    const { items, showItemView } = this.state
     let itemList
+    if (items.length > 0) {
+      itemList = items.map((item) => {
+        return (
+          <View key={item.id}>
+            <Text>{item.name}</Text>
+          </View>
+        )
+      })
+    }
     return (
       <ScrollView>
         <Modal
           animationType={'slide'}
           transparent={false}
-          visible={this.state.showItemView}
+          visible={showItemView}
           onRequestClose={this.warnUser}
         >
           <Text>
@@ -87,7 +119,9 @@ class Pantry extends Component {
             placeholder="Item Quantity"
             onChangeText={quantity => this.setState({ quantity })}
           />
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.addItem}
+          >
             <Text>
               Add
             </Text>
@@ -99,27 +133,29 @@ class Pantry extends Component {
           visible={this.props.isPantryVisible}
           onRequestClose={this.warnUser}
         >
-          <Text>Pantry</Text>
-          <ScrollView>
-            {itemList}
-          </ScrollView>
-          <View style={styles.bottonIconContainer}>
-            <TouchableOpacity
-              onPress={this.warnUser}
-            >
-              <Image
-                source={require('../images/arrow-left.png')}
-                style={styles.backIcon}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.showItemView}
-            >
-              <Image
-                source={require('../images/circle-with-plus.png')}
-                style={styles.addIcon}
-              />
-            </TouchableOpacity>
+          <View style={styles.container}>
+            <Text style={styles.headline}>Pantry</Text>
+            <ScrollView>
+              {itemList}
+            </ScrollView>
+            <View style={styles.bottonIconContainer}>
+              <TouchableOpacity
+                onPress={this.warnUser}
+              >
+                <Image
+                  source={require('../images/arrow-left.png')}
+                  style={styles.backIcon}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.showItemView}
+              >
+                <Image
+                  source={require('../images/circle-with-plus.png')}
+                  style={styles.addIcon}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </Modal>
       </ScrollView>
