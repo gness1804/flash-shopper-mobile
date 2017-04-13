@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import styles from '../styles/Pantry-styles';
 
 class Pantry extends Component {
   constructor(props) {
@@ -54,6 +55,7 @@ class Pantry extends Component {
           <TouchableOpacity>
             <Image
               source={require('../images/circle-with-plus.png')}
+              style={styles.addIcon}
             />
           </TouchableOpacity>
         </Modal>
