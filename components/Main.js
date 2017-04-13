@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Alert,
   ToastAndroid,
+  Image,
 } from 'react-native';
 import Pantry from './Pantry';
 import styles from '../styles/Main-styles';
@@ -135,11 +136,14 @@ class Main extends Component {
           <Text style={styles.text}>Aisle: {aisle}</Text>
           <Text style={styles.text}>Note: {note}</Text>
           <Text style={styles.text}>Quantity: {quantity}</Text>
-          <View style={styles.button}>
-            <Button
-              title="Delete Item"
+          <View style={styles.eachItemButtonsContainer}>
+            <TouchableOpacity
               onPress={() => { this.deleteItem(id) }}
-            />
+            >
+              <Image
+                source={require('../images/cancel-circle.png')}
+              />
+            </TouchableOpacity>
           </View>
           <View style={styles.button}>
             <Button
