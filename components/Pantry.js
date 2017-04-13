@@ -10,6 +10,7 @@ import {
   TextInput,
   AsyncStorage,
 } from 'react-native';
+import { _ , some } from 'lodash'; // eslint-disable-line
 import styles from '../styles/Pantry-styles';
 
 class Pantry extends Component {
@@ -41,10 +42,17 @@ class Pantry extends Component {
   }
 
   addItem = () => {
-    const { name, aisle, note, quantity } = this.state
+    const { name, aisle, note, quantity, items } = this.state
+    const test = _.some(items, { name: this.state.name })
     if (!name) {
       Alert.alert(
         'Oops! You must enter a name.',
+      )
+      return
+    }
+    if (test) {
+      Alert.alert(
+        'Oops! There is already an item with this name in your pantry.',
       )
       return
     }
