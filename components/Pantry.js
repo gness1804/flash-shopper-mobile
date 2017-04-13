@@ -42,6 +42,12 @@ class Pantry extends Component {
 
   addItem = () => {
     const { name, aisle, note, quantity } = this.state
+    if (!name) {
+      Alert.alert(
+        'Oops! You must enter a name.',
+      )
+      return
+    }
     const newItem = {
       name,
       aisle,
@@ -57,12 +63,16 @@ class Pantry extends Component {
       ...this.state.items,
       newItem,
     ]))
-    .then(() => { this.setState({ showItemView: false }) })
+    .then(() => { this.goBackToPantryView() })
     .catch((err) => { throw new Error(err) })
   }
 
   cancelOutOfModal = () => {
     this.props.makePantryInvisible()
+  }
+
+  goBackToPantryView = () => {
+    this.setState({ showItemView: false })
   }
 
   showItemView = () => {
@@ -150,6 +160,13 @@ class Pantry extends Component {
           >
             <Text>
               Add
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.goBackToPantryView}
+          >
+            <Text>
+              Cancel
             </Text>
           </TouchableOpacity>
         </Modal>
