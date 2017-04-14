@@ -220,7 +220,17 @@ class Pantry extends Component {
           </View>
         )
       })
+    } else {
+      itemList = (
+        <View>
+          <Text>
+            There are no items in your pantry.
+            Click on the blue 'plus' button below to start adding items.
+          </Text>
+        </View>
+      )
     }
+
     return (
       <ScrollView>
         <Modal
