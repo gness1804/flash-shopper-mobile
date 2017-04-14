@@ -91,6 +91,10 @@ class Main extends Component {
     this.props.saveChanges(name, aisle, quantity, note, id)
     this.clearText()
     this.setState({ showEditView: false })
+    this.showSaveMicrointeraction()
+  }
+
+  showSaveMicrointeraction = () => {
     ToastAndroid.show('Item saved!', ToastAndroid.SHORT)
   }
 

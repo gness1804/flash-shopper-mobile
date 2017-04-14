@@ -9,6 +9,7 @@ import {
   View,
   TextInput,
   AsyncStorage,
+  ToastAndroid,
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
 import styles from '../styles/Pantry-styles';
@@ -116,8 +117,40 @@ class Pantry extends Component {
     this.setState({ id: null });
   }
 
+  saveChanges = () => {
+    const { name, aisle, quantity, note, id, items } = this.state
+    if (!name) {
+      Alert.alert(
+        'Oops! You must enter in an item name!',
+      )
+      return
+    }
+    const newArr = items.filter((i) => {
+      return i.id !== id
+    })
+    newArr.push({
+      name,
+      aisle,
+      quantity,
+      note,
+      id,
+    })
+    AsyncStorage.setItem('pantry', JSON.stringify(
+       newArr,
+     ))
+     .then(() => { this.setState({ items: newArr }) })
+     .then(() => { this.resetItemState() })
+     .then(() => { this.hideEditView() })
+     .then(() => { this.showSaveMicrointeraction() })
+     .catch((err) => { throw new Error(err) })
+  }
+
   showAddView = () => {
     this.setState({ showAddView: true });
+  }
+
+  showSaveMicrointeraction = () => {
+    ToastAndroid.show('Item saved!', ToastAndroid.SHORT)
   }
 
   transferItemToMainList = (item) => {
@@ -194,7 +227,7 @@ class Pantry extends Component {
         >
           <ScrollView contentContainerStyle={styles.editViewContainer}>
             <Text style={styles.editViewHeadline}>
-              Edit Item: {this.state.name}
+              Edit Pantry Item: {this.state.name}
             </Text>
             <TextInput
               id="item-input"
