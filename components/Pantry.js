@@ -176,23 +176,6 @@ class Pantry extends Component {
     this.props.transferItemToMainList(item)
   }
 
-  warnUser = () => {
-    Alert.alert(
-      'Warning',
-      'Are you sure you want to navigate away from this view? You will lose any unsaved changes.',
-      [
-        {
-          text: 'OK',
-          onPress: this.cancelOutOfModal,
-        },
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-      ],
-    )
-  }
-
   render() {
     const { items, showAddView } = this.state
     let itemList
@@ -353,7 +336,7 @@ class Pantry extends Component {
           animationType={'slide'}
           transparent={false}
           visible={this.props.isPantryVisible}
-          onRequestClose={this.warnUser}
+          onRequestClose={this.cancelOutOfModal}
         >
           <View style={styles.container}>
             <Text style={styles.headline}>Pantry</Text>
