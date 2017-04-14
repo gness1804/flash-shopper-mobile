@@ -147,7 +147,8 @@ class Pantry extends Component {
   }
 
   showAddView = () => {
-    this.setState({ showAddView: true });
+    this.resetItemState()
+    this.setState({ showAddView: true })
   }
 
   showSaveMicrointeraction = () => {
