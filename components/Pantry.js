@@ -153,6 +153,22 @@ class Pantry extends Component {
     ToastAndroid.show('Item saved!', ToastAndroid.SHORT)
   }
 
+  sortAlpha = (items) => {
+    const newArr = items.sort((a, b) => {
+      const first = a.name.toLowerCase()
+      const second = b.name.toLowerCase()
+      if (first < second) {
+        return -1
+      }
+      if (first > second) {
+        return 1
+      }
+      return 0
+    },
+    );
+    return newArr
+  }
+
   transferItemToMainList = (item) => {
     this.props.transferItemToMainList(item)
   }
@@ -178,7 +194,8 @@ class Pantry extends Component {
     const { items, showAddView } = this.state
     let itemList
     if (items.length > 0) {
-      itemList = items.map((item) => {
+      const sortedItems = this.sortAlpha(items)
+      itemList = sortedItems.map((item) => {
         return (
           <View key={item.id} style={styles.itemContainer}>
             <Text style={styles.name}>{item.name}</Text>
