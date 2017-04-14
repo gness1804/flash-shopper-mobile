@@ -18,7 +18,8 @@ class Pantry extends Component {
     super(props)
     this.state = {
       items: [],
-      showItemView: false,
+      showAddView: false,
+      showEditView: false,
       name: '',
       aisle: null,
       note: '',
@@ -72,7 +73,7 @@ class Pantry extends Component {
       newItem,
     ]))
     .then(() => { this.resetItemState() })
-    .then(() => { this.goBackToPantryView() })
+    .then(() => { this.hideAddView() })
     .catch((err) => { throw new Error(err) })
   }
 
@@ -80,8 +81,21 @@ class Pantry extends Component {
     this.props.makePantryInvisible()
   }
 
-  goBackToPantryView = () => {
-    this.setState({ showItemView: false })
+  editItem = (name, aisle, note, quantity, id) => {
+    this.setState({ name });
+    this.setState({ aisle });
+    this.setState({ note });
+    this.setState({ quantity });
+    this.setState({ id });
+    this.setState({ showEditView: true })
+  }
+
+  hideAddView = () => {
+    this.setState({ showAddView: false })
+  }
+
+  hideEditView = () => {
+    this.setState({ showEditView: false })
   }
 
   removeItem = (item) => {
@@ -102,8 +116,8 @@ class Pantry extends Component {
     this.setState({ id: null });
   }
 
-  showItemView = () => {
-    this.setState({ showItemView: true });
+  showAddView = () => {
+    this.setState({ showAddView: true });
   }
 
   transferItemToMainList = (item) => {
@@ -128,7 +142,7 @@ class Pantry extends Component {
   }
 
   render() {
-    const { items, showItemView } = this.state
+    const { items, showAddView } = this.state
     let itemList
     if (items.length > 0) {
       itemList = items.map((item) => {
@@ -151,6 +165,21 @@ class Pantry extends Component {
                 style={styles.deleteIconSmall}
               />
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.editItem(
+                item.name,
+                item.aisle,
+                item.note,
+                item.quantity,
+                item.id)
+              }}
+            >
+              <Image
+                source={require('../images/pencil.png')}
+                style={styles.editIconSmall}
+              />
+            </TouchableOpacity>
           </View>
         )
       })
@@ -160,8 +189,65 @@ class Pantry extends Component {
         <Modal
           animationType={'slide'}
           transparent={false}
-          visible={showItemView}
-          onRequestClose={() => { this.setState({ showItemView: false }); }}
+          visible={this.state.showEditView}
+          onRequestClose={this.hideEditView}
+        >
+          <ScrollView contentContainerStyle={styles.editViewContainer}>
+            <Text style={styles.editViewHeadline}>
+              Edit Item: {this.state.name}
+            </Text>
+            <TextInput
+              id="item-input"
+              value={this.state.name}
+              style={styles.inputField}
+              placeholder="Item Name"
+              onChangeText={name => this.setState({ name })}
+            />
+            <TextInput
+              id="aisle-input"
+              value={this.state.aisle}
+              style={styles.inputField}
+              placeholder="Aisle Name"
+              onChangeText={aisle => this.setState({ aisle })}
+            />
+            <TextInput
+              id="note-input"
+              value={this.state.note}
+              style={styles.inputField}
+              placeholder="Note"
+              onChangeText={note => this.setState({ note })}
+            />
+            <TextInput
+              id="quantity-input"
+              value={this.state.quantity}
+              style={styles.inputField}
+              placeholder="Quantity"
+              onChangeText={quantity => this.setState({ quantity })}
+            />
+            <View style={styles.editViewButtonContainer}>
+              <TouchableOpacity
+                onPress={this.saveChanges}
+              >
+                <Text style={styles.editViewButtonSave}>
+                  Save Changes
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.hideEditView}
+              >
+                <Text style={styles.editViewButtonCancel}>
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </Modal>
+
+        <Modal
+          animationType={'slide'}
+          transparent={false}
+          visible={showAddView}
+          onRequestClose={() => { this.setState({ showAddView: false }); }}
         >
           <ScrollView contentContainerStyle={styles.addItemView}>
             <Text style={styles.addItemViewHeadline}>
@@ -200,7 +286,7 @@ class Pantry extends Component {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={this.goBackToPantryView}
+                onPress={this.hideAddView}
               >
                 <Text style={styles.addItemButtonCancel}>
                   Cancel
@@ -209,6 +295,7 @@ class Pantry extends Component {
             </View>
           </ScrollView>
         </Modal>
+
         <Modal
           animationType={'slide'}
           transparent={false}
@@ -230,7 +317,7 @@ class Pantry extends Component {
                 />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={this.showItemView}
+                onPress={this.showAddView}
               >
                 <Image
                   source={require('../images/plus-icon-large.png')}

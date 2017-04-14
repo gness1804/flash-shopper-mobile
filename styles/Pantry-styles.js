@@ -71,6 +71,11 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     width: 30,
   },
+  editIconSmall: {
+    height: 30,
+    marginLeft: 20,
+    width: 30,
+  },
   headline: {
     fontSize: 36,
     marginTop: 20,
