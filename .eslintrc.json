@@ -22,7 +22,8 @@
     "react/no-string-refs": "off",
     "semi": "off",
     "global-require": "off",
-    "react/no-unescaped-entities": "off"
+    "react/no-unescaped-entities": "off",
+    "no-plusplus": "off"
   },
   "parser": "babel-eslint"
 }

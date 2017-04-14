@@ -47,6 +47,7 @@ class Main extends Component {
       note: this.state.note,
       quantity: this.state.quantity,
       id: Date.now(),
+      inCart: false,
     };
     this.props.addNewItem(newItem);
     this.setState(this.state)
@@ -128,6 +129,10 @@ class Main extends Component {
     this.props.sortAlpha();
   }
 
+  toggleInCart = (id) => {
+    this.props.toggleInCart(id)
+  }
+
   transferItemToMainList = (item) => {
     this.props.transferItemToMainList(item)
   }
@@ -184,6 +189,14 @@ class Main extends Component {
               <Image
                 source={require('../images/pencil.png')}
                 style={styles.pencilIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => { this.toggleInCart(id) }}
+            >
+              <Image
+                source={require('../images/cart.png')}
+                style={styles.cartIcon}
               />
             </TouchableOpacity>
           </View>

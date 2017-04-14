@@ -44,6 +44,16 @@ export default class App extends React.Component {
     ]))
   }
 
+  countItemsInCart = () => {
+    let count = 0
+    this.state.items.forEach((i) => {
+      if (i.inCart) {
+        count++
+      }
+    });
+    return count
+  }
+
   deleteAllItems = () => {
     Alert.alert(
       'Warning',
@@ -145,6 +155,19 @@ export default class App extends React.Component {
     this.setState({ items: newArr });
   }
 
+  toggleInCart = (id) => {
+    const newArr = this.state.items
+    newArr.forEach((i) => {
+      if (i.id === id) {
+        Object.assign(i, { inCart: !i.inCart })
+      }
+    });
+    AsyncStorage.setItem('items', JSON.stringify(
+       newArr,
+     ))
+     .then(() => { this.setState({ items: newArr }) })
+  }
+
   transferItemToMainList = (item) => {
     const { items } = this.state
     const test = _.some(items, { id: item.id })
@@ -175,6 +198,7 @@ export default class App extends React.Component {
               There are no items on your list!
               Add an item by typing into the input fields and then tapping Submit.
             </Text>}
+          <Text>There are {this.countItemsInCart()} item(s) in your cart.</Text>
         </View>
         <Main
           addNewItem={this.addNewItem.bind(this)}
@@ -185,6 +209,7 @@ export default class App extends React.Component {
           deleteAllItems={this.deleteAllItems.bind(this)}
           saveChanges={this.saveChanges.bind(this)}
           transferItemToMainList={this.transferItemToMainList.bind(this)}
+          toggleInCart={this.toggleInCart.bind(this)}
         />
       </View>
     );

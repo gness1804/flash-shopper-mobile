@@ -6,6 +6,11 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 15,
   },
+  cartIcon: {
+    height: 30,
+    marginLeft: 30,
+    width: 30,
+  },
   deleteIcon: {
     height: 30,
     marginRight: 30,
