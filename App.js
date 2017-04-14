@@ -198,7 +198,7 @@ export default class App extends React.Component {
               There are no items on your list!
               Add an item by typing into the input fields and then tapping Submit.
             </Text>}
-          <Text>There are {this.countItemsInCart()} item(s) in your cart.</Text>
+          <Text style={styles.cartNumberMessage}>There are {this.countItemsInCart()} item(s) in your cart.</Text>
         </View>
         <Main
           addNewItem={this.addNewItem.bind(this)}
