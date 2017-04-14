@@ -24,6 +24,11 @@ class Main extends Component {
       note: '',
       quantity: null,
       id: null,
+      tempName: '',
+      tempAisle: null,
+      tempNote: '',
+      tempQuantity: null,
+      tempId: null,
       showEditView: false,
       isPantryVisible: false,
     }
@@ -32,6 +37,7 @@ class Main extends Component {
   cancelOutOfModal = () => {
     this.clearText()
     this.setState({ showEditView: false })
+    this.resetTempStates()
   }
 
   createItem = () => {
@@ -70,6 +76,11 @@ class Main extends Component {
     this.setState({ note });
     this.setState({ quantity });
     this.setState({ id });
+    this.setState({ tempName: name });
+    this.setState({ tempAisle: aisle });
+    this.setState({ tempNote: note });
+    this.setState({ tempQuantity: quantity });
+    this.setState({ tempId: id });
     this.setState({ showEditView: true })
   }
 
@@ -79,6 +90,14 @@ class Main extends Component {
 
   makePantryInvisible = () => {
     this.setState({ isPantryVisible: false });
+  }
+
+  resetTempStates = () => {
+    this.setState({ tempName: '' });
+    this.setState({ tempAisle: null });
+    this.setState({ tempNote: '' });
+    this.setState({ tempQuantity: null });
+    this.setState({ tempId: null });
   }
 
   saveChanges = () => {
@@ -114,20 +133,27 @@ class Main extends Component {
   }
 
   warnUser = () => {
-    Alert.alert(
-      'Warning',
-      'Are you sure you want to navigate away from this view? You will lose any unsaved changes.',
-      [
-        {
-          text: 'OK',
-          onPress: this.cancelOutOfModal,
-        },
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-      ],
-    )
+    if (this.state.name !== this.state.tempName
+    || this.state.aisle !== this.state.tempAisle
+    || this.state.note !== this.state.tempNote
+    || this.state.quantity !== this.state.tempQuantity) {
+      Alert.alert(
+        'Warning',
+        'Are you sure you want to navigate away from this view? You will lose any unsaved changes.',
+        [
+          {
+            text: 'OK',
+            onPress: this.cancelOutOfModal,
+          },
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+        ],
+      )
+    } else {
+      this.cancelOutOfModal()
+    }
   }
 
   render() {
