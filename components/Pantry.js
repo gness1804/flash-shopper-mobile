@@ -10,6 +10,7 @@ import {
   TextInput,
   AsyncStorage,
   ToastAndroid,
+  Platform,
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
 import styles from '../styles/Pantry-styles';
@@ -150,7 +151,9 @@ class Pantry extends Component {
   }
 
   showSaveMicrointeraction = () => {
-    ToastAndroid.show('Item saved!', ToastAndroid.SHORT)
+    if (Platform.OS === 'android') {
+      ToastAndroid.show('Item saved!', ToastAndroid.SHORT)
+    }
   }
 
   sortAlpha = (items) => {

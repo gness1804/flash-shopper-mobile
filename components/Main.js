@@ -10,6 +10,7 @@ import {
   Alert,
   ToastAndroid,
   Image,
+  Platform,
 } from 'react-native';
 import Pantry from './Pantry';
 import styles from '../styles/Main-styles';
@@ -95,7 +96,9 @@ class Main extends Component {
   }
 
   showSaveMicrointeraction = () => {
-    ToastAndroid.show('Item saved!', ToastAndroid.SHORT)
+    if (Platform.OS === 'android') {
+      ToastAndroid.show('Item saved!', ToastAndroid.SHORT)
+    }
   }
 
   sortByAisle = () => {

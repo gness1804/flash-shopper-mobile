@@ -5,6 +5,7 @@ import {
   AsyncStorage,
   Alert,
   ToastAndroid,
+  Platform,
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
 import styles from './styles/App-styles';
@@ -118,7 +119,9 @@ export default class App extends React.Component {
   }
 
   showAddedItemMicrointeraction = () => {
-    ToastAndroid.show('Item added to main list.', ToastAndroid.SHORT)
+    if (Platform.OS === 'android') {
+      ToastAndroid.show('Item added to main list.', ToastAndroid.SHORT)
+    }
   }
 
   sortAlpha = () => {
