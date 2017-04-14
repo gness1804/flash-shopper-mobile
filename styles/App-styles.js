@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgb(134, 148, 247)',
   },
+  itemNumberMessage: {
+    marginBottom: 30,
+    marginTop: 30,
+  },
   text: {
     fontSize: 40,
     marginBottom: 30,

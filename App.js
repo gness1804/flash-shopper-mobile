@@ -165,12 +165,17 @@ export default class App extends React.Component {
         <Text style={styles.text}>
           Flash Shopper
         </Text>
-        <Text>
+        <View>
           {items.length ?
-            <Text>You have {items.length} items on your list.</Text>
+            <Text style={styles.itemNumberMessage}>
+              You have {items.length} item(s) on your list.
+            </Text>
             :
-            <Text>There are no items on your list!</Text>}
-        </Text>
+            <Text style={styles.itemNumberMessage}>
+              There are no items on your list!
+              Add an item by typing into the input fields and then tapping Submit.
+            </Text>}
+        </View>
         <Main
           addNewItem={this.addNewItem.bind(this)}
           items={items}
