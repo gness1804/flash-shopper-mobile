@@ -86,6 +86,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: 'center',
   },
+  textInCart: {
+    color: '#E6E4E4',
+    marginTop: 10,
+    textAlign: 'center',
+    textDecorationLine: 'line-through',
+  },
 })
 
 export default styles

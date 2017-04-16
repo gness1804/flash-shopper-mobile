@@ -170,16 +170,22 @@ class Main extends Component {
       itemsDisplay = items.map((item) => {
         const { name, aisle, note, quantity, id, inCart } = item
         let nameStyle
+        let textStyle
         if (inCart) {
           nameStyle = styles.nameInCart
         } else {
           nameStyle = styles.name
        }
+       if (inCart) {
+          textStyle = styles.textInCart
+        } else {
+          textStyle = styles.text
+       }
         return (<View style={styles.eachItemContainer} key={item.id}>
           <Text style={nameStyle}>{name}</Text>
-          <Text style={styles.text}>Aisle: {aisle}</Text>
-          <Text style={styles.text}>Note: {note}</Text>
-          <Text style={styles.text}>Quantity: {quantity}</Text>
+          <Text style={textStyle}>Aisle: {aisle}</Text>
+          <Text style={textStyle}>Note: {note}</Text>
+          <Text style={textStyle}>Quantity: {quantity}</Text>
           <View style={styles.eachItemButtonsContainer}>
             <TouchableOpacity
               onPress={() => { this.deleteItem(id) }}
