@@ -10,4 +10,5 @@ The user can add, sort, and delete items on the list.
 
 Tested on:
 
-* Android (Nexus 5X and Nexus 9) using [Expo app](https://expo.io/)
+* Android (real Nexus 5X and Nexus 9) using [Expo app](https://expo.io/)
+* iPhone (iPhone 6 simulator) using [Expo app](https://expo.io/)
