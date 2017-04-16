@@ -56,13 +56,28 @@ export default class App extends React.Component {
   }
 
   deleteAllInCart = () => {
-    const newArr = this.state.items.filter((i) => {
-      return !i.inCart
-    })
-    AsyncStorage.setItem('items', JSON.stringify(
-      newArr,
-    ))
-    .then(() => { this.setState({ items: newArr }) })
+    Alert.alert(
+      'Warning',
+      'Do you really want to delete all items in your cart? This cannot be undone!',
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            const newArr = this.state.items.filter((i) => {
+              return !i.inCart
+            })
+            AsyncStorage.setItem('items', JSON.stringify(
+              newArr,
+            ))
+            .then(() => { this.setState({ items: newArr }) })
+          },
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+      ],
+    )
   }
 
   deleteAllItems = () => {
