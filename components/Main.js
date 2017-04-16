@@ -168,9 +168,15 @@ class Main extends Component {
 
     if (items.length > 0) {
       itemsDisplay = items.map((item) => {
-        const { name, aisle, note, quantity, id } = item
+        const { name, aisle, note, quantity, id, inCart } = item
+        let nameStyle
+        if (inCart) {
+          nameStyle = styles.nameInCart
+        } else {
+          nameStyle = styles.name
+       }
         return (<View style={styles.eachItemContainer} key={item.id}>
-          <Text style={styles.name}>{name}</Text>
+          <Text style={nameStyle}>{name}</Text>
           <Text style={styles.text}>Aisle: {aisle}</Text>
           <Text style={styles.text}>Note: {note}</Text>
           <Text style={styles.text}>Quantity: {quantity}</Text>
