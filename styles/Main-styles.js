@@ -72,10 +72,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   nameInCart: {
-    color: '#F00',
+    color: '#E6E4E4',
     fontWeight: '700',
     marginTop: 10,
     textAlign: 'center',
+    textDecorationLine: 'line-through',
   },
   pencilIcon: {
     height: 30,
