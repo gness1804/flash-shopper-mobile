@@ -6,6 +6,7 @@ import {
   Alert,
   ToastAndroid,
   Platform,
+  Button,
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
 import styles from './styles/App-styles';
@@ -52,6 +53,16 @@ export default class App extends React.Component {
       }
     });
     return count
+  }
+
+  deleteAllInCart = () => {
+    const newArr = this.state.items.filter((i) => {
+      return !i.inCart
+    })
+    AsyncStorage.setItem('items', JSON.stringify(
+      newArr,
+    ))
+    .then(() => { this.setState({ items: newArr }) })
   }
 
   deleteAllItems = () => {
@@ -198,7 +209,15 @@ export default class App extends React.Component {
               There are no items on your list!
               Add an item by typing into the input fields and then tapping Submit.
             </Text>}
-          <Text style={styles.cartNumberMessage}>There are {this.countItemsInCart()} item(s) in your cart.</Text>
+          <Text style={styles.cartNumberMessage}>
+            There are {this.countItemsInCart()} item(s) in your cart.
+          </Text>
+        </View>
+        <View>
+          <Button
+            title="Delete All Items In Cart"
+            onPress={this.deleteAllInCart}
+          />
         </View>
         <Main
           addNewItem={this.addNewItem.bind(this)}
