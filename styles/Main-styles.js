@@ -66,6 +66,9 @@ const styles = StyleSheet.create({
     padding: commonElements.inputField.padding,
     width: commonElements.inputField.width,
   },
+  itemsDisplayContainer: {
+    marginBottom: 30,
+  },
   name: {
     fontWeight: '700',
     marginTop: 10,

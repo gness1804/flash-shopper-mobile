@@ -175,12 +175,12 @@ class Main extends Component {
           nameStyle = styles.nameInCart
         } else {
           nameStyle = styles.name
-       }
-       if (inCart) {
+        }
+        if (inCart) {
           textStyle = styles.textInCart
         } else {
           textStyle = styles.text
-       }
+        }
         return (<View style={styles.eachItemContainer} key={item.id}>
           <Text style={nameStyle}>{name}</Text>
           <Text style={textStyle}>Aisle: {aisle}</Text>
@@ -345,7 +345,9 @@ class Main extends Component {
             onPress={() => { this.goToPantry() }}
           />
         </View>
-        {itemsDisplay}
+        <View style={styles.itemsDisplayContainer}>
+          {itemsDisplay}
+        </View>
       </ScrollView>
     );
   }
