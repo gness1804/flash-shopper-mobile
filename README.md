@@ -6,7 +6,7 @@
 
 This is a new port of my first Flash Shopper in React Native. It is rebuilt with [Create React Native App](https://github.com/react-community/create-react-native-app) because this makes it easier to build and deploy the app.
 
-The user can add, sort, and delete items on the list.
+The user can add, sort, and delete items on the list. There is also a Pantry section where the user can add and save commonly bought items to easily add to the active list.
 
 Tested on:
 
