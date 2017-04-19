@@ -50,8 +50,8 @@ class AddItem extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Add Item to Main List</Text>
+      <View style={styles.editViewContainer}>
+        <Text style={styles.editViewHeadline}>Add Item to Main List</Text>
         <TextInput
           id="item-input"
           value={this.state.name}
