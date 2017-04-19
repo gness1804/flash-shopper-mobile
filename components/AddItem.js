@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { TextInput, View, TouchableOpacity, Text } from 'react-native';
 import styles from '../styles/AddItem-styles';
 
@@ -83,7 +83,7 @@ class AddItem extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={this.warnUser}
+            onPress={this.hideAddItem}
           >
             <Text style={styles.editViewButtonCancel}>
                 Cancel
@@ -94,5 +94,10 @@ class AddItem extends Component {
     );
   }
 }
+
+AddItem.propTypes = {
+  addNewItem: PropTypes.func.isRequired,
+  hideAddItem: PropTypes.func.isRequired,
+};
 
 export default AddItem
