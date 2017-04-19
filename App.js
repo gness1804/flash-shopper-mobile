@@ -22,6 +22,11 @@ export default class App extends React.Component {
     this.state = {
       items: [],
       showAddItem: false,
+      // name: '',
+      // aisle: null,
+      // note: '',
+      // quantity: null,
+      // id: null,
     }
   }
 
@@ -232,6 +237,7 @@ export default class App extends React.Component {
         >
           <AddItem />
         </Modal>
+
         <Text style={styles.headline}>
           Flash Shopper
         </Text>
