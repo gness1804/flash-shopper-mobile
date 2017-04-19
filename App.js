@@ -14,6 +14,7 @@ import {
 import { _ , some } from 'lodash'; // eslint-disable-line
 import styles from './styles/App-styles';
 import Main from './components/Main';
+import AddItem from './components/AddItem';
 
 export default class App extends React.Component {
   constructor() {
@@ -229,7 +230,7 @@ export default class App extends React.Component {
           visible={this.state.showAddItem}
           onRequestClose={this.hideAddItem}
         >
-          <Text>I am the Modal to add an item.</Text>
+          <AddItem />
         </Modal>
         <Text style={styles.headline}>
           Flash Shopper
