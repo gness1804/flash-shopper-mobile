@@ -53,6 +53,7 @@ export default class App extends React.Component {
       ...this.state.items,
       newItem,
     ]))
+    .then(() => { this.showAddedItemMicrointeraction() })
   }
 
   countItemsInCart = () => {
