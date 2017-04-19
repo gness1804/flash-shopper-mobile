@@ -28,7 +28,7 @@ class Pantry extends Component {
       aisle: '',
       note: '',
       quantity: '',
-      id: null,
+      id: 0,
     }
   }
 
@@ -45,7 +45,7 @@ class Pantry extends Component {
 
   componentWillMount = ():void => {
     AsyncStorage.getItem('pantry')
-      .then((items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>) => {
+      .then((items: string) => {
         const parsedItems = JSON.parse(items)
         if (!Array.isArray(parsedItems)) {
           AsyncStorage.setItem('pantry', JSON.stringify([]))
@@ -63,7 +63,7 @@ class Pantry extends Component {
     transferItemToMainList: Function,
   }
 
-  addItem = () => {
+  addItem = (): void => {
     const { name, aisle, note, quantity, items } = this.state
     const test = _.some(items, { name: this.state.name })
     if (!name) {
@@ -84,6 +84,7 @@ class Pantry extends Component {
       note,
       quantity,
       id: Date.now(),
+      inCart: false,
     }
     this.setState({ items: [
       ...this.state.items,
@@ -93,16 +94,16 @@ class Pantry extends Component {
       ...this.state.items,
       newItem,
     ]))
-    .then(() => { this.resetItemState() })
-    .then(() => { this.hideAddView() })
-    .catch((err) => { throw new Error(err) })
+    .then((): void => { this.resetItemState() })
+    .then((): void => { this.hideAddView() })
+    .catch((err: string): void => { throw new Error(err) })
   }
 
-  cancelOutOfModal = () => {
+  cancelOutOfModal = (): void => {
     this.props.makePantryInvisible()
   }
 
-  editItem = (name, aisle, note, quantity, id) => {
+  editItem = (name: string, aisle: string, note: string, quantity: string, id: number): void => {
     this.setState({ name });
     this.setState({ aisle });
     this.setState({ note });
@@ -111,33 +112,33 @@ class Pantry extends Component {
     this.setState({ showEditView: true })
   }
 
-  hideAddView = () => {
+  hideAddView = (): void => {
     this.setState({ showAddView: false })
   }
 
-  hideEditView = () => {
+  hideEditView = (): void => {
     this.setState({ showEditView: false })
   }
 
-  removeItem = (item) => {
-    const newArr = this.state.items.filter((i) => {
+  removeItem = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
+    const newArr = this.state.items.filter((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
       return i.id !== item.id
     })
     AsyncStorage.setItem('pantry', JSON.stringify(
        newArr,
      ))
-     .then(() => { this.setState({ items: newArr }) })
+     .then((): void => { this.setState({ items: newArr }) })
   }
 
-  resetItemState = () => {
+  resetItemState = ():void => {
     this.setState({ name: '' })
     this.setState({ aisle: '' });
     this.setState({ note: '' });
-    this.setState({ quantity: null });
-    this.setState({ id: null });
+    this.setState({ quantity: '' });
+    this.setState({ id: 0 });
   }
 
-  saveChanges = () => {
+  saveChanges = (): void => {
     const { name, aisle, quantity, note, id, items } = this.state
     if (!name) {
       Alert.alert(
@@ -145,7 +146,7 @@ class Pantry extends Component {
       )
       return
     }
-    const newArr = items.filter((i) => {
+    const newArr = items.filter((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
       return i.id !== id
     })
     newArr.push({
@@ -154,30 +155,31 @@ class Pantry extends Component {
       quantity,
       note,
       id,
+      inCart: false,
     })
     AsyncStorage.setItem('pantry', JSON.stringify(
        newArr,
      ))
-     .then(() => { this.setState({ items: newArr }) })
-     .then(() => { this.resetItemState() })
-     .then(() => { this.hideEditView() })
-     .then(() => { this.showSaveMicrointeraction() })
-     .catch((err) => { throw new Error(err) })
+     .then((): void => { this.setState({ items: newArr }) })
+     .then((): void => { this.resetItemState() })
+     .then((): void => { this.hideEditView() })
+     .then((): void => { this.showSaveMicrointeraction() })
+     .catch((err: string): void => { throw new Error(err) })
   }
 
-  showAddView = () => {
+  showAddView = ():void => {
     this.resetItemState()
     this.setState({ showAddView: true })
   }
 
-  showSaveMicrointeraction = () => {
+  showSaveMicrointeraction = (): void => {
     if (Platform.OS === 'android') {
       ToastAndroid.show('Item saved!', ToastAndroid.SHORT)
     }
   }
 
-  sortAlpha = (items) => {
-    const newArr = items.sort((a, b) => {
+  sortAlpha = (items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>): Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}> => {
+    const newArr = items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
       const first = a.name.toLowerCase()
       const second = b.name.toLowerCase()
       if (first < second) {
@@ -192,7 +194,7 @@ class Pantry extends Component {
     return newArr
   }
 
-  transferItemToMainList = (item) => {
+  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }): void => {
     this.props.transferItemToMainList(item)
   }
 
@@ -201,7 +203,7 @@ class Pantry extends Component {
     let itemList
     if (items.length > 0) {
       const sortedItems = this.sortAlpha(items)
-      itemList = sortedItems.map((item) => {
+      itemList = sortedItems.map((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
         return (
           <View key={item.id} style={styles.itemContainer}>
             <Text style={styles.name}>{item.name}</Text>
