@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-native-scripts": "0.0.27",
+    "flow-bin": "^0.38.0",
     "jest-expo": "^0.3.0",
+    "react-native-scripts": "0.0.27",
     "react-test-renderer": "~15.4.1"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
@@ -14,7 +15,8 @@
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "test": "node node_modules/jest/bin/jest.js --watch",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "flow": "node_modules/.bin/flow"
   },
   "jest": {
     "preset": "jest-expo"

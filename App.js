@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {
   Text,
@@ -22,11 +24,6 @@ export default class App extends React.Component {
     this.state = {
       items: [],
       showAddItem: false,
-      // name: '',
-      // aisle: null,
-      // note: '',
-      // quantity: null,
-      // id: null,
     }
   }
 
