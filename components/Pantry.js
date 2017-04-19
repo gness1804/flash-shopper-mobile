@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component, PropTypes } from 'react';
 import {
   ScrollView,
@@ -16,23 +18,34 @@ import { _ , some } from 'lodash'; // eslint-disable-line
 import styles from '../styles/Pantry-styles';
 
 class Pantry extends Component {
-  constructor(props) {
+  constructor(props: Object) {
     super(props)
     this.state = {
       items: [],
       showAddView: false,
       showEditView: false,
       name: '',
-      aisle: null,
+      aisle: '',
       note: '',
-      quantity: null,
+      quantity: '',
       id: null,
     }
   }
 
-  componentWillMount = () => {
+  state: {
+    items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>,
+    showAddView: boolean,
+    showEditView: boolean,
+    name: string,
+    aisle: string,
+    note: string,
+    quantity: string,
+    id: number,
+  }
+
+  componentWillMount = ():void => {
     AsyncStorage.getItem('pantry')
-      .then((items) => {
+      .then((items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>) => {
         const parsedItems = JSON.parse(items)
         if (!Array.isArray(parsedItems)) {
           AsyncStorage.setItem('pantry', JSON.stringify([]))
@@ -40,8 +53,14 @@ class Pantry extends Component {
         }
         return parsedItems // eslint-disable-line
       })
-      .then((parsedItems) => { this.setState({ items: parsedItems }) })
-      .catch((err) => { throw new Error(err) })
+      .then((parsedItems: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>) => { this.setState({ items: parsedItems }) })
+      .catch((err: string) => { throw new Error(err) })
+  }
+
+  props: {
+    isPantryVisible: boolean,
+    makePantryInvisible: Function,
+    transferItemToMainList: Function,
   }
 
   addItem = () => {
@@ -112,7 +131,7 @@ class Pantry extends Component {
 
   resetItemState = () => {
     this.setState({ name: '' })
-    this.setState({ aisle: null });
+    this.setState({ aisle: '' });
     this.setState({ note: '' });
     this.setState({ quantity: null });
     this.setState({ id: null });
@@ -251,10 +270,9 @@ class Pantry extends Component {
               onChangeText={name => this.setState({ name })}
             />
             <TextInput
-              id="aisle-input"
               value={this.state.aisle}
               style={styles.inputField}
-              placeholder="Aisle Name"
+              placeholder="Item Aisle"
               onChangeText={aisle => this.setState({ aisle })}
             />
             <TextInput

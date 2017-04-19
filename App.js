@@ -29,7 +29,7 @@ export default class App extends React.Component {
   }
 
   state: {
-  items: Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}>,
+  items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>,
   showAddItem: boolean,
 }
 
@@ -43,11 +43,11 @@ export default class App extends React.Component {
         }
         return parsedItems // eslint-disable-line
       })
-      .then((parsedItems: Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}>):void => { this.setState({ items: parsedItems }) }) // eslint-disable-line
+      .then((parsedItems: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>):void => { this.setState({ items: parsedItems }) }) // eslint-disable-line
       .catch((err: string):void => { throw new Error(err) }) // eslint-disable-line
   }
 
-  addNewItem = (newItem: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }): void => { // eslint-disable-line
+  addNewItem = (newItem: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }): void => { // eslint-disable-line
     this.setState({ items: [
       ...this.state.items,
       newItem,
@@ -61,7 +61,7 @@ export default class App extends React.Component {
 
   countItemsInCart = (): number => {
     let count = 0
-    this.state.items.forEach((i: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }):void => {
+    this.state.items.forEach((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
       if (i.inCart) {
         count++
       }
@@ -77,7 +77,7 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            const newArr = this.state.items.filter((i: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }) => {
+            const newArr = this.state.items.filter((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
               return !i.inCart
             })
             AsyncStorage.setItem('items', JSON.stringify(
@@ -124,7 +124,7 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            const newArr = this.state.items.filter((item: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }) => {
+            const newArr = this.state.items.filter((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
               return item.id !== id
             })
             AsyncStorage.setItem('items', JSON.stringify(
@@ -141,8 +141,8 @@ export default class App extends React.Component {
    )
   }
 
-  checkIfItemIsAlreadyThere = (item: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }):void => {
-    this.state.items.forEach((i: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }):void => {
+  checkIfItemIsAlreadyThere = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
+    this.state.items.forEach((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
       if (i.id === item.id) {
         Alert.alert(
           'Oops! This item is already in your main list.',
@@ -155,8 +155,8 @@ export default class App extends React.Component {
     this.setState({ showAddItem: false })
   }
 
-  saveChanges = (name: string, aisle: number, quantity: string, note: string, id: number, inCart: boolean):void => {
-    const newArr = this.state.items.filter((item: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }) => {
+  saveChanges = (name: string, aisle: string, quantity: string, note: string, id: number, inCart: boolean):void => {
+    const newArr = this.state.items.filter((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
       return item.id !== id
     })
     newArr.push({
@@ -184,7 +184,7 @@ export default class App extends React.Component {
   }
 
   sortAlpha = ():void => {
-    const newArr = this.state.items.sort((a: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }) => {
+    const newArr = this.state.items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
       const first = a.name.toLowerCase()
       const second = b.name.toLowerCase()
       if (first < second) {
@@ -200,13 +200,13 @@ export default class App extends React.Component {
   }
 
   sortByAisle = ():void => {
-    const newArr = this.state.items.sort((a: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }) => { return a.aisle - b.aisle });
+    const newArr = this.state.items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => { return a.aisle - b.aisle });
     this.setState({ items: newArr });
   }
 
   toggleInCart = (id: number): void => {
     const newArr = this.state.items
-    newArr.forEach((i: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }):void => {
+    newArr.forEach((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
       if (i.id === id) {
         Object.assign(i, { inCart: !i.inCart })
       }
@@ -217,7 +217,7 @@ export default class App extends React.Component {
      .then(():void => { this.setState({ items: newArr }) })
   }
 
-  transferItemToMainList = (item: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }): void => {
+  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }): void => {
     const { items } = this.state
     const test = _.some(items, { id: item.id })
     if (test) {
