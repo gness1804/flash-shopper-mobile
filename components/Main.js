@@ -1,4 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+// @flow
+
+import React, { Component } from 'react';
 import {
   Text,
   TextInput,
@@ -16,23 +18,47 @@ import Pantry from './Pantry';
 import styles from '../styles/Main-styles';
 
 class Main extends Component {
-  constructor(props) {
+  constructor(props: Object) {
     super(props);
     this.state = {
       name: '',
-      aisle: null,
+      aisle: '',
       note: '',
-      quantity: null,
-      id: null,
+      quantity: '',
+      id: 0,
       inCart: false,
       tempName: '',
-      tempAisle: null,
+      tempAisle: '',
       tempNote: '',
-      tempQuantity: null,
-      tempId: null,
+      tempQuantity: '',
+      tempId: 0,
       showEditView: false,
       isPantryVisible: false,
     }
+  }
+
+  state: {
+    name: string,
+    aisle: string,
+    note: string,
+    quantity: string,
+    id: number,
+    inCart: boolean,
+    tempName: string,
+    tempAisle: string,
+    tempNote: string,
+    tempQuantity: string,
+    tempId: number,
+    showEditView: boolean,
+    isPantryVisible: boolean,
+  }
+
+  props: {
+    items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>,
+    deleteItem: Function,
+    saveChanges: Function,
+    transferItemToMainList: Function,
+    toggleInCart: Function,
   }
 
   cancelOutOfModal = () => {
@@ -257,13 +283,6 @@ class Main extends Component {
 
         <View style={styles.button}>
           <Button
-            title="Sort Alpha"
-            disabled={this.props.items.length === 0}
-            onPress={() => { this.sortAlpha() }}
-          />
-        </View>
-        <View style={styles.button}>
-          <Button
             title="Delete ALL Items"
             onPress={() => { this.deleteAllItems() }}
             disabled={this.props.items.length === 0}
@@ -283,13 +302,5 @@ class Main extends Component {
   }
 
 }
-
-Main.propTypes = {
-  deleteItem: PropTypes.func.isRequired,
-  items: PropTypes.array.isRequired,
-  saveChanges: PropTypes.func.isRequired,
-  toggleInCart: PropTypes.func.isRequired,
-  transferItemToMainList: PropTypes.func.isRequired,
-};
 
 export default Main;

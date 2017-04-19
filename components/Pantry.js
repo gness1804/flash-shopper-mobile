@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   ScrollView,
   Text,
@@ -399,11 +399,5 @@ class Pantry extends Component {
   }
 
 }
-
-Pantry.propTypes = {
-  makePantryInvisible: PropTypes.func.isRequired,
-  transferItemToMainList: PropTypes.func.isRequired,
-  isPantryVisible: PropTypes.bool.isRequired,
-};
 
 export default Pantry;
