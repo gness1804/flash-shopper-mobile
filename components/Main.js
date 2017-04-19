@@ -255,13 +255,6 @@ class Main extends Component {
 
         <View style={styles.button}>
           <Button
-            title="Sort by Aisle"
-            disabled={this.props.items.length === 0}
-            onPress={() => { this.sortByAisle() }}
-          />
-        </View>
-        <View style={styles.button}>
-          <Button
             title="Sort Alpha"
             disabled={this.props.items.length === 0}
             onPress={() => { this.sortAlpha() }}

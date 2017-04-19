@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
+  button: {
+    marginRight: 20,
+  },
   cartNumberMessage: {
     fontSize: 20,
     fontStyle: 'italic',

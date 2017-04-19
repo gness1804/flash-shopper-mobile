@@ -268,6 +268,20 @@ export default class App extends React.Component {
               style={styles.plusIconHeader}
             />
           </TouchableOpacity>
+          <View style={styles.button}>
+            <Button
+              title="Sort by Aisle"
+              disabled={this.state.items.length === 0}
+              onPress={() => { this.sortByAisle() }}
+            />
+          </View>
+          <View style={styles.button}>
+            <Button
+              title="Sort Alpha"
+              disabled={this.state.items.length === 0}
+              onPress={() => { this.sortAlpha() }}
+            />
+          </View>
           <View>
             <Button
               title="Delete All Items In Cart"
@@ -275,6 +289,7 @@ export default class App extends React.Component {
             />
           </View>
         </View>
+
         <Main
           items={items}
           deleteItem={this.deleteItem}
