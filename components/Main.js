@@ -24,6 +24,7 @@ class Main extends Component {
       note: '',
       quantity: null,
       id: null,
+      inCart: false,
       tempName: '',
       tempAisle: null,
       tempNote: '',
@@ -52,12 +53,13 @@ class Main extends Component {
     this.props.deleteItem(id);
   }
 
-  editItem = (name, aisle, note, quantity, id) => {
+  editItem = (name, aisle, note, quantity, id, inCart) => {
     this.setState({ name });
     this.setState({ aisle });
     this.setState({ note });
     this.setState({ quantity });
     this.setState({ id });
+    this.setState({ inCart });
     this.setState({ tempName: name });
     this.setState({ tempAisle: aisle });
     this.setState({ tempNote: note });
@@ -83,14 +85,14 @@ class Main extends Component {
   }
 
   saveChanges = () => {
-    const { name, aisle, quantity, note, id } = this.state
+    const { name, aisle, quantity, note, id, inCart } = this.state
     if (!name) {
       Alert.alert(
         'Oops! You must enter in an item name!',
       )
       return
     }
-    this.props.saveChanges(name, aisle, quantity, note, id)
+    this.props.saveChanges(name, aisle, quantity, note, id, inCart)
     this.clearText()
     this.setState({ showEditView: false })
     this.showSaveMicrointeraction()
@@ -169,7 +171,7 @@ class Main extends Component {
               />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => { this.editItem(name, aisle, note, quantity, id) }}
+              onPress={() => { this.editItem(name, aisle, note, quantity, id, inCart) }}
             >
               <Image
                 source={require('../images/pencil.png')}

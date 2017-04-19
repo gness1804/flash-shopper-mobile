@@ -19,6 +19,7 @@ import Main from './components/Main';
 import AddItem from './components/AddItem';
 
 export default class App extends React.Component {
+
   constructor() {
     super()
     this.state = {
@@ -27,9 +28,14 @@ export default class App extends React.Component {
     }
   }
 
-  componentWillMount = () => {
+  state: {
+  items: Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}>,
+  showAddItem: boolean,
+}
+
+  componentWillMount = (): void => {
     AsyncStorage.getItem('items')
-      .then((items) => {
+      .then((items: string) => {
         const parsedItems = JSON.parse(items)
         if (!Array.isArray(parsedItems)) {
           AsyncStorage.setItem('items', JSON.stringify([]))
@@ -37,11 +43,11 @@ export default class App extends React.Component {
         }
         return parsedItems // eslint-disable-line
       })
-      .then((parsedItems) => { this.setState({ items: parsedItems }) })
-      .catch((err) => { throw new Error(err) })
+      .then((parsedItems: Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}>):void => { this.setState({ items: parsedItems }) }) // eslint-disable-line
+      .catch((err: string):void => { throw new Error(err) }) // eslint-disable-line
   }
 
-  addNewItem = (newItem) => {
+  addNewItem = (newItem: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }): void => { // eslint-disable-line
     this.setState({ items: [
       ...this.state.items,
       newItem,
@@ -50,12 +56,12 @@ export default class App extends React.Component {
       ...this.state.items,
       newItem,
     ]))
-    .then(() => { this.showAddedItemMicrointeraction() })
+    .then(():void => { this.showAddedItemMicrointeraction() })
   }
 
-  countItemsInCart = () => {
+  countItemsInCart = (): number => {
     let count = 0
-    this.state.items.forEach((i) => {
+    this.state.items.forEach((i: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }):void => {
       if (i.inCart) {
         count++
       }
@@ -63,21 +69,21 @@ export default class App extends React.Component {
     return count
   }
 
-  deleteAllInCart = () => {
+  deleteAllInCart = ():void => {
     Alert.alert(
       'Warning',
       'Do you really want to delete all items in your cart? This cannot be undone!',
       [
         {
           text: 'OK',
-          onPress: () => {
-            const newArr = this.state.items.filter((i) => {
+          onPress: ():void => {
+            const newArr = this.state.items.filter((i: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }): Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}> => {
               return !i.inCart
             })
             AsyncStorage.setItem('items', JSON.stringify(
               newArr,
             ))
-            .then(() => { this.setState({ items: newArr }) })
+            .then(():void => { this.setState({ items: newArr }) })
           },
         },
         {
@@ -88,18 +94,18 @@ export default class App extends React.Component {
     )
   }
 
-  deleteAllItems = () => {
+  deleteAllItems = ():void => {
     Alert.alert(
       'Warning',
       'You are about to delete all items! This cannot be undone!',
       [
         {
           text: 'OK',
-          onPress: () => {
+          onPress: ():void => {
             AsyncStorage.setItem('items', JSON.stringify(
                [],
              ))
-             .then(() => { this.setState({ items: [] }) })
+             .then(():void => { this.setState({ items: [] }) })
           },
         },
         {
@@ -110,21 +116,21 @@ export default class App extends React.Component {
     )
   }
 
-  deleteItem = (id) => {
+  deleteItem = (id: number) => {
     Alert.alert(
      'Warning',
      'You are about to delete this item! This cannot be undone!',
       [
         {
           text: 'OK',
-          onPress: () => {
-            const newArr = this.state.items.filter((item) => {
+          onPress: ():void => {
+            const newArr = this.state.items.filter((item: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }): Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}> => {
               return item.id !== id
             })
             AsyncStorage.setItem('items', JSON.stringify(
                newArr,
              ))
-             .then(() => { this.setState({ items: newArr }) })
+             .then(():void => { this.setState({ items: newArr }) })
           },
         },
         {
@@ -135,8 +141,8 @@ export default class App extends React.Component {
    )
   }
 
-  checkIfItemIsAlreadyThere = (item) => {
-    this.state.items.forEach((i) => {
+  checkIfItemIsAlreadyThere = (item: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }):void => {
+    this.state.items.forEach((i: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }):void => {
       if (i.id === item.id) {
         Alert.alert(
           'Oops! This item is already in your main list.',
@@ -145,12 +151,12 @@ export default class App extends React.Component {
     });
   }
 
-  hideAddItem = () => {
+  hideAddItem = ():void => {
     this.setState({ showAddItem: false })
   }
 
-  saveChanges = (name, aisle, quantity, note, id) => {
-    const newArr = this.state.items.filter((item) => {
+  saveChanges = (name: string, aisle: number, quantity: string, note: string, id: number, inCart: boolean):void => {
+    const newArr = this.state.items.filter((item: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }):Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}> => {
       return item.id !== id
     })
     newArr.push({
@@ -159,25 +165,26 @@ export default class App extends React.Component {
       quantity,
       note,
       id,
+      inCart,
     })
     AsyncStorage.setItem('items', JSON.stringify(
        newArr,
      ))
-     .then(() => { this.setState({ items: newArr }) })
+     .then(():void => { this.setState({ items: newArr }) })
   }
 
-  showAddItem = () => {
+  showAddItem = ():void => {
     this.setState({ showAddItem: true })
   }
 
-  showAddedItemMicrointeraction = () => {
+  showAddedItemMicrointeraction = ():void => {
     if (Platform.OS === 'android') {
       ToastAndroid.show('Item added to main list.', ToastAndroid.SHORT)
     }
   }
 
-  sortAlpha = () => {
-    const newArr = this.state.items.sort((a, b) => {
+  sortAlpha = ():void => {
+    const newArr = this.state.items.sort((a: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }): Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}> => {
       const first = a.name.toLowerCase()
       const second = b.name.toLowerCase()
       if (first < second) {
@@ -192,14 +199,14 @@ export default class App extends React.Component {
     this.setState({ items: newArr });
   }
 
-  sortByAisle = () => {
-    const newArr = this.state.items.sort((a, b) => { return a.aisle - b.aisle });
+  sortByAisle = ():void => {
+    const newArr = this.state.items.sort((a: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }): Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}> => { return a.aisle - b.aisle });
     this.setState({ items: newArr });
   }
 
-  toggleInCart = (id) => {
+  toggleInCart = (id: number): void => {
     const newArr = this.state.items
-    newArr.forEach((i) => {
+    newArr.forEach((i: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }):void => {
       if (i.id === id) {
         Object.assign(i, { inCart: !i.inCart })
       }
@@ -207,10 +214,10 @@ export default class App extends React.Component {
     AsyncStorage.setItem('items', JSON.stringify(
        newArr,
      ))
-     .then(() => { this.setState({ items: newArr }) })
+     .then(():void => { this.setState({ items: newArr }) })
   }
 
-  transferItemToMainList = (item) => {
+  transferItemToMainList = (item: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }): void => {
     const { items } = this.state
     const test = _.some(items, { id: item.id })
     if (test) {
