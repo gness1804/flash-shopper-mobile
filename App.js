@@ -9,6 +9,7 @@ import {
   Button,
   TouchableOpacity,
   Image,
+  Modal,
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
 import styles from './styles/App-styles';
@@ -19,6 +20,7 @@ export default class App extends React.Component {
     super()
     this.state = {
       items: [],
+      showAddItem: false,
     }
   }
 
@@ -139,6 +141,10 @@ export default class App extends React.Component {
     });
   }
 
+  hideAddItem = () => {
+    this.setState({ showAddItem: false })
+  }
+
   saveChanges = (name, aisle, quantity, note, id) => {
     const newArr = this.state.items.filter((item) => {
       return item.id !== id
@@ -154,6 +160,10 @@ export default class App extends React.Component {
        newArr,
      ))
      .then(() => { this.setState({ items: newArr }) })
+  }
+
+  showAddItem = () => {
+    this.setState({ showAddItem: true })
   }
 
   showAddedItemMicrointeraction = () => {
@@ -213,6 +223,14 @@ export default class App extends React.Component {
     const { items } = this.state
     return (
       <View style={styles.container}>
+        <Modal
+          animationType={'slide'}
+          transparent={false}
+          visible={this.state.showAddItem}
+          onRequestClose={this.hideAddItem}
+        >
+          <Text>I am the Modal to add an item.</Text>
+        </Modal>
         <Text style={styles.headline}>
           Flash Shopper
         </Text>
@@ -230,16 +248,20 @@ export default class App extends React.Component {
             There are {this.countItemsInCart()} item(s) in your cart.
           </Text>
         </View>
-        <TouchableOpacity>
-          <Image
-            source={require('./images/plus-icon-header.png')}
-          />
-        </TouchableOpacity>
         <View>
-          <Button
-            title="Delete All Items In Cart"
-            onPress={this.deleteAllInCart}
-          />
+          <TouchableOpacity
+            onPress={this.showAddItem}
+          >
+            <Image
+              source={require('./images/plus-icon-header.png')}
+            />
+          </TouchableOpacity>
+          <View>
+            <Button
+              title="Delete All Items In Cart"
+              onPress={this.deleteAllInCart}
+            />
+          </View>
         </View>
         <Main
           addNewItem={this.addNewItem.bind(this)}
