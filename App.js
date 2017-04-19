@@ -248,12 +248,13 @@ export default class App extends React.Component {
             There are {this.countItemsInCart()} item(s) in your cart.
           </Text>
         </View>
-        <View>
+        <View style={styles.headerButtonsContainer}>
           <TouchableOpacity
             onPress={this.showAddItem}
           >
             <Image
               source={require('./images/plus-icon-header.png')}
+              style={styles.plusIconHeader}
             />
           </TouchableOpacity>
           <View>
