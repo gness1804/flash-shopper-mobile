@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   inputField: {
+    alignSelf: commonElements.inputField.alignSelf,
     borderColor: commonElements.inputField.borderColor,
     borderWidth: commonElements.inputField.borderWidth,
     height: commonElements.inputField.height,

@@ -11,6 +11,10 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     width: 30,
   },
+  container: {
+    marginTop: 30,
+    width: 400,
+  },
   deleteIcon: {
     height: 30,
     marginRight: 30,
@@ -59,6 +63,7 @@ const styles = StyleSheet.create({
     marginTop: editableView.headline.marginTop,
   },
   inputField: {
+    alignSelf: commonElements.inputField.alignSelf,
     borderColor: commonElements.inputField.borderColor,
     borderWidth: commonElements.inputField.borderWidth,
     height: commonElements.inputField.height,

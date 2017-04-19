@@ -217,7 +217,7 @@ class Main extends Component {
     }
 
     return (
-      <ScrollView>
+      <ScrollView style={styles.container}>
         <Pantry
           isPantryVisible={this.state.isPantryVisible}
           makePantryInvisible={this.makePantryInvisible.bind(this)}

@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   headline: {
-    fontSize: 40,
+    fontSize: 42,
     marginBottom: 10,
     marginTop: 30,
   },
