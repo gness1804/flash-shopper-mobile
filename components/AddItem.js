@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { TextInput, View, TouchableOpacity, Text } from 'react-native';
+import { TextInput, View, TouchableOpacity, Text, Alert } from 'react-native';
 import styles from '../styles/AddItem-styles';
 
 class AddItem extends Component {
@@ -16,6 +16,12 @@ class AddItem extends Component {
 
   addItem = () => {
     const { name, aisle, note, quantity } = this.state
+    if (!name) {
+      Alert.alert(
+        'Oops! You must enter an item name.',
+      )
+      return
+    }
     const newItem = {
       name,
       aisle,
