@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   Text,
   TextInput,
@@ -46,10 +46,6 @@ class Main extends Component {
     this.state.note = ''
     this.state.quantity = ''
     this.state.id = null
-  }
-
-  deleteAllItems = () => {
-    this.props.deleteAllItems();
   }
 
   deleteItem = (id) => {
@@ -104,14 +100,6 @@ class Main extends Component {
     if (Platform.OS === 'android') {
       ToastAndroid.show('Item saved!', ToastAndroid.SHORT)
     }
-  }
-
-  sortByAisle = () => {
-    this.props.sortByAisle();
-  }
-
-  sortAlpha = () => {
-    this.props.sortAlpha();
   }
 
   toggleInCart = (id) => {
@@ -300,5 +288,13 @@ class Main extends Component {
   }
 
 }
+
+Main.propTypes = {
+  deleteItem: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
+  saveChanges: PropTypes.func.isRequired,
+  toggleInCart: PropTypes.func.isRequired,
+  transferItemToMainList: PropTypes.func.isRequired,
+};
 
 export default Main;

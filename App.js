@@ -278,9 +278,6 @@ export default class App extends React.Component {
         <Main
           items={items}
           deleteItem={this.deleteItem}
-          sortByAisle={this.sortByAisle.bind(this)}
-          sortAlpha={this.sortAlpha.bind(this)}
-          deleteAllItems={this.deleteAllItems.bind(this)}
           saveChanges={this.saveChanges.bind(this)}
           transferItemToMainList={this.transferItemToMainList.bind(this)}
           toggleInCart={this.toggleInCart.bind(this)}

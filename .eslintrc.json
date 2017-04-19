@@ -22,7 +22,8 @@
     "semi": "off",
     "global-require": "off",
     "react/no-unescaped-entities": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "react/forbid-prop-types": "off"
   },
   "parser": "babel-eslint"
 }
