@@ -40,21 +40,6 @@ class Main extends Component {
     this.resetTempStates()
   }
 
-  createItem = () => {
-    const newItem = {
-      name: this.state.name,
-      aisle: this.state.aisle,
-      note: this.state.note,
-      quantity: this.state.quantity,
-      id: Date.now(),
-      inCart: false,
-    };
-    this.props.addNewItem(newItem);
-    this.setState(this.state)
-    this.setState({ name: '' })
-    this.clearText('itemInput', 'aisleInput', 'noteInput', 'quantityInput');
-  }
-
   clearText = () => {
     this.state.name = ''
     this.state.aisle = ''

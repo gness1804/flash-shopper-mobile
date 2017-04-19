@@ -235,7 +235,9 @@ export default class App extends React.Component {
           visible={this.state.showAddItem}
           onRequestClose={this.hideAddItem}
         >
-          <AddItem />
+          <AddItem
+            addNewItem={this.addNewItem.bind(this)}
+          />
         </Modal>
 
         <Text style={styles.headline}>
@@ -272,7 +274,6 @@ export default class App extends React.Component {
           </View>
         </View>
         <Main
-          addNewItem={this.addNewItem.bind(this)}
           items={items}
           deleteItem={this.deleteItem}
           sortByAisle={this.sortByAisle.bind(this)}
