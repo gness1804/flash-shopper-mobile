@@ -211,13 +211,13 @@ export default class App extends React.Component {
     const { items } = this.state
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>
+        <Text style={styles.headline}>
           Flash Shopper
         </Text>
-        <View>
+        <View style={styles.upperMessageContainer}>
           {items.length ?
             <Text style={styles.itemNumberMessage}>
-              You have {items.length} item(s) on your list.
+              You have {items.length} item(s) on your list. &nbsp;
             </Text>
             :
             <Text style={styles.itemNumberMessage}>
