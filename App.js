@@ -7,6 +7,8 @@ import {
   ToastAndroid,
   Platform,
   Button,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
 import styles from './styles/App-styles';
@@ -228,6 +230,11 @@ export default class App extends React.Component {
             There are {this.countItemsInCart()} item(s) in your cart.
           </Text>
         </View>
+        <TouchableOpacity>
+          <Image
+            source={require('./images/plus-icon-header.png')}
+          />
+        </TouchableOpacity>
         <View>
           <Button
             title="Delete All Items In Cart"
