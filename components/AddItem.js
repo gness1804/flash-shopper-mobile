@@ -26,6 +26,11 @@ class AddItem extends Component {
     };
     this.props.addNewItem(newItem);
     this.resetItemStates()
+    this.hideAddItem()
+  }
+
+  hideAddItem = () => {
+    this.props.hideAddItem()
   }
 
 

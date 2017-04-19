@@ -237,6 +237,7 @@ export default class App extends React.Component {
         >
           <AddItem
             addNewItem={this.addNewItem.bind(this)}
+            hideAddItem={this.hideAddItem.bind(this)}
           />
         </Modal>
 
