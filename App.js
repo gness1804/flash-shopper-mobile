@@ -77,7 +77,7 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            const newArr = this.state.items.filter((i: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }): Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}> => {
+            const newArr = this.state.items.filter((i: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }) => {
               return !i.inCart
             })
             AsyncStorage.setItem('items', JSON.stringify(
@@ -124,7 +124,7 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            const newArr = this.state.items.filter((item: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }): Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}> => {
+            const newArr = this.state.items.filter((item: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }) => {
               return item.id !== id
             })
             AsyncStorage.setItem('items', JSON.stringify(
@@ -156,7 +156,7 @@ export default class App extends React.Component {
   }
 
   saveChanges = (name: string, aisle: number, quantity: string, note: string, id: number, inCart: boolean):void => {
-    const newArr = this.state.items.filter((item: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }):Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}> => {
+    const newArr = this.state.items.filter((item: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }) => {
       return item.id !== id
     })
     newArr.push({
@@ -184,7 +184,7 @@ export default class App extends React.Component {
   }
 
   sortAlpha = ():void => {
-    const newArr = this.state.items.sort((a: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }): Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}> => {
+    const newArr = this.state.items.sort((a: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }) => {
       const first = a.name.toLowerCase()
       const second = b.name.toLowerCase()
       if (first < second) {
@@ -200,7 +200,7 @@ export default class App extends React.Component {
   }
 
   sortByAisle = ():void => {
-    const newArr = this.state.items.sort((a: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }): Array<{ name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean}> => { return a.aisle - b.aisle });
+    const newArr = this.state.items.sort((a: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: number, note: string, quantity: string, id: number, inCart: boolean }) => { return a.aisle - b.aisle });
     this.setState({ items: newArr });
   }
 

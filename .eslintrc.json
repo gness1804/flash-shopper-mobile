@@ -23,7 +23,8 @@
     "global-require": "off",
     "react/no-unescaped-entities": "off",
     "no-plusplus": "off",
-    "react/forbid-prop-types": "off"
+    "react/forbid-prop-types": "off",
+    "max-len": "warn"
   },
   "parser": "babel-eslint"
 }
