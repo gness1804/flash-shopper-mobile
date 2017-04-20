@@ -24,7 +24,7 @@
     "react/no-unescaped-entities": "off",
     "no-plusplus": "off",
     "react/forbid-prop-types": "off",
-    "max-len": "warn"
+    "max-len": "off"
   },
   "parser": "babel-eslint"
 }

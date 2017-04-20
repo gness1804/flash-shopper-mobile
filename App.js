@@ -278,64 +278,64 @@ export default class App extends React.Component {
           <Text style={styles.headline}>
           Flash Shopper
         </Text>
-        <View style={styles.upperMessageContainer}>
-          {items.length ?
-            <Text style={styles.itemNumberMessage}>
-              You have {items.length} item(s) on your list. There are {this.countItemsInCart()} item(s) in your cart.
-            </Text>
+          <View style={styles.upperMessageContainer}>
+            {items.length ?
+              <Text style={styles.itemNumberMessage}>
+                You have {items.length} item(s) on your list. There are {this.countItemsInCart()} item(s) in your cart.
+              </Text>
             :
-            <Text style={styles.itemNumberMessage}>
+              <Text style={styles.itemNumberMessage}>
               There are no items on your list! To add an item, click on the "plus" button.
             </Text>}
-        </View>
-        <View style={styles.headerButtonsContainer}>
-          <TouchableOpacity
-            onPress={this.showAddItem}
-          >
-            <Image
-              source={require('./images/plus-icon-header.png')}
-              style={styles.plusIconHeader}
-            />
-          </TouchableOpacity>
-          <View style={styles.button}>
-            <Button
-              title="Sort by Aisle"
+          </View>
+          <View style={styles.headerButtonsContainer}>
+            <TouchableOpacity
+              onPress={this.showAddItem}
+            >
+              <Image
+                source={require('./images/plus-icon-header.png')}
+                style={styles.plusIconHeader}
+              />
+            </TouchableOpacity>
+            <View style={styles.button}>
+              <Button
+                title="Sort by Aisle"
+                disabled={this.state.items.length === 0}
+                onPress={() => { this.sortByAisle() }}
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                title="Sort Alpha"
+                disabled={this.state.items.length === 0}
+                onPress={() => { this.sortAlpha() }}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => { this.deleteAllItems() }}
               disabled={this.state.items.length === 0}
-              onPress={() => { this.sortByAisle() }}
+            >
+              <Image
+                source={require('./images/delete_forever.png')}
+                style={styles.deleteDBIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => { this.deleteAllInCart() }}
+              disabled={this.checkItemsInCart()}
+            >
+              <Image
+                source={require('./images/delete-cart.png')}
+                style={styles.deleteCartIcon}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.pantryButton}>
+            <Button
+              title="Go to Pantry"
+              onPress={() => { this.goToPantry() }}
             />
           </View>
-          <View style={styles.button}>
-            <Button
-              title="Sort Alpha"
-              disabled={this.state.items.length === 0}
-              onPress={() => { this.sortAlpha() }}
-            />
-          </View>
-          <TouchableOpacity
-            onPress={() => { this.deleteAllItems() }}
-            disabled={this.state.items.length === 0}
-          >
-            <Image
-              source={require('./images/delete_forever.png')}
-              style={styles.deleteDBIcon}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => { this.deleteAllInCart() }}
-            disabled={this.checkItemsInCart()}
-          >
-            <Image
-              source={require('./images/delete-cart.png')}
-              style={styles.deleteCartIcon}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.pantryButton}>
-          <Button
-            title="Go to Pantry"
-            onPress={() => { this.goToPantry() }}
-          />
-        </View>
         </View>
 
         <Main
