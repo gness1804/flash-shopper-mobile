@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native'
 
 const headerIcon = {
-  height: 60,
-  marginRight: 30,
-  width: 60,
+  height: 40,
+  marginRight: 20,
+  width: 40,
 }
 
 const styles = StyleSheet.create({

@@ -291,7 +291,7 @@ export default class App extends React.Component {
             disabled={this.state.items.length === 0}
           >
             <Image
-              source={require('./images/data_delete.png')}
+              source={require('./images/delete_forever.png')}
               style={styles.deleteDBIcon}
             />
           </TouchableOpacity>
