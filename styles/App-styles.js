@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   header: {
-    // position: 'relative',
-    // top: -60,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   itemNumberMessage: {
     fontSize: 20,
