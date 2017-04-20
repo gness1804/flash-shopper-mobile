@@ -173,9 +173,9 @@ class Main extends Component {
         }
         return (<View style={styles.eachItemContainer} key={item.id}>
           <Text style={nameStyle}>{name}</Text>
-          <Text style={textStyle}>Aisle: {aisle}</Text>
-          <Text style={textStyle}>Note: {note}</Text>
-          <Text style={textStyle}>Quantity: {quantity}</Text>
+          {aisle ? <Text style={textStyle}>Aisle: {aisle}</Text> : <Text />}
+          {note ? <Text style={textStyle}>Note: {note}</Text> : <Text />}
+          {quantity ? <Text style={textStyle}>Quantity: {quantity}</Text> : <Text />}
           <View style={styles.eachItemButtonsContainer}>
             <TouchableOpacity
               onPress={() => { this.deleteItem(id) }}
