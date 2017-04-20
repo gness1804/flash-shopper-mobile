@@ -59,6 +59,17 @@ export default class App extends React.Component {
     .then(():void => { this.showAddedItemMicrointeraction() })
   }
 
+  checkItemsInCart = (): boolean => {
+    const test = this.countItemsInCart()
+    let result
+    if (test > 0) {
+      result = false
+    } else {
+      result = true
+    }
+    return result
+  }
+
   countItemsInCart = (): number => {
     let count = 0
     this.state.items.forEach((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
@@ -297,7 +308,7 @@ export default class App extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => { this.deleteAllInCart() }}
-            disabled={this.state.items.length === 0}
+            disabled={this.checkItemsInCart()}
           >
             <Image
               source={require('./images/delete-cart.png')}
