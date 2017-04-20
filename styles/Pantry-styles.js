@@ -2,6 +2,12 @@ import { StyleSheet } from 'react-native';
 import editableView from './editableView';
 import commonElements from './CommonElements';
 
+const smallIcon = {
+  height: 30,
+  marginLeft: 30,
+  width: 30,
+}
+
 const styles = StyleSheet.create({
   addIconLarge: {
     alignSelf: 'flex-end',
@@ -10,8 +16,8 @@ const styles = StyleSheet.create({
     width: 80,
   },
   addIconSmall: {
-    height: 30,
-    width: 30,
+    height: smallIcon.height,
+    width: smallIcon.width,
   },
   addItemButtonCancel: {
     backgroundColor: editableView.cancelButton.backgroundColor,
@@ -61,14 +67,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(200, 240, 240)',
   },
   deleteIconSmall: {
-    height: 30,
-    marginLeft: 20,
-    width: 30,
+    height: smallIcon.height,
+    marginLeft: smallIcon.marginLeft,
+    width: smallIcon.width,
   },
   editIconSmall: {
-    height: 30,
-    marginLeft: 20,
-    width: 30,
+    height: smallIcon.height,
+    marginLeft: smallIcon.marginLeft,
+    width: smallIcon.width,
   },
   editViewButtonCancel: {
     backgroundColor: editableView.cancelButton.backgroundColor,
