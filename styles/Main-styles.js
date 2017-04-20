@@ -78,12 +78,14 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   name: {
+    fontSize: 20,
     fontWeight: '700',
     marginTop: 10,
     textAlign: 'center',
   },
   nameInCart: {
     color: '#E6E4E4',
+    fontSize: 20,
     fontWeight: '700',
     marginTop: 10,
     textAlign: 'center',
