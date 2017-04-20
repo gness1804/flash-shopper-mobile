@@ -1,10 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+// @flow
+
+import React, { Component } from 'react';
 import {
   TextInput,
   View,
   TouchableOpacity,
   Text,
-  Alert, 
+  Alert,
 } from 'react-native';
 import styles from '../styles/AddItem-styles';
 
@@ -107,9 +109,9 @@ class AddItem extends Component {
   }
 }
 
-AddItem.propTypes = {
-  addNewItem: PropTypes.func.isRequired,
-  hideAddItem: PropTypes.func.isRequired,
-};
+// AddItem.propTypes = {
+//   addNewItem: PropTypes.func.isRequired,
+//   hideAddItem: PropTypes.func.isRequired,
+// };
 
 export default AddItem

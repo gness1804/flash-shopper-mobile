@@ -284,13 +284,6 @@ class Main extends Component {
 
         <View style={styles.button}>
           <Button
-            title="Delete ALL Items"
-            onPress={() => { this.deleteAllItems() }}
-            disabled={this.props.items.length === 0}
-          />
-        </View>
-        <View style={styles.button}>
-          <Button
             title="Pantry"
             onPress={() => { this.goToPantry() }}
           />

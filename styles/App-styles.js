@@ -16,6 +16,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgb(134, 148, 247)',
   },
+  deleteDBIcon: {
+    height: 60,
+    marginRight: 30,
+    width: 60,
+  },
   headerButtonsContainer: {
     flexDirection: 'row',
   },

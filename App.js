@@ -286,6 +286,15 @@ export default class App extends React.Component {
               onPress={() => { this.sortAlpha() }}
             />
           </View>
+          <TouchableOpacity
+            onPress={() => { this.deleteAllItems() }}
+            disabled={this.state.items.length === 0}
+          >
+            <Image
+              source={require('./images/data_delete.png')}
+              style={styles.deleteDBIcon}
+            />
+          </TouchableOpacity>
           <View>
             <Button
               title="Delete All Items In Cart"
