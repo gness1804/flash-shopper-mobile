@@ -1,5 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import { TextInput, View, TouchableOpacity, Text, Alert } from 'react-native';
+import {
+  TextInput,
+  View,
+  TouchableOpacity,
+  Text,
+  Alert, 
+} from 'react-native';
 import styles from '../styles/AddItem-styles';
 
 class AddItem extends Component {

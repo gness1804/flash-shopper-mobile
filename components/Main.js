@@ -61,25 +61,17 @@ class Main extends Component {
     toggleInCart: Function,
   }
 
-  cancelOutOfModal = () => {
-    this.clearText()
+  cancelOutOfModal = (): void => {
+    this.resetItemStates()
     this.setState({ showEditView: false })
     this.resetTempStates()
   }
 
-  clearText = () => {
-    this.state.name = ''
-    this.state.aisle = ''
-    this.state.note = ''
-    this.state.quantity = ''
-    this.state.id = null
-  }
-
-  deleteItem = (id) => {
+  deleteItem = (id: number): void => {
     this.props.deleteItem(id);
   }
 
-  editItem = (name, aisle, note, quantity, id, inCart) => {
+  editItem = (name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean): void => {
     this.setState({ name });
     this.setState({ aisle });
     this.setState({ note });
@@ -94,23 +86,31 @@ class Main extends Component {
     this.setState({ showEditView: true })
   }
 
-  goToPantry = () => {
+  goToPantry = (): void => {
     this.setState({ isPantryVisible: true })
   }
 
-  makePantryInvisible = () => {
+  makePantryInvisible = (): void => {
     this.setState({ isPantryVisible: false });
   }
 
-  resetTempStates = () => {
-    this.setState({ tempName: '' });
-    this.setState({ tempAisle: null });
-    this.setState({ tempNote: '' });
-    this.setState({ tempQuantity: null });
-    this.setState({ tempId: null });
+  resetItemStates = (): void => {
+    this.setState({ name: '' });
+    this.setState({ aisle: '' });
+    this.setState({ note: '' });
+    this.setState({ quantity: '' });
+    this.setState({ id: 0 });
   }
 
-  saveChanges = () => {
+  resetTempStates = (): void => {
+    this.setState({ tempName: '' });
+    this.setState({ tempAisle: '' });
+    this.setState({ tempNote: '' });
+    this.setState({ tempQuantity: '' });
+    this.setState({ tempId: 0 });
+  }
+
+  saveChanges = (): void => {
     const { name, aisle, quantity, note, id, inCart } = this.state
     if (!name) {
       Alert.alert(
@@ -119,30 +119,31 @@ class Main extends Component {
       return
     }
     this.props.saveChanges(name, aisle, quantity, note, id, inCart)
-    this.clearText()
+    this.resetItemStates()
     this.setState({ showEditView: false })
     this.showSaveMicrointeraction()
   }
 
-  showSaveMicrointeraction = () => {
+  showSaveMicrointeraction = (): void => {
     if (Platform.OS === 'android') {
       ToastAndroid.show('Item saved!', ToastAndroid.SHORT)
     }
   }
 
-  toggleInCart = (id) => {
+  toggleInCart = (id: number) => {
     this.props.toggleInCart(id)
   }
 
-  transferItemToMainList = (item) => {
+  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }): void => {
     this.props.transferItemToMainList(item)
   }
 
-  warnUser = () => {
-    if (this.state.name !== this.state.tempName
-    || this.state.aisle !== this.state.tempAisle
-    || this.state.note !== this.state.tempNote
-    || this.state.quantity !== this.state.tempQuantity) {
+  warnUser = (): void => {
+    const { name, aisle, note, quantity, tempName, tempAisle, tempNote, tempQuantity } = this.state
+    if (name !== tempName
+    || aisle !== tempAisle
+    || note !== tempNote
+    || quantity !== tempQuantity) {
       Alert.alert(
         'Warning',
         'Are you sure you want to navigate away from this view? You will lose any unsaved changes.',
@@ -168,7 +169,7 @@ class Main extends Component {
     let itemsDisplay;
 
     if (items.length > 0) {
-      itemsDisplay = items.map((item) => {
+      itemsDisplay = items.map((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
         const { name, aisle, note, quantity, id, inCart } = item
         let nameStyle
         let textStyle
