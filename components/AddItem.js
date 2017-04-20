@@ -11,18 +11,31 @@ import {
 import styles from '../styles/AddItem-styles';
 
 class AddItem extends Component {
-  constructor(props) {
+  constructor(props: Object) {
     super(props);
     this.state = {
       name: '',
-      aisle: null,
+      aisle: '',
       note: '',
-      quantity: null,
-      id: null,
+      quantity: '',
+      id: 0,
     }
   }
 
-  addItem = () => {
+  state: {
+    name: string,
+    aisle: string,
+    note: string,
+    quantity: string,
+    id: number,
+  }
+
+  props: {
+    addNewItem: Function,
+    hideAddItem: Function,
+  }
+
+  addItem = (): void => {
     const { name, aisle, note, quantity } = this.state
     if (!name) {
       Alert.alert(
@@ -43,17 +56,17 @@ class AddItem extends Component {
     this.hideAddItem()
   }
 
-  hideAddItem = () => {
+  hideAddItem = (): void => {
     this.props.hideAddItem()
   }
 
 
-  resetItemStates = () => {
+  resetItemStates = (): void => {
     this.setState({ name: '' });
-    this.setState({ aisle: null });
+    this.setState({ aisle: '' });
     this.setState({ note: '' });
-    this.setState({ quantity: null });
-    this.setState({ id: null });
+    this.setState({ quantity: '' });
+    this.setState({ id: 0 });
   }
 
   render() {
@@ -108,10 +121,5 @@ class AddItem extends Component {
     );
   }
 }
-
-// AddItem.propTypes = {
-//   addNewItem: PropTypes.func.isRequired,
-//   hideAddItem: PropTypes.func.isRequired,
-// };
 
 export default AddItem
