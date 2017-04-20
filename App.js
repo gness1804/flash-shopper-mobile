@@ -329,7 +329,7 @@ export default class App extends React.Component {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.button}>
+        <View style={styles.pantryButton}>
           <Button
             title="Go to Pantry"
             onPress={() => { this.goToPantry() }}

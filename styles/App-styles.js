@@ -41,6 +41,9 @@ const styles = StyleSheet.create({
     marginTop: 30,
     textAlign: 'center',
   },
+  pantryButton: {
+    marginTop: 30,
+  },
   plusIconHeader: {
     height: headerIcon.height,
     marginRight: headerIcon.marginRight,
