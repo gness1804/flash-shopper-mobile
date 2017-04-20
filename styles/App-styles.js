@@ -1,15 +1,31 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import commonElements from './CommonElements';
+
+const { width } = Dimensions.get('screen')
+
+let iconRightMargin
+if (width < 600) {
+  iconRightMargin = 5
+} else {
+  iconRightMargin = 20
+}
+
+let buttonRightMargin
+if (width < 600) {
+  buttonRightMargin = 5
+} else {
+  buttonRightMargin = 20
+}
 
 const headerIcon = {
   height: 40,
-  marginRight: 20,
+  marginRight: iconRightMargin,
   width: 40,
 }
 
 const styles = StyleSheet.create({
   button: {
-    marginRight: 20,
+    marginRight: buttonRightMargin,
   },
   container: {
     alignItems: 'center',
