@@ -1,4 +1,7 @@
 const commonElements = {
+  core: {
+    backgroundColor: 'rgb(134, 148, 247)',
+  },
   inputField: {
     alignSelf: 'center',
     borderColor: 'black',

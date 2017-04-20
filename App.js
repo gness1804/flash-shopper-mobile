@@ -274,7 +274,8 @@ export default class App extends React.Component {
           transferItemToMainList={this.transferItemToMainList.bind(this)}
         />
 
-        <Text style={styles.headline}>
+        <View style={styles.header}>
+          <Text style={styles.headline}>
           Flash Shopper
         </Text>
         <View style={styles.upperMessageContainer}>
@@ -335,6 +336,7 @@ export default class App extends React.Component {
             onPress={() => { this.goToPantry() }}
           />
         </View>
+        </View>
 
         <Main
           items={items}
@@ -343,6 +345,7 @@ export default class App extends React.Component {
           transferItemToMainList={this.transferItemToMainList.bind(this)}
           toggleInCart={this.toggleInCart.bind(this)}
         />
+
       </View>
     );
   }

@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     width: 30,
   },
   container: {
+    height: 2000,
     marginTop: 30,
     width: 400,
   },

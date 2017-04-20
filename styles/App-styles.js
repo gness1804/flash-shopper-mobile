@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import commonElements from './CommonElements';
 
 const headerIcon = {
   height: 40,
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'rgb(134, 148, 247)',
+    backgroundColor: commonElements.core.backgroundColor,
   },
   deleteDBIcon: {
     height: headerIcon.height,
@@ -33,6 +34,10 @@ const styles = StyleSheet.create({
     fontSize: 42,
     marginBottom: 10,
     marginTop: 30,
+  },
+  header: {
+    // position: 'relative',
+    // top: -60,
   },
   itemNumberMessage: {
     fontSize: 20,
