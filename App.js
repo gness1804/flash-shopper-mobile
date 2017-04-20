@@ -295,12 +295,15 @@ export default class App extends React.Component {
               style={styles.deleteDBIcon}
             />
           </TouchableOpacity>
-          <View>
-            <Button
-              title="Delete All Items In Cart"
-              onPress={this.deleteAllInCart}
+          <TouchableOpacity
+            onPress={() => { this.deleteAllInCart() }}
+            disabled={this.state.items.length === 0}
+          >
+            <Image
+              source={require('./images/delete-cart.png')}
+              style={styles.deleteCartIcon}
             />
-          </View>
+          </TouchableOpacity>
         </View>
 
         <Main

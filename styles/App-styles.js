@@ -1,5 +1,11 @@
 import { StyleSheet } from 'react-native'
 
+const headerIcon = {
+  height: 60,
+  marginRight: 30,
+  width: 60,
+}
+
 const styles = StyleSheet.create({
   button: {
     marginRight: 20,
@@ -17,9 +23,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(134, 148, 247)',
   },
   deleteDBIcon: {
-    height: 60,
-    marginRight: 30,
-    width: 60,
+    height: headerIcon.height,
+    marginRight: headerIcon.marginRight,
+    width: headerIcon.width,
+  },
+  deleteCartIcon: {
+    height: headerIcon.height,
+    marginRight: headerIcon.marginRight,
+    width: headerIcon.width,
   },
   headerButtonsContainer: {
     flexDirection: 'row',
@@ -36,9 +47,9 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   plusIconHeader: {
-    height: 60,
-    marginRight: 30,
-    width: 60,
+    height: headerIcon.height,
+    marginRight: headerIcon.marginRight,
+    width: headerIcon.width,
   },
   upperMessageContainer: {
     flexDirection: 'row',
