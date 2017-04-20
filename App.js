@@ -62,16 +62,6 @@ export default class App extends React.Component {
     .then(():void => { this.showAddedItemMicrointeraction() })
   }
 
-  checkIfItemIsAlreadyThere = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
-    this.state.items.forEach((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
-      if (i.id === item.id) {
-        Alert.alert(
-          'Oops! This item is already in your main list.',
-        )
-      }
-    });
-  }
-
   checkItemsInCart = (): boolean => {
     const test = this.countItemsInCart()
     let result
@@ -79,6 +69,18 @@ export default class App extends React.Component {
       result = false
     } else {
       result = true
+    }
+    return result
+  }
+
+  checkForDuplicateNames = (name: string): boolean => {
+    const { items } = this.state
+    const test = _.some(items, { name })
+    let result
+    if (test) {
+      result = true
+    } else {
+      result = false
     }
     return result
   }
@@ -265,6 +267,7 @@ export default class App extends React.Component {
           <AddItem
             addNewItem={this.addNewItem.bind(this)}
             hideAddItem={this.hideAddItem.bind(this)}
+            checkForDuplicateNames={this.checkForDuplicateNames.bind(this)}
           />
         </Modal>
 

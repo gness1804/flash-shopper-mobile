@@ -33,6 +33,7 @@ class AddItem extends Component {
   props: {
     addNewItem: Function,
     hideAddItem: Function,
+    checkForDuplicateNames: Function,
   }
 
   addItem = (): void => {
@@ -41,6 +42,13 @@ class AddItem extends Component {
       Alert.alert(
         'Oops! You must enter an item name.',
       )
+      return
+    }
+    const test = this.props.checkForDuplicateNames(name)
+    if (test) {
+      Alert.alert(
+        'An item with this name is already on your list. Please choose a different name.',
+        )
       return
     }
     const newItem = {
