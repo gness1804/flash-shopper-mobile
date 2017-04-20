@@ -10,16 +10,10 @@ const styles = StyleSheet.create({
   button: {
     marginRight: 20,
   },
-  cartNumberMessage: {
-    fontSize: 20,
-    fontStyle: 'italic',
-    marginBottom: 30,
-    marginTop: 30,
-  },
   container: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'rgb(134, 148, 247)',
   },
   deleteDBIcon: {
@@ -43,8 +37,9 @@ const styles = StyleSheet.create({
   itemNumberMessage: {
     fontSize: 20,
     fontStyle: 'italic',
-    marginBottom: 30,
+    marginBottom: 50,
     marginTop: 30,
+    textAlign: 'center',
   },
   plusIconHeader: {
     height: headerIcon.height,

@@ -280,16 +280,12 @@ export default class App extends React.Component {
         <View style={styles.upperMessageContainer}>
           {items.length ?
             <Text style={styles.itemNumberMessage}>
-              You have {items.length} item(s) on your list. &nbsp;
+              You have {items.length} item(s) on your list. There are {this.countItemsInCart()} item(s) in your cart.
             </Text>
             :
             <Text style={styles.itemNumberMessage}>
-              There are no items on your list!
-              Add an item by typing into the input fields and then tapping Submit.
+              There are no items on your list! To add an item, click on the "plus" button.
             </Text>}
-          <Text style={styles.cartNumberMessage}>
-            There are {this.countItemsInCart()} item(s) in your cart.
-          </Text>
         </View>
         <View style={styles.headerButtonsContainer}>
           <TouchableOpacity
@@ -335,7 +331,7 @@ export default class App extends React.Component {
         </View>
         <View style={styles.button}>
           <Button
-            title="Pantry"
+            title="Go to Pantry"
             onPress={() => { this.goToPantry() }}
           />
         </View>
