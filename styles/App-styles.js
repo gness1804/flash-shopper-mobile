@@ -18,9 +18,9 @@ if (width < 600) {
 }
 
 const headerIcon = {
-  height: 40,
+  height: 50,
   marginRight: iconRightMargin,
-  width: 40,
+  width: 50,
 }
 
 const styles = StyleSheet.create({

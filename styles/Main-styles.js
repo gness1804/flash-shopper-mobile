@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     marginTop: 20,
+    width: '80%',
   },
   editViewContainer: {
     alignItems: editableView.container.alignItems,
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
     width: commonElements.inputField.width,
   },
   itemsDisplayContainer: {
+    alignItems: 'center',
     marginBottom: 30,
   },
   name: {
