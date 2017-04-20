@@ -17,6 +17,7 @@ import { _ , some } from 'lodash'; // eslint-disable-line
 import styles from './styles/App-styles';
 import Main from './components/Main';
 import AddItem from './components/AddItem';
+import Pantry from './components/Pantry';
 
 export default class App extends React.Component {
 
@@ -25,12 +26,14 @@ export default class App extends React.Component {
     this.state = {
       items: [],
       showAddItem: false,
+      isPantryVisible: false,
     }
   }
 
   state: {
   items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>,
   showAddItem: boolean,
+  isPantryVisible: boolean,
 }
 
   componentWillMount = (): void => {
@@ -57,6 +60,16 @@ export default class App extends React.Component {
       newItem,
     ]))
     .then(():void => { this.showAddedItemMicrointeraction() })
+  }
+
+  checkIfItemIsAlreadyThere = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
+    this.state.items.forEach((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
+      if (i.id === item.id) {
+        Alert.alert(
+          'Oops! This item is already in your main list.',
+        )
+      }
+    });
   }
 
   checkItemsInCart = (): boolean => {
@@ -152,18 +165,16 @@ export default class App extends React.Component {
    )
   }
 
-  checkIfItemIsAlreadyThere = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
-    this.state.items.forEach((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
-      if (i.id === item.id) {
-        Alert.alert(
-          'Oops! This item is already in your main list.',
-        )
-      }
-    });
+  goToPantry = (): void => {
+    this.setState({ isPantryVisible: true })
   }
 
   hideAddItem = ():void => {
     this.setState({ showAddItem: false })
+  }
+
+  makePantryInvisible = (): void => {
+    this.setState({ isPantryVisible: false });
   }
 
   saveChanges = (name: string, aisle: string, quantity: string, note: string, id: number, inCart: boolean):void => {
@@ -242,7 +253,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { items } = this.state
+    const { items, isPantryVisible } = this.state
     return (
       <View style={styles.container}>
         <Modal
@@ -256,6 +267,12 @@ export default class App extends React.Component {
             hideAddItem={this.hideAddItem.bind(this)}
           />
         </Modal>
+
+        <Pantry
+          isPantryVisible={isPantryVisible}
+          makePantryInvisible={this.makePantryInvisible.bind(this)}
+          transferItemToMainList={this.transferItemToMainList.bind(this)}
+        />
 
         <Text style={styles.headline}>
           Flash Shopper
@@ -315,6 +332,12 @@ export default class App extends React.Component {
               style={styles.deleteCartIcon}
             />
           </TouchableOpacity>
+        </View>
+        <View style={styles.button}>
+          <Button
+            title="Pantry"
+            onPress={() => { this.goToPantry() }}
+          />
         </View>
 
         <Main

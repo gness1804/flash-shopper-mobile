@@ -5,7 +5,6 @@ import {
   Text,
   TextInput,
   View,
-  Button,
   ScrollView,
   Modal,
   TouchableOpacity,
@@ -14,7 +13,6 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import Pantry from './Pantry';
 import styles from '../styles/Main-styles';
 
 class Main extends Component {
@@ -33,7 +31,6 @@ class Main extends Component {
       tempQuantity: '',
       tempId: 0,
       showEditView: false,
-      isPantryVisible: false,
     }
   }
 
@@ -50,7 +47,6 @@ class Main extends Component {
     tempQuantity: string,
     tempId: number,
     showEditView: boolean,
-    isPantryVisible: boolean,
   }
 
   props: {
@@ -84,14 +80,6 @@ class Main extends Component {
     this.setState({ tempQuantity: quantity });
     this.setState({ tempId: id });
     this.setState({ showEditView: true })
-  }
-
-  goToPantry = (): void => {
-    this.setState({ isPantryVisible: true })
-  }
-
-  makePantryInvisible = (): void => {
-    this.setState({ isPantryVisible: false });
   }
 
   resetItemStates = (): void => {
@@ -220,11 +208,6 @@ class Main extends Component {
 
     return (
       <ScrollView style={styles.container}>
-        <Pantry
-          isPantryVisible={this.state.isPantryVisible}
-          makePantryInvisible={this.makePantryInvisible.bind(this)}
-          transferItemToMainList={this.transferItemToMainList.bind(this)}
-        />
         <Modal
           animationType={'slide'}
           transparent={false}
@@ -282,12 +265,6 @@ class Main extends Component {
           </ScrollView>
         </Modal>
 
-        <View style={styles.button}>
-          <Button
-            title="Pantry"
-            onPress={() => { this.goToPantry() }}
-          />
-        </View>
         <View style={styles.itemsDisplayContainer}>
           {itemsDisplay}
         </View>
