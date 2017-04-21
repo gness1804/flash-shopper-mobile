@@ -306,14 +306,14 @@ export default class App extends React.Component {
               <View style={styles.button}>
                 <Button
                   title="Sort by Aisle"
-                  disabled={this.state.items.length === 0}
+                  disabled={this.state.items.length < 2}
                   onPress={() => { this.sortByAisle() }}
                 />
               </View>
               <View style={styles.button}>
                 <Button
                   title="Sort Alpha"
-                  disabled={this.state.items.length === 0}
+                  disabled={this.state.items.length < 2}
                   onPress={() => { this.sortAlpha() }}
                 />
               </View>
