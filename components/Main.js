@@ -56,6 +56,7 @@ class Main extends Component {
     saveChanges: Function,
     transferItemToMainList: Function,
     toggleInCart: Function,
+    showAddItem: Function,
   }
 
   cancelOutOfModal = (): void => {
@@ -111,6 +112,10 @@ class Main extends Component {
     this.resetItemStates()
     this.setState({ showEditView: false })
     this.showSaveMicrointeraction()
+  }
+
+  showAddItem = ():void => {
+    this.props.showAddItem()
   }
 
   showSaveMicrointeraction = (): void => {
@@ -207,7 +212,9 @@ class Main extends Component {
       })
     } else {
       itemsDisplay = (
-        <NoItemsDisplay />
+        <NoItemsDisplay
+          showAddItem={this.showAddItem.bind(this)}
+        />
       )
     }
 

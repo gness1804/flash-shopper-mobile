@@ -370,6 +370,7 @@ export default class App extends React.Component {
           saveChanges={this.saveChanges.bind(this)}
           transferItemToMainList={this.transferItemToMainList.bind(this)}
           toggleInCart={this.toggleInCart.bind(this)}
+          showAddItem={this.showAddItem.bind(this)}
         />
 
       </View>
