@@ -1,7 +1,6 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet } from 'react-native'
 import commonElements from './CommonElements';
-
-const { width } = Dimensions.get('screen')
+import { width } from '../helpers/Dimensions';
 
 let iconRightMargin
 if (width < 600) {
