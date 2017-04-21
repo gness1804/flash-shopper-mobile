@@ -135,6 +135,19 @@ class Main extends Component {
     this.props.transferItemToMainList(item)
   }
 
+  updateAisle = (aisle: string): void => {
+    const promise = new Promise((resolve, reject) => {
+      resolve(this.setState({ aisle }))
+      reject((err: string) => { console.log(err) }) //eslint-disable-line
+    });
+    promise.then(() => {
+      if (this.state.aisle !== this.state.tempAisle) {
+        this.setState({ dirtyAttributes: true })
+      }
+    })
+    .catch((err: string) => { throw new Error(err) })
+  }
+
   updateName = (name: string): void => {
     const promise = new Promise((resolve, reject) => {
       resolve(this.setState({ name }))
@@ -142,6 +155,32 @@ class Main extends Component {
     });
     promise.then(() => {
       if (this.state.name !== this.state.tempName) {
+        this.setState({ dirtyAttributes: true })
+      }
+    })
+    .catch((err: string) => { throw new Error(err) })
+  }
+
+  updateNote = (note: string): void => {
+    const promise = new Promise((resolve, reject) => {
+      resolve(this.setState({ note }))
+      reject((err: string) => { console.log(err) }) //eslint-disable-line
+    });
+    promise.then(() => {
+      if (this.state.note !== this.state.tempNote) {
+        this.setState({ dirtyAttributes: true })
+      }
+    })
+    .catch((err: string) => { throw new Error(err) })
+  }
+
+  updateQuantity = (quantity: string): void => {
+    const promise = new Promise((resolve, reject) => {
+      resolve(this.setState({ quantity }))
+      reject((err: string) => { console.log(err) }) //eslint-disable-line
+    });
+    promise.then(() => {
+      if (this.state.quantity !== this.state.tempQuantity) {
         this.setState({ dirtyAttributes: true })
       }
     })
@@ -254,21 +293,21 @@ class Main extends Component {
               value={this.state.aisle}
               style={styles.inputField}
               placeholder="Aisle Name"
-              onChangeText={aisle => this.setState({ aisle })}
+              onChangeText={aisle => this.updateAisle(aisle)}
             />
             <TextInput
               id="note-input"
               value={this.state.note}
               style={styles.inputField}
               placeholder="Note"
-              onChangeText={note => this.setState({ note })}
+              onChangeText={note => this.updateNote(note)}
             />
             <TextInput
               id="quantity-input"
               value={this.state.quantity}
               style={styles.inputField}
               placeholder="Quantity"
-              onChangeText={quantity => this.setState({ quantity })}
+              onChangeText={quantity => this.updateQuantity(quantity)}
             />
             <View style={styles.editViewButtonContainer}>
               <TouchableOpacity
