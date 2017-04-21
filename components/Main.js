@@ -149,11 +149,7 @@ class Main extends Component {
   }
 
   warnUser = (): void => {
-    const { name, aisle, note, quantity, tempName, tempAisle, tempNote, tempQuantity } = this.state
-    if (name !== tempName
-    || aisle !== tempAisle
-    || note !== tempNote
-    || quantity !== tempQuantity) {
+    if (this.state.dirtyAttributes) {
       Alert.alert(
         'Warning',
         'Are you sure you want to navigate away from this view? You will lose any unsaved changes.',
