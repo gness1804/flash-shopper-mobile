@@ -12,7 +12,7 @@ const NoItemsDisplay = () => {
       <Text
         style={styles.text}
       >
-        There are no items on your list. To add an item, click the "plus" icon near the top of the screen.
+        There are no items on your list. To add an item, tap the "plus" icon near the top of the screen or tap the shopping cart icon right above this message.
       </Text>
     </ScrollView>
   );
