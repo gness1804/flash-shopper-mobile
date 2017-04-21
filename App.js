@@ -213,6 +213,10 @@ export default class App extends React.Component {
     }
   }
 
+  showButtons = (): void => {
+    this.setState({ showButtons: true })
+  }
+
   sortAlpha = ():void => {
     const newArr = this.state.items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
       const first = a.name.toLowerCase()
@@ -351,13 +355,21 @@ export default class App extends React.Component {
 
         </View>
 
-        <TouchableOpacity
+        {showButtons ? <TouchableOpacity
           onPress={() => { this.hideButtons() }}
         >
           <Image
             source={require('./images/circle-up.png')}
           />
         </TouchableOpacity>
+        :
+        <TouchableOpacity
+          onPress={() => { this.showButtons() }}
+        >
+          <Image
+            source={require('./images/circle-down.png')}
+          />
+        </TouchableOpacity>}
 
         <Main
           items={items}
