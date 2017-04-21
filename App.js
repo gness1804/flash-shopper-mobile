@@ -27,6 +27,7 @@ export default class App extends React.Component {
       items: [],
       showAddItem: false,
       isPantryVisible: false,
+      showButtons: true,
     }
   }
 
@@ -34,6 +35,7 @@ export default class App extends React.Component {
   items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>,
   showAddItem: boolean,
   isPantryVisible: boolean,
+  showButtons: boolean,
 }
 
   componentWillMount = (): void => {
@@ -175,6 +177,10 @@ export default class App extends React.Component {
     this.setState({ showAddItem: false })
   }
 
+  hideButtons = (): void => {
+    this.setState({ showButtons: false })
+  }
+
   makePantryInvisible = (): void => {
     this.setState({ isPantryVisible: false });
   }
@@ -255,7 +261,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { items, isPantryVisible } = this.state
+    const { items, isPantryVisible, showButtons } = this.state
     return (
       <View style={styles.container}>
         <Modal
@@ -291,55 +297,67 @@ export default class App extends React.Component {
               There are no items on your list! To add an item, click on the "plus" button.
             </Text>}
           </View>
-          <View style={styles.headerButtonsContainer}>
-            <TouchableOpacity
-              onPress={this.showAddItem}
-            >
-              <Image
-                source={require('./images/plus-icon-header.png')}
-                style={styles.plusIconHeader}
-              />
-            </TouchableOpacity>
-            <View style={styles.button}>
-              <Button
-                title="Sort by Aisle"
+
+          {showButtons && <View style={styles.masterButtonsContainer}>
+            <View style={styles.headerButtonsContainer}>
+              <TouchableOpacity
+                onPress={this.showAddItem}
+              >
+                <Image
+                  source={require('./images/plus-icon-header.png')}
+                  style={styles.plusIconHeader}
+                />
+              </TouchableOpacity>
+              <View style={styles.button}>
+                <Button
+                  title="Sort by Aisle"
+                  disabled={this.state.items.length === 0}
+                  onPress={() => { this.sortByAisle() }}
+                />
+              </View>
+              <View style={styles.button}>
+                <Button
+                  title="Sort Alpha"
+                  disabled={this.state.items.length === 0}
+                  onPress={() => { this.sortAlpha() }}
+                />
+              </View>
+              <TouchableOpacity
+                onPress={() => { this.deleteAllItems() }}
                 disabled={this.state.items.length === 0}
-                onPress={() => { this.sortByAisle() }}
+              >
+                <Image
+                  source={require('./images/delete_forever.png')}
+                  style={styles.deleteDBIcon}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => { this.deleteAllInCart() }}
+                disabled={this.checkItemsInCart()}
+              >
+                <Image
+                  source={require('./images/delete-cart.png')}
+                  style={styles.deleteCartIcon}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.pantryButton}>
+              <Button
+                title="Go to Pantry"
+                onPress={() => { this.goToPantry() }}
               />
             </View>
-            <View style={styles.button}>
-              <Button
-                title="Sort Alpha"
-                disabled={this.state.items.length === 0}
-                onPress={() => { this.sortAlpha() }}
-              />
-            </View>
-            <TouchableOpacity
-              onPress={() => { this.deleteAllItems() }}
-              disabled={this.state.items.length === 0}
-            >
-              <Image
-                source={require('./images/delete_forever.png')}
-                style={styles.deleteDBIcon}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => { this.deleteAllInCart() }}
-              disabled={this.checkItemsInCart()}
-            >
-              <Image
-                source={require('./images/delete-cart.png')}
-                style={styles.deleteCartIcon}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.pantryButton}>
-            <Button
-              title="Go to Pantry"
-              onPress={() => { this.goToPantry() }}
-            />
-          </View>
+          </View>}
+
         </View>
+
+        <TouchableOpacity
+          onPress={() => { this.hideButtons() }}
+        >
+          <Image
+            source={require('./images/circle-up.png')}
+          />
+        </TouchableOpacity>
 
         <Main
           items={items}
