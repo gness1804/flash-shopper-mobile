@@ -63,7 +63,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   pantryButton: {
+    alignSelf: 'center',
     marginTop: 30,
+    width: '40%',
   },
   plusIconHeader: {
     alignSelf: 'center',
