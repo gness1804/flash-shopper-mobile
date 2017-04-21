@@ -291,18 +291,18 @@ export default class App extends React.Component {
           <Text style={styles.headline}>
           Flash Shopper
         </Text>
-          <View style={styles.upperMessageContainer}>
-            {items.length ?
-              <Text style={styles.itemNumberMessage}>
-                You have {items.length} item(s) on your list. There are {this.countItemsInCart()} item(s) in your cart.
-              </Text>
-            :
-              <Text style={styles.itemNumberMessage}>
-              There are no items on your list! To add an item, click on the "plus" button.
-            </Text>}
-          </View>
 
           {showButtons && <View style={styles.masterButtonsContainer}>
+            <View style={styles.upperMessageContainer}>
+              {items.length ?
+                <Text style={styles.itemNumberMessage}>
+                  You have {items.length} item(s) on your list. There are {this.countItemsInCart()} item(s) in your cart.
+                </Text>
+            :
+                <Text style={styles.itemNumberMessage}>
+                There are no items on your list! To add an item, click on the "plus" button.
+              </Text>}
+            </View>
             <View style={styles.headerButtonsContainer}>
               <TouchableOpacity
                 onPress={this.showAddItem}
@@ -360,6 +360,7 @@ export default class App extends React.Component {
         >
           <Image
             source={require('./images/circle-up.png')}
+            style={styles.toggleButtonViewIcon}
           />
         </TouchableOpacity>
         :
@@ -368,6 +369,7 @@ export default class App extends React.Component {
         >
           <Image
             source={require('./images/circle-down.png')}
+            style={styles.toggleButtonViewIcon}
           />
         </TouchableOpacity>}
 

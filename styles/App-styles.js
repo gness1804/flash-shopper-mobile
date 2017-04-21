@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
   itemNumberMessage: {
     fontSize: 20,
     fontStyle: 'italic',
-    marginBottom: 50,
-    marginTop: 30,
+    marginBottom: 20,
+    marginTop: 10,
     textAlign: 'center',
   },
   pantryButton: {
@@ -69,6 +69,11 @@ const styles = StyleSheet.create({
     height: headerIcon.height,
     marginRight: headerIcon.marginRight,
     width: headerIcon.width,
+  },
+  toggleButtonViewIcon: {
+    height: 50,
+    marginTop: 20,
+    width: 50,
   },
   upperMessageContainer: {
     flexDirection: 'row',
