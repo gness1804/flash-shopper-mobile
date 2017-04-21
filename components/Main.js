@@ -14,6 +14,7 @@ import {
   Platform,
 } from 'react-native';
 import styles from '../styles/Main-styles';
+import NoItemsDisplay from './NoItemsDisplay';
 
 class Main extends Component {
   constructor(props: Object) {
@@ -204,6 +205,10 @@ class Main extends Component {
           </View>
         </View>)
       })
+    } else {
+      itemsDisplay = (
+        <NoItemsDisplay />
+      )
     }
 
     return (
