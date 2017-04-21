@@ -66,9 +66,10 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   plusIconHeader: {
-    height: headerIcon.height,
-    marginRight: headerIcon.marginRight,
-    width: headerIcon.width,
+    alignSelf: 'center',
+    height: 70,
+    marginBottom: 30,
+    width: 70,
   },
   toggleButtonViewIcon: {
     height: 50,

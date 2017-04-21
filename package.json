@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
     "flow-bin": "^0.38.0",
     "jest-expo": "^0.3.0",
     "react-native-scripts": "0.0.27",

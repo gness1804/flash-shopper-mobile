@@ -293,25 +293,16 @@ export default class App extends React.Component {
         </Text>
 
           {showButtons && <View style={styles.masterButtonsContainer}>
-            <View style={styles.upperMessageContainer}>
-              {items.length ?
-                <Text style={styles.itemNumberMessage}>
-                  You have {items.length} item(s) on your list. There are {this.countItemsInCart()} item(s) in your cart.
-                </Text>
-            :
-                <Text style={styles.itemNumberMessage}>
-                There are no items on your list! To add an item, click on the "plus" button.
-              </Text>}
-            </View>
+            <TouchableOpacity
+              onPress={this.showAddItem}
+            >
+              <Image
+                source={require('./images/plus-icon-header.png')}
+                style={styles.plusIconHeader}
+              />
+            </TouchableOpacity>
+
             <View style={styles.headerButtonsContainer}>
-              <TouchableOpacity
-                onPress={this.showAddItem}
-              >
-                <Image
-                  source={require('./images/plus-icon-header.png')}
-                  style={styles.plusIconHeader}
-                />
-              </TouchableOpacity>
               <View style={styles.button}>
                 <Button
                   title="Sort by Aisle"
