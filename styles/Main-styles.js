@@ -2,6 +2,13 @@ import { StyleSheet } from 'react-native'
 import editableView from './editableView';
 import commonElements from './CommonElements';
 
+const inCart = {
+  color: 'rgb(134, 136, 131)',
+  marginTop: 10,
+  textAlign: 'center',
+  textDecorationLine: 'line-through',
+}
+
 const styles = StyleSheet.create({
   button: {
     marginTop: 15,
@@ -84,12 +91,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   nameInCart: {
-    color: '#E6E4E4',
+    color: inCart.color,
     fontSize: 20,
     fontWeight: '700',
-    marginTop: 10,
-    textAlign: 'center',
-    textDecorationLine: 'line-through',
+    marginTop: inCart.marginTop,
+    textAlign: inCart.textAlign,
+    textDecorationLine: inCart.textDecorationLine,
   },
   pencilIcon: {
     height: 30,
@@ -100,10 +107,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   textInCart: {
-    color: '#E6E4E4',
-    marginTop: 10,
-    textAlign: 'center',
-    textDecorationLine: 'line-through',
+    color: inCart.color,
+    marginTop: inCart.marginTop,
+    textAlign: inCart.textAlign,
+    textDecorationLine: inCart.textDecorationLine,
   },
 })
 

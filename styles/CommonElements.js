@@ -1,6 +1,6 @@
 const commonElements = {
   core: {
-    backgroundColor: 'rgb(168, 216, 233)',
+    backgroundColor: 'rgb(202, 229, 235)',
     button: {
       color: '#887FFA',
     },
