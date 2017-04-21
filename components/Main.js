@@ -83,6 +83,7 @@ class Main extends Component {
     this.setState({ tempNote: note });
     this.setState({ tempQuantity: quantity });
     this.setState({ tempId: id });
+    this.setState({ dirtyAttributes: false });
     this.setState({ showEditView: true })
   }
 
