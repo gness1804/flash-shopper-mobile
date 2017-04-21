@@ -55,13 +55,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  itemNumberMessage: {
-    fontSize: 20,
-    fontStyle: 'italic',
-    marginBottom: 20,
-    marginTop: 10,
-    textAlign: 'center',
-  },
   pantryButton: {
     alignSelf: 'center',
     marginTop: 30,
