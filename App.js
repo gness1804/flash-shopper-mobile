@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
 import styles from './styles/App-styles';
+import commonElements from './styles/CommonElements';
 import Main from './components/Main';
 import AddItem from './components/AddItem';
 import Pantry from './components/Pantry';
@@ -306,6 +307,7 @@ export default class App extends React.Component {
               <View style={styles.button}>
                 <Button
                   title="Sort by Aisle"
+                  color={commonElements.core.button.color}
                   disabled={this.state.items.length < 2}
                   onPress={() => { this.sortByAisle() }}
                 />
@@ -313,6 +315,7 @@ export default class App extends React.Component {
               <View style={styles.button}>
                 <Button
                   title="Sort Alpha"
+                  color={commonElements.core.button.color}
                   disabled={this.state.items.length < 2}
                   onPress={() => { this.sortAlpha() }}
                 />
@@ -339,6 +342,7 @@ export default class App extends React.Component {
             <View style={styles.pantryButton}>
               <Button
                 title="Go to Pantry"
+                color={commonElements.core.button.color}
                 onPress={() => { this.goToPantry() }}
               />
             </View>
