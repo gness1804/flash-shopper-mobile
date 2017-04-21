@@ -32,6 +32,7 @@ class Main extends Component {
       tempQuantity: '',
       tempId: 0,
       showEditView: false,
+      dirtyAttributes: false,
     }
   }
 
@@ -48,6 +49,7 @@ class Main extends Component {
     tempQuantity: string,
     tempId: number,
     showEditView: boolean,
+    dirtyAttributes: boolean,
   }
 
   props: {
@@ -130,6 +132,19 @@ class Main extends Component {
 
   transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }): void => {
     this.props.transferItemToMainList(item)
+  }
+
+  updateName = (name: string): void => {
+    const promise = new Promise((resolve, reject) => {
+      resolve(this.setState({ name }))
+      reject((err: string) => { console.log(err) }) //eslint-disable-line
+    });
+    promise.then(() => {
+      if (this.state.name !== this.state.tempName) {
+        this.setState({ dirtyAttributes: true })
+      }
+    })
+    .catch((err: string) => { throw new Error(err) })
   }
 
   warnUser = (): void => {
@@ -235,7 +250,7 @@ class Main extends Component {
               value={this.state.name}
               style={styles.inputField}
               placeholder="Item Name"
-              onChangeText={name => this.setState({ name })}
+              onChangeText={name => this.updateName(name)}
             />
             <TextInput
               id="aisle-input"
@@ -261,6 +276,7 @@ class Main extends Component {
             <View style={styles.editViewButtonContainer}>
               <TouchableOpacity
                 onPress={this.saveChanges}
+                disabled={!this.state.dirtyAttributes}
               >
                 <Text style={styles.editViewButtonSave}>
                   Save Changes
