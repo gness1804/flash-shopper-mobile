@@ -329,15 +329,6 @@ export default class App extends React.Component {
                   style={styles.deleteDBIcon}
                 />
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => { this.deleteAllInCart() }}
-                disabled={this.checkItemsInCart()}
-              >
-                <Image
-                  source={require('./images/delete-cart.png')}
-                  style={styles.deleteCartIcon}
-                />
-              </TouchableOpacity>
             </View>
             <View style={styles.pantryButton}>
               <Button
@@ -362,6 +353,17 @@ export default class App extends React.Component {
                 style={styles.cartCounterButton}
               />
               <Text>{this.countItemsInCart()}</Text>
+            </View>
+            <View style={styles.cartCounterButtonContainer}>
+              <TouchableOpacity
+                onPress={() => { this.deleteAllInCart() }}
+                disabled={this.checkItemsInCart()}
+              >
+                <Image
+                  source={require('./images/delete-cart.png')}
+                  style={styles.deleteCartIcon}
+                />
+              </TouchableOpacity>
             </View>
 
           </View>
