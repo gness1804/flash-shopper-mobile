@@ -26,8 +26,13 @@ const styles = StyleSheet.create({
   button: {
     marginRight: buttonRightMargin,
   },
+  cartCounterButton: {
+    height: 40,
+    marginRight: 20,
+    width: 40,
+  },
   cartCounterButtonContainer: {
-    
+    flexDirection: 'row',
   },
   container: {
     alignItems: 'center',
