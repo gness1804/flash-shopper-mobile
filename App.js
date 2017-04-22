@@ -361,7 +361,7 @@ export default class App extends React.Component {
               >
                 <Image
                   source={require('./images/delete-cart.png')}
-                  style={styles.deleteCartIcon}
+                  style={styles.deleteCartButton}
                 />
               </TouchableOpacity>
             </View>

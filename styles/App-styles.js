@@ -44,6 +44,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: commonElements.core.backgroundColor,
   },
+  deleteCartButton: {
+    height: 40,
+    width: 40,
+  },
   deleteDBIcon: {
     height: headerIcon.height,
     marginRight: headerIcon.marginRight,
