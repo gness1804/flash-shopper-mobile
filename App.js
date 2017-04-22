@@ -293,7 +293,7 @@ export default class App extends React.Component {
           Flash Shopper
         </Text>
 
-          {showButtons && <View style={styles.masterButtonsContainer}>
+          {showButtons ? <View style={styles.masterButtonsContainer}>
             <TouchableOpacity
               onPress={this.showAddItem}
             >
@@ -346,7 +346,12 @@ export default class App extends React.Component {
                 onPress={() => { this.goToPantry() }}
               />
             </View>
-          </View>}
+          </View>
+          :
+          <View style={styles.cartCounterButtonContainer}>
+            <Text>{this.countItemsInCart()}</Text>
+          </View>
+          }
 
         </View>
 
