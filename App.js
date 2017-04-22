@@ -348,12 +348,22 @@ export default class App extends React.Component {
             </View>
           </View>
           :
-          <View style={styles.cartCounterButtonContainer}>
-            <Image
-              source={require('./images/cart-arrow-down.png')}
-              style={styles.cartCounterButton}
-            />
-            <Text>{this.countItemsInCart()}</Text>
+          <View>
+            <View style={styles.cartCounterButtonContainer}>
+              <Image
+                source={require('./images/list.png')}
+                style={styles.cartCounterButton}
+              />
+              <Text>{this.state.items.length}</Text>
+            </View>
+            <View style={styles.cartCounterButtonContainer}>
+              <Image
+                source={require('./images/cart-arrow-down.png')}
+                style={styles.cartCounterButton}
+              />
+              <Text>{this.countItemsInCart()}</Text>
+            </View>
+
           </View>
           }
 
