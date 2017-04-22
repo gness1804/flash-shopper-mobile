@@ -348,7 +348,7 @@ export default class App extends React.Component {
             </View>
           </View>
           :
-          <View>
+          <View style={styles.cartButtonsMasterContainer}>
             <View style={styles.cartCounterButtonContainer}>
               <Image
                 source={require('./images/list.png')}
