@@ -176,6 +176,7 @@ export default class App extends React.Component {
             quantity: item.val().quantity,
             note: item.val().note,
             inCart: item.val().inCart || false,
+            location: item.val().location,
             id: item.key,
           })
         }
@@ -243,7 +244,7 @@ export default class App extends React.Component {
 
   toggleInCart = (id: number): void => {
     const newArr = this.state.items
-    newArr.forEach((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
+    newArr.forEach((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }):void => {
       if (i.id === id) {
         Object.assign(i, { inCart: !i.inCart })
       }
