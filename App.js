@@ -41,30 +41,20 @@ export default class App extends React.Component {
   showButtons: boolean,
 }
 
-  componentWillMount = (): void => {
-    AsyncStorage.getItem('items')
-      .then((items: string) => {
-        const parsedItems = JSON.parse(items)
-        if (!Array.isArray(parsedItems)) {
-          AsyncStorage.setItem('items', JSON.stringify([]))
-          return
-        }
-        return parsedItems // eslint-disable-line
-      })
-      .then((parsedItems: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>):void => { this.setState({ items: parsedItems }) }) // eslint-disable-line
-      .catch((err: string):void => { throw new Error(err) }) // eslint-disable-line
+  componentDidMount = () => {
+    this.listenForItems(this.itemsRef)
   }
 
-  addNewItem = (newItem: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }): void => { // eslint-disable-line
-    this.setState({ items: [
-      ...this.state.items,
-      newItem,
-    ] });
-    AsyncStorage.setItem('items', JSON.stringify([
-      ...this.state.items,
-      newItem,
-    ]))
-    .then(():void => { this.showAddedItemMicrointeraction() })
+  addNewItem = (newItem: { name: string, aisle: string, note: string, quantity: string, inCart: boolean }): void => { // eslint-disable-line
+    const promise = new Promise((resolve, reject) => {
+      resolve(this.itemsRef.push(
+        newItem,
+      ))
+      reject(console.error('There was an error.')) // eslint-disable-line
+    });
+    promise.then(() => { this.listenForItems() })
+            .then(() => { this.showAddedItemMicrointeraction() })
+            .catch((err) => { throw new Error(err) })
   }
 
   checkItemsInCart = (): boolean => {
@@ -182,6 +172,23 @@ export default class App extends React.Component {
 
   hideButtons = (): void => {
     this.setState({ showButtons: false })
+  }
+
+  listenForItems = (itemsRef):void => {
+    itemsRef.on('value', (snapshot) => {
+      const newArr = []
+      snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
+        newArr.push({
+          name: item.val().name,
+          aisle: item.val().aisle,
+          quantity: item.val().quantity,
+          note: item.val().note,
+          inCart: item.val().inCart || false,
+          id: item.key,
+        })
+      });
+      this.setState({ items: newArr })
+    });
   }
 
   makePantryInvisible = (): void => {
