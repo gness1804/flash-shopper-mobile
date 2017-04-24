@@ -14,6 +14,7 @@ import {
   Modal,
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
+import firebaseApp from './firebaseConfig';
 import styles from './styles/App-styles';
 import commonElements from './styles/CommonElements';
 import Main from './components/Main';
@@ -30,6 +31,7 @@ export default class App extends React.Component {
       isPantryVisible: false,
       showButtons: true,
     }
+    this.itemsRef = firebaseApp.database().ref()
   }
 
   state: {
