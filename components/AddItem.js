@@ -19,6 +19,7 @@ class AddItem extends Component {
       note: '',
       quantity: '',
       id: 0,
+      location: ['main'],
     }
   }
 
@@ -28,6 +29,7 @@ class AddItem extends Component {
     note: string,
     quantity: string,
     id: number,
+    location: Array<string>,
   }
 
   props: {
@@ -37,7 +39,7 @@ class AddItem extends Component {
   }
 
   addItem = (): void => {
-    const { name, aisle, note, quantity } = this.state
+    const { name, aisle, note, quantity, location } = this.state
     if (!name) {
       Alert.alert(
         'Oops! You must enter an item name.',
@@ -57,6 +59,7 @@ class AddItem extends Component {
       note,
       quantity,
       inCart: false,
+      location,
     };
     this.props.addNewItem(newItem);
     this.resetItemStates()

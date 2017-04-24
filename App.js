@@ -35,7 +35,7 @@ export default class App extends React.Component {
   }
 
   state: {
-  items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>,
+  items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }>,
   showAddItem: boolean,
   isPantryVisible: boolean,
   showButtons: boolean,
@@ -45,7 +45,7 @@ export default class App extends React.Component {
     this.listenForItems(this.itemsRef)
   }
 
-  addNewItem = (newItem: { name: string, aisle: string, note: string, quantity: string, inCart: boolean }): void => { // eslint-disable-line
+  addNewItem = (newItem: { name: string, aisle: string, note: string, quantity: string, inCart: boolean, location: Array<string> }): void => { // eslint-disable-line
     const promise = new Promise((resolve) => {
       resolve(this.itemsRef.push(
         newItem,
@@ -166,17 +166,19 @@ export default class App extends React.Component {
   }
 
   listenForItems = (itemsRef):void => {
-    itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>) => {
+    itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string>}>) => {
       const newArr = []
-      snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
-        newArr.push({
-          name: item.val().name,
-          aisle: item.val().aisle,
-          quantity: item.val().quantity,
-          note: item.val().note,
-          inCart: item.val().inCart || false,
-          id: item.key,
-        })
+      snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+        if (item.val().location.includes('main')) {
+          newArr.push({
+            name: item.val().name,
+            aisle: item.val().aisle,
+            quantity: item.val().quantity,
+            note: item.val().note,
+            inCart: item.val().inCart || false,
+            id: item.key,
+          })
+        }
       });
       this.setState({ items: newArr })
     });
@@ -249,7 +251,7 @@ export default class App extends React.Component {
     this.itemsRef.set(newArr)
   }
 
-  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }): void => {
+  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {
     const { items } = this.state
     const test = _.some(items, { id: item.id })
     if (test) {

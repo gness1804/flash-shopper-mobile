@@ -194,7 +194,7 @@ class Pantry extends Component {
     return newArr
   }
 
-  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }): void => {
+  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {
     this.props.transferItemToMainList(item)
   }
 
