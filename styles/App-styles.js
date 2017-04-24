@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import commonElements from './CommonElements';
-import { width } from '../helpers/Dimensions';
+import { width, height } from '../helpers/Dimensions';
 
 let iconRightMargin
 if (width < 600) {
@@ -16,6 +16,14 @@ if (width < 600) {
   buttonRightMargin = 20
 }
 
+let iconsContainerMargin
+
+if (height < 900) {
+  iconsContainerMargin = 0
+} else {
+  iconsContainerMargin = 30
+}
+
 const headerIcon = {
   height: 50,
   marginRight: iconRightMargin,
@@ -28,6 +36,8 @@ const styles = StyleSheet.create({
   },
   cartButtonsMasterContainer: {
     flexDirection: 'row',
+    marginBottom: iconsContainerMargin,
+    marginTop: iconsContainerMargin,
   },
   cartCounterButton: {
     height: 40,
