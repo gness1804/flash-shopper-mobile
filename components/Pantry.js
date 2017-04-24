@@ -15,6 +15,7 @@ import {
   Platform,
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
+import firebaseApp from '../firebaseConfig';
 import styles from '../styles/Pantry-styles';
 
 class Pantry extends Component {
@@ -29,7 +30,10 @@ class Pantry extends Component {
       note: '',
       quantity: '',
       id: 0,
+      location: ['pantry'],
     }
+
+    this.itemsRef = firebaseApp.database().ref()
   }
 
   state: {
@@ -41,20 +45,25 @@ class Pantry extends Component {
     note: string,
     quantity: string,
     id: number,
+    location: Array<string>,
   }
 
-  componentWillMount = ():void => {
-    AsyncStorage.getItem('pantry')
-      .then((items: string) => {
-        const parsedItems = JSON.parse(items)
-        if (!Array.isArray(parsedItems)) {
-          AsyncStorage.setItem('pantry', JSON.stringify([]))
-          return
-        }
-        return parsedItems // eslint-disable-line
-      })
-      .then((parsedItems: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>) => { this.setState({ items: parsedItems }) })
-      .catch((err: string) => { throw new Error(err) })
+  // componentWillMount = ():void => {
+  //   AsyncStorage.getItem('pantry')
+  //     .then((items: string) => {
+  //       const parsedItems = JSON.parse(items)
+  //       if (!Array.isArray(parsedItems)) {
+  //         AsyncStorage.setItem('pantry', JSON.stringify([]))
+  //         return
+  //       }
+  //       return parsedItems // eslint-disable-line
+  //     })
+  //     .then((parsedItems: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>) => { this.setState({ items: parsedItems }) })
+  //     .catch((err: string) => { throw new Error(err) })
+  // }
+
+  componentDidMount = () => {
+    this.listenForItems(this.itemsRef)
   }
 
   props: {
@@ -64,7 +73,7 @@ class Pantry extends Component {
   }
 
   addItem = (): void => {
-    const { name, aisle, note, quantity, items } = this.state
+    const { name, aisle, note, quantity, location, items } = this.state
     const test = _.some(items, { name: this.state.name })
     if (!name) {
       Alert.alert(
@@ -83,20 +92,19 @@ class Pantry extends Component {
       aisle,
       note,
       quantity,
-      id: Date.now(),
+      location,
       inCart: false,
     }
-    this.setState({ items: [
-      ...this.state.items,
-      newItem,
-    ] })
-    AsyncStorage.setItem('pantry', JSON.stringify([
-      ...this.state.items,
-      newItem,
-    ]))
-    .then((): void => { this.resetItemState() })
-    .then((): void => { this.hideAddView() })
-    .catch((err: string): void => { throw new Error(err) })
+    const promise = new Promise((resolve) => {
+      resolve(this.itemsRef.push(
+        newItem,
+      ))
+      // reject(console.error('There was an error.')) // eslint-disable-line
+    });
+    promise
+          .then((): void => { this.resetItemState() })
+          .then((): void => { this.hideAddView() })
+          .catch((err: string): void => { throw new Error(err) })
   }
 
   cancelOutOfModal = (): void => {
@@ -118,6 +126,26 @@ class Pantry extends Component {
 
   hideEditView = (): void => {
     this.setState({ showEditView: false })
+  }
+
+  listenForItems = (itemsRef):void => {
+    itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string>}>) => {
+      const newArr = []
+      snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+        if (item.val().location.includes('pantry')) {
+          newArr.push({
+            name: item.val().name,
+            aisle: item.val().aisle,
+            quantity: item.val().quantity,
+            note: item.val().note,
+            inCart: item.val().inCart || false,
+            location: item.val().location,
+            id: item.key,
+          })
+        }
+      });
+      this.setState({ items: newArr })
+    });
   }
 
   removeItem = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
@@ -203,7 +231,7 @@ class Pantry extends Component {
     let itemList
     if (items.length > 0) {
       const sortedItems = this.sortAlpha(items)
-      itemList = sortedItems.map((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
+      itemList = sortedItems.map((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
         return (
           <View key={item.id} style={styles.itemContainer}>
             <Text style={styles.name}>{item.name}</Text>
