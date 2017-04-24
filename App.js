@@ -145,13 +145,14 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            const newArr = this.state.items.filter((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
-              return item.id !== id
-            })
-            AsyncStorage.setItem('items', JSON.stringify(
-               newArr,
-             ))
-             .then(():void => { this.setState({ items: newArr }) })
+            this.itemsRef.child(id).remove()
+            // const newArr = this.state.items.filter((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
+            //   return item.id !== id
+            // })
+            // AsyncStorage.setItem('items', JSON.stringify(
+            //    newArr,
+            //  ))
+            //  .then(():void => { this.setState({ items: newArr }) })
           },
         },
         {
