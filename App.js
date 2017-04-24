@@ -46,7 +46,7 @@ export default class App extends React.Component {
   }
 
   addNewItem = (newItem: { name: string, aisle: string, note: string, quantity: string, inCart: boolean }): void => { // eslint-disable-line
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve) => {
       resolve(this.itemsRef.push(
         newItem,
       ))
@@ -249,10 +249,7 @@ export default class App extends React.Component {
         Object.assign(i, { inCart: !i.inCart })
       }
     });
-    AsyncStorage.setItem('items', JSON.stringify(
-       newArr,
-     ))
-     .then(():void => { this.setState({ items: newArr }) })
+    this.itemsRef.set(newArr)
   }
 
   transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }): void => {
