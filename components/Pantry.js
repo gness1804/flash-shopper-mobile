@@ -142,6 +142,9 @@ class Pantry extends Component {
     itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string>}>) => {
       const newArr = []
       snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+        if (item.val().location.includes('none')) {
+          this.itemsRef.child(item.key).remove()
+        }
         if (item.val().location.includes('pantry')) {
           newArr.push({
             name: item.val().name,
