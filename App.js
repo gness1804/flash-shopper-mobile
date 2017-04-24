@@ -123,10 +123,7 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            AsyncStorage.setItem('items', JSON.stringify(
-               [],
-             ))
-             .then(():void => { this.setState({ items: [] }) })
+            this.itemsRef.set([])
           },
         },
         {
