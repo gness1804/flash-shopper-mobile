@@ -56,7 +56,6 @@ class AddItem extends Component {
       aisle,
       note,
       quantity,
-      id: Date.now(),
       inCart: false,
     };
     this.props.addNewItem(newItem);

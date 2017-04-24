@@ -50,11 +50,11 @@ export default class App extends React.Component {
       resolve(this.itemsRef.push(
         newItem,
       ))
-      reject(console.error('There was an error.')) // eslint-disable-line
+      // reject(console.error('There was an error.')) // eslint-disable-line
     });
-    promise.then(() => { this.listenForItems() })
+    promise
             .then(() => { this.showAddedItemMicrointeraction() })
-            .catch((err) => { throw new Error(err) })
+            // .catch((err) => { throw new Error(err) })
   }
 
   checkItemsInCart = (): boolean => {
@@ -146,13 +146,6 @@ export default class App extends React.Component {
           text: 'OK',
           onPress: ():void => {
             this.itemsRef.child(id).remove()
-            // const newArr = this.state.items.filter((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
-            //   return item.id !== id
-            // })
-            // AsyncStorage.setItem('items', JSON.stringify(
-            //    newArr,
-            //  ))
-            //  .then(():void => { this.setState({ items: newArr }) })
           },
         },
         {
@@ -176,7 +169,7 @@ export default class App extends React.Component {
   }
 
   listenForItems = (itemsRef):void => {
-    itemsRef.on('value', (snapshot) => {
+    itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>) => {
       const newArr = []
       snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
         newArr.push({
