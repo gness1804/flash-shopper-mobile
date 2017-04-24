@@ -120,6 +120,14 @@ class Pantry extends Component {
     this.setState({ showEditView: true })
   }
 
+  filterOutPantry = (location: Array<string>): Array<string> => {
+    const newArr = ['none']
+    const filteredArr = location.filter((i: string) => {
+      return i !== 'pantry'
+    })
+    return newArr.concat(filteredArr)
+  }
+
   hideAddView = (): void => {
     this.setState({ showAddView: false })
   }
@@ -148,14 +156,10 @@ class Pantry extends Component {
     });
   }
 
-  removeItem = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
-    const newArr = this.state.items.filter((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
-      return i.id !== item.id
-    })
-    AsyncStorage.setItem('pantry', JSON.stringify(
-       newArr,
-     ))
-     .then((): void => { this.setState({ items: newArr }) })
+  removeItem = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+    //make it so that 'pantry' is no longer in this item's location array
+    const newItem = Object.assign(item, { location: this.filterOutPantry(item.location) })
+    this.itemsRef.child(item.id).update(newItem)
   }
 
   resetItemState = ():void => {
@@ -223,6 +227,7 @@ class Pantry extends Component {
   }
 
   transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {
+    this.itemsRef.child(item.id).remove()
     this.props.transferItemToMainList(item)
   }
 

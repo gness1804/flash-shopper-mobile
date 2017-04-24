@@ -45,10 +45,17 @@ export default class App extends React.Component {
     this.listenForItems(this.itemsRef)
   }
 
+//here, I need to make all new items have 'main' in their location array
   addNewItem = (newItem: { name: string, aisle: string, note: string, quantity: string, inCart: boolean, location: Array<string> }): void => { // eslint-disable-line
+    //add the main to the array of newItem
+    const amendedItem = Object.assign(newItem, { location: [
+      ...newItem.location,
+      'main',
+    ],
+    })
     const promise = new Promise((resolve) => {
       resolve(this.itemsRef.push(
-        newItem,
+        amendedItem,
       ))
       // reject(console.error('There was an error.')) // eslint-disable-line
     });
