@@ -122,6 +122,7 @@ export default class App extends React.Component {
     )
   }
 
+  //this needs to only delete items with 'main' location, not all items
   deleteAllItems = ():void => {
     Alert.alert(
       'Warning',
@@ -141,7 +142,7 @@ export default class App extends React.Component {
     )
   }
 
-  deleteItem = (id: number) => {
+  deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
     Alert.alert(
      'Warning',
      'You are about to delete this item! This cannot be undone!',
@@ -149,7 +150,8 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            this.itemsRef.child(id).remove()
+            const newItem = Object.assign(item, { location: this.filterOutMain(item.location) })
+            this.itemsRef.child(item.id).update(newItem)
           },
         },
         {
@@ -158,6 +160,16 @@ export default class App extends React.Component {
         },
       ],
    )
+  }
+
+  filterOutMain = (location: Array<string>): Array<string> => {
+    let result
+    if (location.includes('pantry')) {
+      result = ['pantry']
+    } else {
+      result = ['none']
+    }
+    return result
   }
 
   goToPantry = (): void => {

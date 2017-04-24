@@ -67,8 +67,8 @@ class Main extends Component {
     this.resetTempStates()
   }
 
-  deleteItem = (id: number): void => {
-    this.props.deleteItem(id);
+  deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {
+    this.props.deleteItem(item);
   }
 
   editItem = (name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean): void => {
@@ -235,7 +235,7 @@ class Main extends Component {
           {quantity ? <Text style={textStyle}>Quantity: {quantity}</Text> : <Text />}
           <View style={styles.eachItemButtonsContainer}>
             <TouchableOpacity
-              onPress={() => { this.deleteItem(id) }}
+              onPress={() => { this.deleteItem(item) }}
             >
               <Image
                 source={require('../images/cancel-circle.png')}

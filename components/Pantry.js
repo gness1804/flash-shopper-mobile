@@ -121,11 +121,13 @@ class Pantry extends Component {
   }
 
   filterOutPantry = (location: Array<string>): Array<string> => {
-    const newArr = ['none']
-    const filteredArr = location.filter((i: string) => {
-      return i !== 'pantry'
-    })
-    return newArr.concat(filteredArr)
+    let result
+    if (location.includes('main')) {
+      result = ['main']
+    } else {
+      result = ['none']
+    }
+    return result
   }
 
   hideAddView = (): void => {
