@@ -255,14 +255,9 @@ export default class App extends React.Component {
     this.setState({ items: newArr });
   }
 
-  toggleInCart = (id: number): void => {
-    const newArr = this.state.items
-    newArr.forEach((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }):void => {
-      if (i.id === id) {
-        Object.assign(i, { inCart: !i.inCart })
-      }
-    });
-    this.itemsRef.set(newArr)
+  toggleInCart = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {
+    const newItem = Object.assign(item, { inCart: !item.inCart })
+    this.itemsRef.child(item.id).update(newItem)
   }
 
   transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {

@@ -130,11 +130,11 @@ class Main extends Component {
     }
   }
 
-  toggleInCart = (id: number) => {
-    this.props.toggleInCart(id)
+  toggleInCart = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+    this.props.toggleInCart(item)
   }
 
-  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }): void => {
+  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {
     this.props.transferItemToMainList(item)
   }
 
@@ -254,7 +254,7 @@ class Main extends Component {
               />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => { this.toggleInCart(id) }}
+              onPress={() => { this.toggleInCart(item) }}
             >
               <Image
                 source={require('../images/cart.png')}
