@@ -79,18 +79,6 @@ export default class App extends React.Component {
     return result
   }
 
-  checkForDuplicateNames = (name: string): boolean => {
-    const { items } = this.state
-    const test = _.some(items, { name })
-    let result
-    if (test) {
-      result = true
-    } else {
-      result = false
-    }
-    return result
-  }
-
   countItemsInCart = (): number => {
     let count = 0
     this.state.items.forEach((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
@@ -296,7 +284,6 @@ export default class App extends React.Component {
           <AddItem
             addNewItem={this.addNewItem.bind(this)}
             hideAddItem={this.hideAddItem.bind(this)}
-            checkForDuplicateNames={this.checkForDuplicateNames.bind(this)}
           />
         </Modal>
 
