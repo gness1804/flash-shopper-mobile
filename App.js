@@ -19,6 +19,7 @@ import commonElements from './styles/CommonElements';
 import Main from './components/Main';
 import AddItem from './components/AddItem';
 import Pantry from './components/Pantry';
+import AuthScreen from './components/AuthScreen';
 
 export default class App extends React.Component {
 
@@ -29,6 +30,7 @@ export default class App extends React.Component {
       showAddItem: false,
       isPantryVisible: false,
       showButtons: true,
+      showAuthScreen: true,
     }
     this.itemsRef = firebaseApp.database().ref()
   }
@@ -38,6 +40,7 @@ export default class App extends React.Component {
   showAddItem: boolean,
   isPantryVisible: boolean,
   showButtons: boolean,
+  showAuthScreen: boolean,
 }
 
   componentDidMount = (): void => {
@@ -269,6 +272,15 @@ export default class App extends React.Component {
     const { items, isPantryVisible, showButtons } = this.state
     return (
       <View style={styles.container}>
+        <Modal
+          animationType={'slide'}
+          transparent={false}
+          visible={this.state.showAuthScreen}
+          onRequestClose={this.hideAddItem}
+        >
+          <AuthScreen />
+        </Modal>
+
         <Modal
           animationType={'slide'}
           transparent={false}
