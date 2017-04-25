@@ -26,6 +26,7 @@ class Main extends Component {
       quantity: '',
       id: 0,
       inCart: false,
+      location: [],
       tempName: '',
       tempAisle: '',
       tempNote: '',
@@ -43,6 +44,7 @@ class Main extends Component {
     quantity: string,
     id: number,
     inCart: boolean,
+    location: Array<string>,
     tempName: string,
     tempAisle: string,
     tempNote: string,
@@ -53,7 +55,7 @@ class Main extends Component {
   }
 
   props: {
-    items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>,
+    items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string>}>,
     deleteItem: Function,
     saveChanges: Function,
     transferItemToMainList: Function,
@@ -71,13 +73,14 @@ class Main extends Component {
     this.props.deleteItem(item);
   }
 
-  editItem = (name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean): void => {
+  editItem = (name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string>): void => {
     this.setState({ name });
     this.setState({ aisle });
     this.setState({ note });
     this.setState({ quantity });
     this.setState({ id });
     this.setState({ inCart });
+    this.setState({ location });
     this.setState({ tempName: name });
     this.setState({ tempAisle: aisle });
     this.setState({ tempNote: note });
@@ -104,14 +107,14 @@ class Main extends Component {
   }
 
   saveChanges = (): void => {
-    const { name, aisle, quantity, note, id, inCart } = this.state
+    const { name, aisle, quantity, note, id, inCart, location } = this.state
     if (!name) {
       Alert.alert(
         'Oops! You must enter in an item name!',
       )
       return
     }
-    this.props.saveChanges(name, aisle, quantity, note, id, inCart)
+    this.props.saveChanges(name, aisle, quantity, note, id, inCart, location)
     this.resetItemStates()
     this.setState({ showEditView: false })
     this.showSaveMicrointeraction()
@@ -214,8 +217,8 @@ class Main extends Component {
     let itemsDisplay;
 
     if (items.length > 0) {
-      itemsDisplay = items.map((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
-        const { name, aisle, note, quantity, id, inCart } = item
+      itemsDisplay = items.map((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+        const { name, aisle, note, quantity, id, inCart, location } = item
         let nameStyle
         let textStyle
         if (inCart) {
@@ -243,7 +246,7 @@ class Main extends Component {
               />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => { this.editItem(name, aisle, note, quantity, id, inCart) }}
+              onPress={() => { this.editItem(name, aisle, note, quantity, id, inCart, location) }}
             >
               <Image
                 source={require('../images/pencil.png')}

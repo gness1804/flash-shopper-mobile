@@ -221,22 +221,16 @@ export default class App extends React.Component {
     this.setState({ isPantryVisible: false });
   }
 
-  saveChanges = (name: string, aisle: string, quantity: string, note: string, id: number, inCart: boolean):void => {
-    const newArr = this.state.items.filter((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
-      return item.id !== id
-    })
-    newArr.push({
+  saveChanges = (name: string, aisle: string, quantity: string, note: string, id: number, inCart: boolean, location: Array<string>):void => {
+    const newItem = {
       name,
       aisle,
       quantity,
       note,
-      id,
       inCart,
-    })
-    AsyncStorage.setItem('items', JSON.stringify(
-       newArr,
-     ))
-     .then(():void => { this.setState({ items: newArr }) })
+      location,
+    }
+    this.itemsRef.child(id).update(newItem)
   }
 
   showAddItem = ():void => {
