@@ -10,7 +10,6 @@ import {
   Image,
   View,
   TextInput,
-  AsyncStorage,
   ToastAndroid,
   Platform,
 } from 'react-native';
@@ -30,6 +29,7 @@ class Pantry extends Component {
       note: '',
       quantity: '',
       id: 0,
+      inCart: false,
       location: ['pantry'],
     }
 
@@ -45,6 +45,7 @@ class Pantry extends Component {
     note: string,
     quantity: string,
     id: number,
+    inCart: boolean,
     location: Array<string>,
   }
 
@@ -97,12 +98,14 @@ class Pantry extends Component {
     this.props.makePantryInvisible()
   }
 
-  editItem = (name: string, aisle: string, note: string, quantity: string, id: number): void => {
+  editItem = (name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string>): void => {
     this.setState({ name });
     this.setState({ aisle });
     this.setState({ note });
     this.setState({ quantity });
     this.setState({ id });
+    this.setState({ inCart })
+    this.setState({ location })
     this.setState({ showEditView: true })
   }
 
@@ -148,7 +151,6 @@ class Pantry extends Component {
   }
 
   removeItem = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
-    //make it so that 'pantry' is no longer in this item's location array
     const newItem = Object.assign(item, { location: this.filterOutPantry(item.location) })
     this.itemsRef.child(item.id).update(newItem)
   }
@@ -162,28 +164,27 @@ class Pantry extends Component {
   }
 
   saveChanges = (): void => {
-    const { name, aisle, quantity, note, id, items } = this.state
+    const { name, aisle, quantity, note, id, inCart, location } = this.state
     if (!name) {
       Alert.alert(
         'Oops! You must enter in an item name!',
       )
       return
     }
-    const newArr = items.filter((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
-      return i.id !== id
-    })
-    newArr.push({
+    const newItem = {
       name,
       aisle,
       quantity,
       note,
+      inCart,
       id,
-      inCart: false,
+      location,
+    }
+
+    const promise = new Promise((resolve) => {
+      resolve(this.itemsRef.child(id).update(newItem))
     })
-    AsyncStorage.setItem('pantry', JSON.stringify(
-       newArr,
-     ))
-     .then((): void => { this.setState({ items: newArr }) })
+    promise
      .then((): void => { this.resetItemState() })
      .then((): void => { this.hideEditView() })
      .then((): void => { this.showSaveMicrointeraction() })
@@ -254,7 +255,9 @@ class Pantry extends Component {
                 item.aisle,
                 item.note,
                 item.quantity,
-                item.id)
+                item.id,
+                item.inCart,
+                item.location)
               }}
             >
               <Image

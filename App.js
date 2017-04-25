@@ -4,7 +4,6 @@ import React from 'react';
 import {
   Text,
   View,
-  AsyncStorage,
   Alert,
   ToastAndroid,
   Platform,
@@ -215,6 +214,7 @@ export default class App extends React.Component {
       quantity,
       note,
       inCart,
+      id,
       location,
     }
     this.itemsRef.child(id).update(newItem)
