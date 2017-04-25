@@ -183,6 +183,20 @@ export default class App extends React.Component {
     this.setState({ showButtons: false })
   }
 
+  informUser = ():void => {
+    Alert.alert(
+      'Warning',
+      'You must sign up or log in to proceed.',
+      [
+        {
+          text: 'OK',
+          style: 'cancel',
+        },
+      ],
+      { cancelable: false },
+    )
+  }
+
   listenForItems = (itemsRef):void => {
     itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string>}>) => {
       const newArr = []
@@ -276,7 +290,7 @@ export default class App extends React.Component {
           animationType={'slide'}
           transparent={false}
           visible={this.state.showAuthScreen}
-          onRequestClose={this.hideAddItem}
+          onRequestClose={this.informUser}
         >
           <AuthScreen />
         </Modal>
