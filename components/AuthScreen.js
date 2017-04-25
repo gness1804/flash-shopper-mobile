@@ -69,6 +69,7 @@ class AuthScreen extends Component {
         />
         <TextInput
           id="password-input"
+          secureTextEntry
           value={password}
           placeholder="Enter Your Password"
           onChangeText={_password => this.setState({ password: _password })}
