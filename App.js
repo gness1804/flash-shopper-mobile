@@ -41,16 +41,22 @@ export default class App extends React.Component {
   showButtons: boolean,
 }
 
-  componentDidMount = () => {
+  componentDidMount = (): void => {
     this.listenForItems(this.itemsRef)
   }
 
+  addInMain = (location: Array<string>): Array<string> => {
+    let result
+    if (location.includes('pantry')) {
+      result = ['main', 'pantry']
+    } else {
+      result = ['main']
+    }
+    return result
+  }
+
   addNewItem = (newItem: { name: string, aisle: string, note: string, quantity: string, inCart: boolean, location: Array<string> }): void => { // eslint-disable-line
-    const amendedItem = Object.assign(newItem, { location: [
-      ...newItem.location,
-      'main',
-    ],
-    })
+    const amendedItem = Object.assign(newItem, { location: this.addInMain(newItem.location) })
     const promise = new Promise((resolve) => {
       resolve(this.itemsRef.push(
         amendedItem,
@@ -120,7 +126,6 @@ export default class App extends React.Component {
     )
   }
 
-  //this needs to only delete items with 'main' location, not all items
   deleteAllItems = ():void => {
     Alert.alert(
       'Warning',
@@ -129,7 +134,10 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            this.itemsRef.set([])
+            this.state.items.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+              const newItem = Object.assign(item, { location: this.filterOutMain(item.location) })
+              this.itemsRef.child(item.id).update(newItem)
+            });
           },
         },
         {
@@ -277,14 +285,6 @@ export default class App extends React.Component {
   }
 
   transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {
-    const { items } = this.state
-    const test = _.some(items, { id: item.id })
-    if (test) {
-      Alert.alert(
-        'Oops! This item is already in your main list.',
-      )
-      return
-    }
     this.addNewItem(item)
     this.showAddedItemMicrointeraction()
   }
