@@ -48,21 +48,7 @@ class Pantry extends Component {
     location: Array<string>,
   }
 
-  // componentWillMount = ():void => {
-  //   AsyncStorage.getItem('pantry')
-  //     .then((items: string) => {
-  //       const parsedItems = JSON.parse(items)
-  //       if (!Array.isArray(parsedItems)) {
-  //         AsyncStorage.setItem('pantry', JSON.stringify([]))
-  //         return
-  //       }
-  //       return parsedItems // eslint-disable-line
-  //     })
-  //     .then((parsedItems: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>) => { this.setState({ items: parsedItems }) })
-  //     .catch((err: string) => { throw new Error(err) })
-  // }
-
-  componentDidMount = () => {
+  componentDidMount = ():void => {
     this.listenForItems(this.itemsRef)
   }
 

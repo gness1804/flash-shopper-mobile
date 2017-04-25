@@ -45,9 +45,7 @@ export default class App extends React.Component {
     this.listenForItems(this.itemsRef)
   }
 
-//here, I need to make all new items have 'main' in their location array
   addNewItem = (newItem: { name: string, aisle: string, note: string, quantity: string, inCart: boolean, location: Array<string> }): void => { // eslint-disable-line
-    //add the main to the array of newItem
     const amendedItem = Object.assign(newItem, { location: [
       ...newItem.location,
       'main',
@@ -150,7 +148,11 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            const newItem = Object.assign(item, { location: this.filterOutMain(item.location) })
+            const newItem = Object.assign(
+              item,
+              { location: this.filterOutMain(item.location) },
+              { inCart: false },
+            )
             this.itemsRef.child(item.id).update(newItem)
           },
         },
