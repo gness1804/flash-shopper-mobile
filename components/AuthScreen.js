@@ -50,9 +50,27 @@ class AuthScreen extends Component {
     this.setState({ password: '' })
   }
 
+  sendResetPasswordEmail = (email: string):void => {
+    if (!email) {
+      Alert.alert('You must enter an email address.')
+      return
+    }
+    firebase.auth().sendPasswordResetEmail(email)
+    .then(() => { this.showRecoveryEmailAlert() })
+    .catch(() => { this.showRecoveryError() })
+  }
+
   showLogInError = ():void => {
     Alert.alert('There was a problem signing in. Please double check your email and password.')
     this.resetEmailAndPWStates()
+  }
+
+  showRecoveryError = ():void => {
+    Alert.alert('There was a problem sending the password recovery email. Please ensure that you created an account under this password and that your email is in a valid format (foo@foobar.com).')
+  }
+
+  showRecoveryEmailAlert = ():void => {
+    Alert.alert('Password recovery email successfully sent. Please check your inbox.')
   }
 
   showSignUpMicrointeraction = ():void => {
@@ -127,6 +145,13 @@ class AuthScreen extends Component {
               title="Log In"
               color={commonElements.core.button.color}
               onPress={() => { this.logIn(email, password) }}
+            />
+          </View>
+          <View style={styles.button}>
+            <Button
+              title="Reset Password"
+              color={commonElements.core.button.color}
+              onPress={() => { this.sendResetPasswordEmail(email) }}
             />
           </View>
         </View>

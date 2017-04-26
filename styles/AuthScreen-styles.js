@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 30,
     marginRight: 20,
-    width: 80,
+    // width: 80,
   },
   buttonContainer: {
     flexDirection: 'row',
