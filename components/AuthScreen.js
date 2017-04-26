@@ -114,19 +114,21 @@ class AuthScreen extends Component {
           placeholder="Enter Your Password"
           onChangeText={_password => this.setState({ password: _password })}
         />
-        <View style={styles.button}>
-          <Button
-            title="Sign Up"
-            color={commonElements.core.button.color}
-            onPress={() => { this.signUp(email, password) }}
-          />
-        </View>
-        <View style={styles.button}>
-          <Button
-            title="Log In"
-            color={commonElements.core.button.color}
-            onPress={() => { this.logIn(email, password) }}
-          />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button
+              title="Sign Up"
+              color={commonElements.core.button.color}
+              onPress={() => { this.signUp(email, password) }}
+            />
+          </View>
+          <View style={styles.button}>
+            <Button
+              title="Log In"
+              color={commonElements.core.button.color}
+              onPress={() => { this.logIn(email, password) }}
+            />
+          </View>
         </View>
       </View>
     );
