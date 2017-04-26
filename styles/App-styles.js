@@ -31,6 +31,11 @@ const headerIcon = {
 }
 
 const styles = StyleSheet.create({
+  authContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+    marginTop: 20,
+  },
   button: {
     marginRight: buttonRightMargin,
   },
@@ -79,6 +84,12 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  loggedInAsText: {
+    marginRight: 15,
+  },
+  loggedInAsTextSpan: {
+    fontWeight: 'bold',
   },
   pantryButton: {
     alignSelf: 'center',

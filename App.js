@@ -182,6 +182,10 @@ export default class App extends React.Component {
     this.setState({ showAddItem: false })
   }
 
+  hideAuthScreen = ():void => {
+    this.setState({ showAuthScreen: false })
+  }
+
   hideButtons = (): void => {
     this.setState({ showButtons: false })
   }
@@ -201,10 +205,10 @@ export default class App extends React.Component {
   }
 
   initializeApp = ():void => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user: Object) => {
       if (user) {
         this.setState({ userEmail: user.email })
-        this.setState({ showAuthScreen: false })
+        this.hideAuthScreen()
         this.listenForItems(this.itemsRef)
       }
     })
@@ -231,6 +235,26 @@ export default class App extends React.Component {
       });
       this.setState({ items: newArr })
     });
+  }
+
+  logOut = ():void => {
+    Alert.alert(
+      'Warning',
+      'Are you sure you want to log out?',
+      [
+        {
+          text: 'Yes',
+          onPress: () => {
+            firebase.auth().signOut()
+            this.showAuthScreen()
+          },
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+      ],
+    )
   }
 
   makePantryInvisible = (): void => {
@@ -262,6 +286,10 @@ export default class App extends React.Component {
 
   showButtons = (): void => {
     this.setState({ showButtons: true })
+  }
+
+  showAuthScreen = ():void => {
+    this.setState({ showAuthScreen: true })
   }
 
   sortAlpha = ():void => {
@@ -296,7 +324,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { items, isPantryVisible, showButtons } = this.state
+    const { items, isPantryVisible, showButtons, userEmail } = this.state
     return (
       <View style={styles.container}>
         <Modal
@@ -332,6 +360,17 @@ export default class App extends React.Component {
         </Text>
 
           {showButtons ? <View style={styles.masterButtonsContainer}>
+            <View style={styles.authContainer}>
+              <Text style={styles.loggedInAsText}>
+              Logged in as <Text style={styles.loggedInAsTextSpan}>{userEmail}</Text>
+              </Text>
+              <Button
+                title="Log Out"
+                color="rgb(233, 73, 88)"
+                onPress={this.logOut}
+              />
+            </View>
+
             <TouchableOpacity
               onPress={this.showAddItem}
             >
