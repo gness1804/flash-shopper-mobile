@@ -13,6 +13,7 @@ import {
   Modal,
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
+import * as firebase from 'firebase';
 import firebaseApp from './firebaseConfig';
 import styles from './styles/App-styles';
 import commonElements from './styles/CommonElements';
@@ -31,6 +32,7 @@ export default class App extends React.Component {
       isPantryVisible: false,
       showButtons: true,
       showAuthScreen: true,
+      userEmail: '',
     }
     this.itemsRef = firebaseApp.database().ref()
   }
@@ -41,10 +43,11 @@ export default class App extends React.Component {
   isPantryVisible: boolean,
   showButtons: boolean,
   showAuthScreen: boolean,
+  userEmail: string,
 }
 
   componentDidMount = (): void => {
-    this.listenForItems(this.itemsRef)
+    this.initializeApp()
   }
 
   addInMain = (location: Array<string>): Array<string> => {
@@ -195,6 +198,16 @@ export default class App extends React.Component {
       ],
       { cancelable: false },
     )
+  }
+
+  initializeApp = ():void => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ userEmail: user.email })
+        this.setState({ showAuthScreen: false })
+        this.listenForItems(this.itemsRef)
+      }
+    })
   }
 
   listenForItems = (itemsRef):void => {
