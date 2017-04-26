@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
 import * as firebase from 'firebase';
+import firebaseApp from '../firebaseConfig';  // eslint-disable-line
 import styles from '../styles/Pantry-styles';
 import cleanUpUserEmail from '../helpers/cleanUpUserEmail';
 
