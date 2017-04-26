@@ -11,6 +11,7 @@ import { View,
 } from 'react-native';
 import * as firebase from 'firebase';
 import styles from '../styles/AuthScreen-styles';
+import commonElements from '../styles/CommonElements';
 
 class AuthScreen extends Component {
   constructor() {
@@ -70,6 +71,11 @@ class AuthScreen extends Component {
     }
   }
 
+  showSignUpError = ():void => {
+    Alert.alert('There was a problem signing up. Please ensure that you have not already signed up using this email address and that the email format is valid (foo@foobar.com).')
+    this.resetEmailAndPWStates()
+  }
+
   signUp = (email: string, password: string):void => {
     if (!email || !password) {
       Alert.alert(
@@ -85,7 +91,7 @@ class AuthScreen extends Component {
     promise
           .then(() => { this.showSignUpMicrointeraction() })
           .then(() => { this.resetEmailAndPWStates() })
-          .catch((err: string) => { throw new Error(err) })
+          .catch(() => { this.showSignUpError() })
   }
 
   render() {
@@ -111,12 +117,14 @@ class AuthScreen extends Component {
         <View style={styles.button}>
           <Button
             title="Sign Up"
+            color={commonElements.core.button.color}
             onPress={() => { this.signUp(email, password) }}
           />
         </View>
         <View style={styles.button}>
           <Button
             title="Log In"
+            color={commonElements.core.button.color}
             onPress={() => { this.logIn(email, password) }}
           />
         </View>
