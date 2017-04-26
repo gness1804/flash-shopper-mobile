@@ -16,4 +16,5 @@ Tested on:
 Sources that proved useful in building the app:
 
 [Beginner's Guide to React Native and Firebase](https://firebase.googleblog.com/2016/01/the-beginners-guide-to-react-native-and_84.html)
+
 [Getting Started with React Native and Firebase](https://medium.com/@jamesmarino/getting-started-with-react-native-and-firebase-ab1f396db549)
