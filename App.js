@@ -33,8 +33,9 @@ export default class App extends React.Component {
       showButtons: true,
       showAuthScreen: true,
       userEmail: '',
+      userId: '',
     }
-    this.itemsRef = firebaseApp.database().ref()
+    this.itemsRef = firebaseApp.database().ref(`/user/${this.state.userId}`)
   }
 
   state: {
@@ -44,6 +45,7 @@ export default class App extends React.Component {
   showButtons: boolean,
   showAuthScreen: boolean,
   userEmail: string,
+  userId: string,
 }
 
   componentDidMount = (): void => {
@@ -208,6 +210,7 @@ export default class App extends React.Component {
     firebase.auth().onAuthStateChanged((user: Object) => {
       if (user) {
         this.setState({ userEmail: user.email })
+        this.setState({ userId: user.uid })
         this.hideAuthScreen()
         this.listenForItems(this.itemsRef)
       }

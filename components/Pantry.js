@@ -14,6 +14,7 @@ import {
   Platform,
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
+import * as firebase from 'firebase';
 import firebaseApp from '../firebaseConfig';
 import styles from '../styles/Pantry-styles';
 
@@ -31,9 +32,11 @@ class Pantry extends Component {
       id: 0,
       inCart: false,
       location: ['pantry'],
+      userEmail: '',
+      userId: '',
     }
 
-    this.itemsRef = firebaseApp.database().ref()
+    this.itemsRef = firebaseApp.database().ref(`/user/${this.state.userId}`)
   }
 
   state: {
@@ -47,10 +50,12 @@ class Pantry extends Component {
     id: number,
     inCart: boolean,
     location: Array<string>,
+    userEmail: string,
+    userId: string,
   }
 
-  componentDidMount = ():void => {
-    this.listenForItems(this.itemsRef)
+  componentDidMount = (): void => {
+    this.initializeApp()
   }
 
   props: {
@@ -125,6 +130,16 @@ class Pantry extends Component {
 
   hideEditView = (): void => {
     this.setState({ showEditView: false })
+  }
+
+  initializeApp = ():void => {
+    firebase.auth().onAuthStateChanged((user: Object) => {
+      if (user) {
+        this.setState({ userEmail: user.email })
+        this.setState({ userId: user.uid })
+        this.listenForItems(this.itemsRef)
+      }
+    })
   }
 
   listenForItems = (itemsRef):void => {
