@@ -32,7 +32,6 @@ class Pantry extends Component {
       quantity: '',
       id: '',
       inCart: false,
-      location: ['pantry'],
       userEmail: '',
       userId: '',
     }
@@ -41,7 +40,7 @@ class Pantry extends Component {
   }
 
   state: {
-    items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>}>,
+    items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }>,
     showAddView: boolean,
     showEditView: boolean,
     name: string,
@@ -50,7 +49,6 @@ class Pantry extends Component {
     quantity: string,
     id: string,
     inCart: boolean,
-    location: Array<string>,
     userEmail: string,
     userId: string,
   }
@@ -65,11 +63,10 @@ class Pantry extends Component {
   props: {
     isPantryVisible: boolean,
     makePantryInvisible: Function,
-    transferItemToMainList: Function,
   }
 
   addItem = (): void => {
-    const { name, aisle, note, quantity, location, items } = this.state
+    const { name, aisle, note, quantity, items } = this.state
     const test = _.some(items, { name: this.state.name })
     if (!name) {
       Alert.alert(
@@ -88,14 +85,12 @@ class Pantry extends Component {
       aisle,
       note,
       quantity,
-      location,
       inCart: false,
     }
     const promise = new Promise((resolve) => {
       resolve(this.itemsRef.push(
         newItem,
       ))
-      // reject(console.error('There was an error.')) // eslint-disable-line
     });
     promise
           .then((): void => { this.resetItemState() })
@@ -107,25 +102,14 @@ class Pantry extends Component {
     this.props.makePantryInvisible()
   }
 
-  editItem = (name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>): void => {
+  editItem = (name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean): void => {
     this.setState({ name });
     this.setState({ aisle });
     this.setState({ note });
     this.setState({ quantity });
     this.setState({ id });
     this.setState({ inCart })
-    this.setState({ location })
     this.setState({ showEditView: true })
-  }
-
-  filterOutPantry = (location: Array<string>): Array<string> => {
-    let result
-    if (location.includes('main')) {
-      result = ['main']
-    } else {
-      result = ['none']
-    }
-    return result
   }
 
   hideAddView = (): void => {
@@ -139,40 +123,34 @@ class Pantry extends Component {
   initializeApp = ():void => {
     firebase.auth().onAuthStateChanged((user: Object) => {
       if (user) {
+        const email = cleanUpUserEmail(user.email)
         this.setState({ userEmail: user.email })
         this.setState({ userId: user.uid })
-        this.itemsRef = firebase.database().ref(cleanUpUserEmail(user.email))
+        this.itemsRef = firebase.database().ref(email + '/pantry') //eslint-disable-line
         this.listenForItems(this.itemsRef)
       }
     })
   }
 
   listenForItems = (itemsRef: Object):void => {
-    itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>, key: string, val: Function}>) => {
+    itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, inCart: boolean, key: string, val: Function}>) => {
       const newArr = []
-      snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>, key: string, val: Function }) => {
-        if (item.val().location.includes('none')) {
-          this.itemsRef.child(item.key).remove()
-        }
-        if (item.val().location.includes('pantry')) {
-          newArr.push({
-            name: item.val().name,
-            aisle: item.val().aisle,
-            quantity: item.val().quantity,
-            note: item.val().note,
-            inCart: item.val().inCart || false,
-            location: item.val().location,
-            id: item.key,
-          })
-        }
+      snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, inCart: boolean, key: string, val: Function}) => {
+        newArr.push({
+          name: item.val().name,
+          aisle: item.val().aisle,
+          quantity: item.val().quantity,
+          note: item.val().note,
+          inCart: item.val().inCart || false,
+          id: item.key,
+        })
       });
       this.setState({ items: newArr })
     });
   }
 
-  removeItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }) => {
-    const newItem = Object.assign(item, { location: this.filterOutPantry(item.location) })
-    this.itemsRef.child(item.id).update(newItem)
+  removeItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
+    this.itemsRef.child(item.id).remove()
   }
 
   resetItemState = ():void => {
@@ -184,7 +162,7 @@ class Pantry extends Component {
   }
 
   saveChanges = (): void => {
-    const { name, aisle, quantity, note, id, inCart, location } = this.state
+    const { name, aisle, quantity, note, id, inCart } = this.state
     if (!name) {
       Alert.alert(
         'Oops! You must enter in an item name!',
@@ -198,7 +176,6 @@ class Pantry extends Component {
       note,
       inCart,
       id,
-      location,
     }
 
     const promise = new Promise((resolve) => {
@@ -209,6 +186,12 @@ class Pantry extends Component {
      .then((): void => { this.hideEditView() })
      .then((): void => { this.showSaveMicrointeraction() })
      .catch((err: string): void => { throw new Error(err) })
+  }
+
+  showAddItemMicrointeraction = () => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show('Item added to main list.', ToastAndroid.SHORT)
+    }
   }
 
   showAddView = ():void => {
@@ -222,8 +205,8 @@ class Pantry extends Component {
     }
   }
 
-  sortAlpha = (items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>}>): Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>}> => {
-    const newArr = items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>}, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>}) => {
+  sortAlpha = (items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }>): Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }> => {
+    const newArr = items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
       const first = a.name.toLowerCase()
       const second = b.name.toLowerCase()
       if (first < second) {
@@ -238,9 +221,10 @@ class Pantry extends Component {
     return newArr
   }
 
-  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }): void => {
-    this.itemsRef.child(item.id).remove()
-    this.props.transferItemToMainList(item)
+  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }): void => {
+    const email = cleanUpUserEmail(this.state.userEmail)
+    firebase.database().ref(email + '/main').push(item) //eslint-disable-line
+    this.showAddItemMicrointeraction()
   }
 
   render() {
@@ -248,7 +232,7 @@ class Pantry extends Component {
     let itemList
     if (items.length > 0) {
       const sortedItems = this.sortAlpha(items)
-      itemList = sortedItems.map((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }) => {
+      itemList = sortedItems.map((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
         return (
           <View key={item.id} style={styles.itemContainer}>
             <Text style={styles.name}>{item.name}</Text>
@@ -277,7 +261,7 @@ class Pantry extends Component {
                 item.quantity,
                 item.id,
                 item.inCart,
-                item.location)
+                )
               }}
             >
               <Image

@@ -40,7 +40,7 @@ export default class App extends React.Component {
   }
 
   state: {
-  items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }>,
+  items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }>,
   showAddItem: boolean,
   isPantryVisible: boolean,
   showButtons: boolean,
@@ -55,23 +55,11 @@ export default class App extends React.Component {
 
   itemsRef: Object
 
-  addInMain = (location: Array<string>): Array<string> => {
-    let result
-    if (location.includes('pantry')) {
-      result = ['main', 'pantry']
-    } else {
-      result = ['main']
-    }
-    return result
-  }
-
-  addNewItem = (newItem: { name: string, aisle: string, note: string, quantity: string, inCart: boolean, location: Array<string> }): void => { // eslint-disable-line
-    const amendedItem = Object.assign(newItem, { location: this.addInMain(newItem.location) })
+  addNewItem = (newItem: { name: string, aisle: string, note: string, quantity: string, inCart: boolean }): void => { // eslint-disable-line
     const promise = new Promise((resolve) => {
       resolve(this.itemsRef.push(
-        amendedItem,
+        newItem,
       ))
-      // reject(console.error('There was an error.')) // eslint-disable-line
     });
     promise
             .then(() => { this.showAddedItemMicrointeraction() })
@@ -107,10 +95,9 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            this.state.items.forEach((item) => {
+            this.state.items.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
               if (item.inCart) {
-                const newItem = Object.assign(item, { location: this.filterOutMain(item.location) })
-                this.itemsRef.child(item.id).update(newItem)
+                this.itemsRef.child(item.id).remove()
               }
             });
           },
@@ -131,10 +118,7 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            this.state.items.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }) => {
-              const newItem = Object.assign(item, { location: this.filterOutMain(item.location) })
-              this.itemsRef.child(item.id).update(newItem)
-            });
+            this.itemsRef.set([])
           },
         },
         {
@@ -145,7 +129,7 @@ export default class App extends React.Component {
     )
   }
 
-  deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }) => {
+  deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
     Alert.alert(
      'Warning',
      'You are about to delete this item! This cannot be undone!',
@@ -153,12 +137,7 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            const newItem = Object.assign(
-              item,
-              { location: this.filterOutMain(item.location) },
-              { inCart: false },
-            )
-            this.itemsRef.child(item.id).update(newItem)
+            this.itemsRef.child(item.id).remove()
           },
         },
         {
@@ -167,16 +146,6 @@ export default class App extends React.Component {
         },
       ],
    )
-  }
-
-  filterOutMain = (location: Array<string>): Array<string> => {
-    let result
-    if (location.includes('pantry')) {
-      result = ['pantry']
-    } else {
-      result = ['none']
-    }
-    return result
   }
 
   goToPantry = (): void => {
@@ -212,9 +181,10 @@ export default class App extends React.Component {
   initializeApp = ():void => {
     firebase.auth().onAuthStateChanged((user: Object) => {
       if (user) {
+        const email = cleanUpUserEmail(user.email)
         this.setState({ userEmail: user.email })
         this.setState({ userId: user.uid })
-        this.itemsRef = firebase.database().ref(cleanUpUserEmail(user.email))
+        this.itemsRef = firebase.database().ref(email + '/main') //eslint-disable-line
         this.hideAuthScreen()
         this.listenForItems(this.itemsRef)
       }
@@ -222,23 +192,17 @@ export default class App extends React.Component {
   }
 
   listenForItems = (itemsRef: Object):void => {
-    itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, inCart: boolean, location: Array<string>, key: string, val: Function}>) => {
+    itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, inCart: boolean, key: string, val: Function}>) => {
       const newArr = []
-      snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, inCart: boolean, location: Array<string>, key: string, val: Function}) => {
-        if (item.val().location.includes('none')) {
-          this.itemsRef.child(item.key).remove()
-        }
-        if (item.val().location.includes('main')) {
-          newArr.push({
-            name: item.val().name,
-            aisle: item.val().aisle,
-            quantity: item.val().quantity,
-            note: item.val().note,
-            inCart: item.val().inCart || false,
-            location: item.val().location,
-            id: item.key,
-          })
-        }
+      snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, inCart: boolean, key: string, val: Function}) => {
+        newArr.push({
+          name: item.val().name,
+          aisle: item.val().aisle,
+          quantity: item.val().quantity,
+          note: item.val().note,
+          inCart: item.val().inCart || false,
+          id: item.key,
+        })
       });
       this.setState({ items: newArr })
     });
@@ -269,7 +233,7 @@ export default class App extends React.Component {
     this.setState({ isPantryVisible: false });
   }
 
-  saveChanges = (name: string, aisle: string, quantity: string, note: string, id: string, inCart: boolean, location: Array<string>):void => {
+  saveChanges = (name: string, aisle: string, quantity: string, note: string, id: string, inCart: boolean):void => {
     const newItem = {
       name,
       aisle,
@@ -277,7 +241,6 @@ export default class App extends React.Component {
       note,
       inCart,
       id,
-      location,
     }
     this.itemsRef.child(id).update(newItem)
   }
@@ -327,14 +290,9 @@ export default class App extends React.Component {
     this.setState({ items: newArr });
   }
 
-  toggleInCart = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }): void => {
+  toggleInCart = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, }): void => {
     const newItem = Object.assign(item, { inCart: !item.inCart })
     this.itemsRef.child(item.id).update(newItem)
-  }
-
-  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }): void => {
-    this.addNewItem(item)
-    this.showAddedItemMicrointeraction()
   }
 
   render() {
@@ -365,7 +323,6 @@ export default class App extends React.Component {
         <Pantry
           isPantryVisible={isPantryVisible}
           makePantryInvisible={this.makePantryInvisible.bind(this)}
-          transferItemToMainList={this.transferItemToMainList.bind(this)}
         />
 
         <View style={styles.header}>
@@ -484,7 +441,6 @@ export default class App extends React.Component {
           items={items}
           deleteItem={this.deleteItem}
           saveChanges={this.saveChanges.bind(this)}
-          transferItemToMainList={this.transferItemToMainList.bind(this)}
           toggleInCart={this.toggleInCart.bind(this)}
           showAddItem={this.showAddItem.bind(this)}
         />
