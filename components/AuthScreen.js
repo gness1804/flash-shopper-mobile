@@ -25,6 +25,24 @@ class AuthScreen extends Component {
     password: string,
   }
 
+  logIn = (email: string, password: string):void => {
+    if (!email || !password) {
+      Alert.alert(
+        'Oops! You must enter both an email and a password.',
+      )
+      return
+    }
+    const promise = new Promise((resolve) => {
+      resolve(
+        firebase.auth().signInWithEmailAndPassword(email, password),
+      )
+    })
+    promise
+    .then(() => { this.showLogInMicrointeraction() })
+    .then(() => { this.resetEmailAndPWStates() })
+    .catch((err: string) => { throw new Error(err) })
+  }
+
   resetEmailAndPWStates = ():void => {
     this.setState({ email: '' })
     this.setState({ password: '' })
@@ -35,6 +53,14 @@ class AuthScreen extends Component {
       ToastAndroid.show('You have successfully signed up.', ToastAndroid.SHORT)
     } else {
       Alert.alert('Sign Up successful.')
+    }
+  }
+
+  showLogInMicrointeraction = ():void => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show('You have successfully logged in.', ToastAndroid.SHORT)
+    } else {
+      Alert.alert('Login successful.')
     }
   }
 
@@ -77,6 +103,10 @@ class AuthScreen extends Component {
         <Button
           title="Sign Up"
           onPress={() => { this.signUp(email, password) }}
+        />
+        <Button
+          title="Log In"
+          onPress={() => { this.logIn(email, password) }}
         />
       </View>
     );
