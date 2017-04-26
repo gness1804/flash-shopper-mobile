@@ -8,6 +8,8 @@ import { View,
  Platform,
  ToastAndroid,
  Alert,
+ TouchableOpacity,
+ Image,
 } from 'react-native';
 import * as firebase from 'firebase';
 import styles from '../styles/AuthScreen-styles';
@@ -155,6 +157,11 @@ class AuthScreen extends Component {
             />
           </View>
         </View>
+        <TouchableOpacity>
+          <Image
+            source={require('../images/question.png')}
+          />
+        </TouchableOpacity>
       </View>
     );
   }
