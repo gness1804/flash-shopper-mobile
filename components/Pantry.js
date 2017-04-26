@@ -29,7 +29,7 @@ class Pantry extends Component {
       aisle: '',
       note: '',
       quantity: '',
-      id: 0,
+      id: '',
       inCart: false,
       location: ['pantry'],
       userEmail: '',
@@ -40,23 +40,26 @@ class Pantry extends Component {
   }
 
   state: {
-    items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>,
+    items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>}>,
     showAddView: boolean,
     showEditView: boolean,
     name: string,
     aisle: string,
     note: string,
     quantity: string,
-    id: number,
+    id: string,
     inCart: boolean,
     location: Array<string>,
     userEmail: string,
     userId: string,
   }
 
+
   componentDidMount = (): void => {
     this.initializeApp()
   }
+
+  itemsRef: Object
 
   props: {
     isPantryVisible: boolean,
@@ -103,7 +106,7 @@ class Pantry extends Component {
     this.props.makePantryInvisible()
   }
 
-  editItem = (name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string>): void => {
+  editItem = (name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>): void => {
     this.setState({ name });
     this.setState({ aisle });
     this.setState({ note });
@@ -142,10 +145,10 @@ class Pantry extends Component {
     })
   }
 
-  listenForItems = (itemsRef):void => {
-    itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string>}>) => {
+  listenForItems = (itemsRef: Object):void => {
+    itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>, key: string, val: Function}>) => {
       const newArr = []
-      snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+      snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>, key: string, val: Function }) => {
         if (item.val().location.includes('none')) {
           this.itemsRef.child(item.key).remove()
         }
@@ -165,7 +168,7 @@ class Pantry extends Component {
     });
   }
 
-  removeItem = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+  removeItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }) => {
     const newItem = Object.assign(item, { location: this.filterOutPantry(item.location) })
     this.itemsRef.child(item.id).update(newItem)
   }
@@ -175,7 +178,7 @@ class Pantry extends Component {
     this.setState({ aisle: '' });
     this.setState({ note: '' });
     this.setState({ quantity: '' });
-    this.setState({ id: 0 });
+    this.setState({ id: '' });
   }
 
   saveChanges = (): void => {
@@ -217,8 +220,8 @@ class Pantry extends Component {
     }
   }
 
-  sortAlpha = (items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}>): Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean}> => {
-    const newArr = items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
+  sortAlpha = (items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>}>): Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>}> => {
+    const newArr = items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>}, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>}) => {
       const first = a.name.toLowerCase()
       const second = b.name.toLowerCase()
       if (first < second) {
@@ -233,7 +236,7 @@ class Pantry extends Component {
     return newArr
   }
 
-  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {
+  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }): void => {
     this.itemsRef.child(item.id).remove()
     this.props.transferItemToMainList(item)
   }
@@ -243,7 +246,7 @@ class Pantry extends Component {
     let itemList
     if (items.length > 0) {
       const sortedItems = this.sortAlpha(items)
-      itemList = sortedItems.map((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+      itemList = sortedItems.map((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }) => {
         return (
           <View key={item.id} style={styles.itemContainer}>
             <Text style={styles.name}>{item.name}</Text>

@@ -24,14 +24,14 @@ class Main extends Component {
       aisle: '',
       note: '',
       quantity: '',
-      id: 0,
+      id: '',
       inCart: false,
       location: [],
       tempName: '',
       tempAisle: '',
       tempNote: '',
       tempQuantity: '',
-      tempId: 0,
+      tempId: '',
       showEditView: false,
       dirtyAttributes: false,
     }
@@ -42,20 +42,20 @@ class Main extends Component {
     aisle: string,
     note: string,
     quantity: string,
-    id: number,
+    id: string,
     inCart: boolean,
     location: Array<string>,
     tempName: string,
     tempAisle: string,
     tempNote: string,
     tempQuantity: string,
-    tempId: number,
+    tempId: string,
     showEditView: boolean,
     dirtyAttributes: boolean,
   }
 
   props: {
-    items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string>}>,
+    items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>}>,
     deleteItem: Function,
     saveChanges: Function,
     transferItemToMainList: Function,
@@ -69,11 +69,11 @@ class Main extends Component {
     this.resetTempStates()
   }
 
-  deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {
+  deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }): void => {
     this.props.deleteItem(item);
   }
 
-  editItem = (name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string>): void => {
+  editItem = (name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string>): void => {
     this.setState({ name });
     this.setState({ aisle });
     this.setState({ note });
@@ -95,7 +95,7 @@ class Main extends Component {
     this.setState({ aisle: '' });
     this.setState({ note: '' });
     this.setState({ quantity: '' });
-    this.setState({ id: 0 });
+    this.setState({ id: '' });
   }
 
   resetTempStates = (): void => {
@@ -103,7 +103,7 @@ class Main extends Component {
     this.setState({ tempAisle: '' });
     this.setState({ tempNote: '' });
     this.setState({ tempQuantity: '' });
-    this.setState({ tempId: 0 });
+    this.setState({ tempId: '' });
   }
 
   saveChanges = (): void => {
@@ -130,11 +130,11 @@ class Main extends Component {
     }
   }
 
-  toggleInCart = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+  toggleInCart = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }) => {
     this.props.toggleInCart(item)
   }
 
-  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {
+  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }): void => {
     this.props.transferItemToMainList(item)
   }
 
@@ -217,7 +217,7 @@ class Main extends Component {
     let itemsDisplay;
 
     if (items.length > 0) {
-      itemsDisplay = items.map((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+      itemsDisplay = items.map((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }) => {
         const { name, aisle, note, quantity, id, inCart, location } = item
         let nameStyle
         let textStyle

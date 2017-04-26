@@ -18,7 +18,7 @@ class AddItem extends Component {
       aisle: '',
       note: '',
       quantity: '',
-      id: 0,
+      id: '',
       location: ['main'],
     }
   }
@@ -28,7 +28,7 @@ class AddItem extends Component {
     aisle: string,
     note: string,
     quantity: string,
-    id: number,
+    id: string,
     location: Array<string>,
   }
 
@@ -68,7 +68,7 @@ class AddItem extends Component {
     this.setState({ aisle: '' });
     this.setState({ note: '' });
     this.setState({ quantity: '' });
-    this.setState({ id: 0 });
+    this.setState({ id: '' });
   }
 
   render() {

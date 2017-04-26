@@ -39,7 +39,7 @@ export default class App extends React.Component {
   }
 
   state: {
-  items: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }>,
+  items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }>,
   showAddItem: boolean,
   isPantryVisible: boolean,
   showButtons: boolean,
@@ -51,6 +51,8 @@ export default class App extends React.Component {
   componentDidMount = (): void => {
     this.initializeApp()
   }
+
+  itemsRef: Object
 
   addInMain = (location: Array<string>): Array<string> => {
     let result
@@ -88,7 +90,7 @@ export default class App extends React.Component {
 
   countItemsInCart = (): number => {
     let count = 0
-    this.state.items.forEach((i: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }):void => {
+    this.state.items.forEach((i: { name: string, aisle: string, note: string, quantity: string, inCart: boolean }):void => {
       if (i.inCart) {
         count++
       }
@@ -128,7 +130,7 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            this.state.items.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+            this.state.items.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }) => {
               const newItem = Object.assign(item, { location: this.filterOutMain(item.location) })
               this.itemsRef.child(item.id).update(newItem)
             });
@@ -142,7 +144,7 @@ export default class App extends React.Component {
     )
   }
 
-  deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+  deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }) => {
     Alert.alert(
      'Warning',
      'You are about to delete this item! This cannot be undone!',
@@ -217,10 +219,10 @@ export default class App extends React.Component {
     })
   }
 
-  listenForItems = (itemsRef):void => {
-    itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string>}>) => {
+  listenForItems = (itemsRef: Object):void => {
+    itemsRef.on('value', (snapshot: Array<{ name: string, aisle: string, note: string, quantity: string, inCart: boolean, location: Array<string>, key: string, val: Function}>) => {
       const newArr = []
-      snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }) => {
+      snapshot.forEach((item: { name: string, aisle: string, note: string, quantity: string, inCart: boolean, location: Array<string>, key: string, val: Function}) => {
         if (item.val().location.includes('none')) {
           this.itemsRef.child(item.key).remove()
         }
@@ -264,7 +266,7 @@ export default class App extends React.Component {
     this.setState({ isPantryVisible: false });
   }
 
-  saveChanges = (name: string, aisle: string, quantity: string, note: string, id: number, inCart: boolean, location: Array<string>):void => {
+  saveChanges = (name: string, aisle: string, quantity: string, note: string, id: string, inCart: boolean, location: Array<string>):void => {
     const newItem = {
       name,
       aisle,
@@ -296,7 +298,7 @@ export default class App extends React.Component {
   }
 
   sortAlpha = ():void => {
-    const newArr = this.state.items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => {
+    const newArr = this.state.items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
       const first = a.name.toLowerCase()
       const second = b.name.toLowerCase()
       if (first < second) {
@@ -312,16 +314,16 @@ export default class App extends React.Component {
   }
 
   sortByAisle = ():void => {
-    const newArr = this.state.items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean }) => { return parseInt(a.aisle, 10) - parseInt(b.aisle, 10) });
+    const newArr = this.state.items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => { return parseInt(a.aisle, 10) - parseInt(b.aisle, 10) });
     this.setState({ items: newArr });
   }
 
-  toggleInCart = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {
+  toggleInCart = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }): void => {
     const newItem = Object.assign(item, { inCart: !item.inCart })
     this.itemsRef.child(item.id).update(newItem)
   }
 
-  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: number, inCart: boolean, location: Array<string> }): void => {
+  transferItemToMainList = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, location: Array<string> }): void => {
     this.addNewItem(item)
     this.showAddedItemMicrointeraction()
   }
