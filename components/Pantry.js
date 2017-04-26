@@ -15,8 +15,8 @@ import {
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
 import * as firebase from 'firebase';
-import firebaseApp from '../firebaseConfig';
 import styles from '../styles/Pantry-styles';
+import cleanUpUserEmail from '../helpers/cleanUpUserEmail';
 
 class Pantry extends Component {
   constructor(props: Object) {
@@ -36,7 +36,7 @@ class Pantry extends Component {
       userId: '',
     }
 
-    this.itemsRef = firebaseApp.database().ref(`/user/${this.state.userId}`)
+    this.itemsRef = {}
   }
 
   state: {
@@ -140,6 +140,7 @@ class Pantry extends Component {
       if (user) {
         this.setState({ userEmail: user.email })
         this.setState({ userId: user.uid })
+        this.itemsRef = firebase.database().ref(cleanUpUserEmail(user.email))
         this.listenForItems(this.itemsRef)
       }
     })

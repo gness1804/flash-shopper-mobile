@@ -14,13 +14,13 @@ import {
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
 import * as firebase from 'firebase';
-import firebaseApp from './firebaseConfig';
 import styles from './styles/App-styles';
 import commonElements from './styles/CommonElements';
 import Main from './components/Main';
 import AddItem from './components/AddItem';
 import Pantry from './components/Pantry';
 import AuthScreen from './components/AuthScreen';
+import cleanUpUserEmail from './helpers/cleanUpUserEmail';
 
 export default class App extends React.Component {
 
@@ -35,7 +35,7 @@ export default class App extends React.Component {
       userEmail: '',
       userId: '',
     }
-    this.itemsRef = firebaseApp.database().ref(`/user/${this.state.userId}`)
+    this.itemsRef = {}
   }
 
   state: {
@@ -213,6 +213,7 @@ export default class App extends React.Component {
       if (user) {
         this.setState({ userEmail: user.email })
         this.setState({ userId: user.uid })
+        this.itemsRef = firebase.database().ref(cleanUpUserEmail(user.email))
         this.hideAuthScreen()
         this.listenForItems(this.itemsRef)
       }
@@ -252,6 +253,7 @@ export default class App extends React.Component {
           onPress: () => {
             firebase.auth().signOut()
             this.showAuthScreen()
+            this.showLogOutMicrointeraction()
           },
         },
         {
@@ -289,12 +291,18 @@ export default class App extends React.Component {
     }
   }
 
+  showAuthScreen = ():void => {
+    this.setState({ showAuthScreen: true })
+  }
+
   showButtons = (): void => {
     this.setState({ showButtons: true })
   }
 
-  showAuthScreen = ():void => {
-    this.setState({ showAuthScreen: true })
+  showLogOutMicrointeraction = ():void => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show('You have successfully logged out.', ToastAndroid.SHORT)
+    }
   }
 
   sortAlpha = ():void => {
