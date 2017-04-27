@@ -30,6 +30,11 @@ const styles = StyleSheet.create({
     padding: commonElements.inputField.padding,
     width: commonElements.inputField.width,
   },
+  questionIcon: {
+    height: 80,
+    marginTop: 60,
+    width: 80,
+  },
 })
 
 export default styles

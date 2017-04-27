@@ -62,25 +62,30 @@ class AuthScreen extends Component {
     .catch(() => { this.showRecoveryError() })
   }
 
+  showHelpDialog = ():void => {
+    Alert.alert(
+      'Help Screen',
+      'Welcome to Flash Shopper! To use the app, you must create an account by entering a valid email and a password into the input fields and then tapping the "Sign Up" button. Once signed up, you can log in by entering these credentials and then taping "Log In". If you forget your password, you can easily recover it by entering in your email and then tapping "Reset Password".',
+    )
+  }
+
   showLogInError = ():void => {
-    Alert.alert('There was a problem signing in. Please double check your email and password.')
+    Alert.alert(
+      'Error',
+      'There was a problem signing in. Please double check your email and password.',
+      )
     this.resetEmailAndPWStates()
   }
 
   showRecoveryError = ():void => {
-    Alert.alert('There was a problem sending the password recovery email. Please ensure that you created an account under this password and that your email is in a valid format (foo@foobar.com).')
+    Alert.alert(
+      'Error',
+      'There was a problem sending the password recovery email. Please ensure that you created an account under this password and that your email is in a valid format (foo@foobar.com).',
+      )
   }
 
   showRecoveryEmailAlert = ():void => {
     Alert.alert('Password recovery email successfully sent. Please check your inbox.')
-  }
-
-  showSignUpMicrointeraction = ():void => {
-    if (Platform.OS === 'android') {
-      ToastAndroid.show('You have successfully signed up.', ToastAndroid.SHORT)
-    } else {
-      Alert.alert('Sign Up successful.')
-    }
   }
 
   showLogInMicrointeraction = ():void => {
@@ -94,6 +99,14 @@ class AuthScreen extends Component {
   showSignUpError = ():void => {
     Alert.alert('There was a problem signing up. Please ensure that you have not already signed up using this email address and that the email format is valid (foo@foobar.com).')
     this.resetEmailAndPWStates()
+  }
+
+  showSignUpMicrointeraction = ():void => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show('You have successfully signed up.', ToastAndroid.SHORT)
+    } else {
+      Alert.alert('Sign Up successful.')
+    }
   }
 
   signUp = (email: string, password: string):void => {
@@ -157,9 +170,12 @@ class AuthScreen extends Component {
             />
           </View>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.showHelpDialog}
+        >
           <Image
             source={require('../images/question.png')}
+            style={styles.questionIcon}
           />
         </TouchableOpacity>
       </View>
