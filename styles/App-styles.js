@@ -96,10 +96,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     width: '40%',
   },
-  plusIconHeader: {
-    alignSelf: 'center',
+  plusIconLarge: {
     height: 70,
-    marginBottom: 30,
     width: 70,
   },
   toggleButtonViewIcon: {

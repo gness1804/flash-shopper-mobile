@@ -342,15 +342,6 @@ export default class App extends React.Component {
               />
             </View>
 
-            <TouchableOpacity
-              onPress={this.showAddItem}
-            >
-              <Image
-                source={require('./images/plus-icon-header.png')}
-                style={styles.plusIconHeader}
-              />
-            </TouchableOpacity>
-
             <View style={styles.headerButtonsContainer}>
               <View style={styles.button}>
                 <Button
@@ -444,6 +435,15 @@ export default class App extends React.Component {
           toggleInCart={this.toggleInCart.bind(this)}
           showAddItem={this.showAddItem.bind(this)}
         />
+
+        <TouchableOpacity
+          onPress={this.showAddItem}
+        >
+          <Image
+            source={require('./images/plus-icon-header.png')}
+            style={styles.plusIconLarge}
+          />
+        </TouchableOpacity>
 
       </View>
     );
