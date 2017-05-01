@@ -4,7 +4,7 @@ import commonElements from './CommonElements';
 
 const smallIcon = {
   height: 30,
-  marginLeft: 30,
+  marginLeft: 60,
   width: 30,
 }
 
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   addIconSmall: {
     height: smallIcon.height,
     width: smallIcon.width,
+    marginLeft: smallIcon.marginLeft,
   },
   addItemButtonCancel: {
     backgroundColor: editableView.cancelButton.backgroundColor,
