@@ -2,14 +2,13 @@ import { StyleSheet } from 'react-native';
 import commonElements from './CommonElements'
 
 const styles = StyleSheet.create({
-  button: {
+  bottomButton: {
     marginBottom: 30,
-    marginRight: 20,
-    // width: 80,
+    marginRight: 50,
   },
   buttonContainer: {
     flexDirection: 'row',
-    marginTop: 40,
+    marginTop: 60,
   },
   container: {
     alignItems: 'center',
@@ -29,6 +28,9 @@ const styles = StyleSheet.create({
     margin: commonElements.inputField.margin,
     padding: commonElements.inputField.padding,
     width: commonElements.inputField.width,
+  },
+  logInButton: {
+    marginTop: 40,
   },
   questionIcon: {
     height: 80,
