@@ -295,7 +295,7 @@ export default class App extends React.Component {
         this.sortByAisle(arr)
       }
     })
-    .catch(() => {})
+    .catch((): void => { this.setState({ items: arr }) })
   }
 
   toggleInCart = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, }): void => {
