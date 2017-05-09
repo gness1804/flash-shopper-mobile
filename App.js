@@ -285,9 +285,8 @@ export default class App extends React.Component {
     this.setState({ items: newArr });
   }
 
-  sortByAisle = ():void => {
-    const { items } = this.state
-    const newArr = items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => { return parseInt(a.aisle, 10) - parseInt(b.aisle, 10) });
+  sortByAisle = (arr: Array<Object>): void => {
+    const newArr = arr.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => { return parseInt(a.aisle, 10) - parseInt(b.aisle, 10) });
     this.setState({ items: newArr });
   }
 
@@ -353,7 +352,7 @@ export default class App extends React.Component {
                   title="Sort by Aisle"
                   color={commonElements.core.button.color}
                   disabled={this.state.items.length < 2}
-                  onPress={() => { this.sortByAisle() }}
+                  onPress={() => { this.sortByAisle(items) }}
                 />
               </View>
               <View style={styles.button}>
@@ -361,7 +360,7 @@ export default class App extends React.Component {
                   title="Sort Alpha"
                   color={commonElements.core.button.color}
                   disabled={this.state.items.length < 2}
-                  onPress={() => { this.sortAlpha() }}
+                  onPress={() => { this.sortAlpha(items) }}
                 />
               </View>
               <TouchableOpacity
