@@ -150,7 +150,22 @@ class Pantry extends Component {
   }
 
   removeItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
-    this.itemsRef.child(item.id).remove()
+    Alert.alert(
+      'Warning',
+      `Delete ${item.name}?`,
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            this.itemsRef.child(item.id).remove()
+          },
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+      ],
+    )
   }
 
   resetItemState = ():void => {
