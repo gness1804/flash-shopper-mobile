@@ -204,7 +204,7 @@ export default class App extends React.Component {
           id: item.key,
         })
       });
-      this.setState({ items: newArr })
+      this.sortItems(newArr)
     });
   }
 
@@ -269,9 +269,8 @@ export default class App extends React.Component {
     }
   }
 
-  sortAlpha = ():void => {
-    const { items } = this.state
-    const newArr = items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
+  sortAlpha = (arr: Array<Object>): void => {
+    const newArr = arr.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
       const first = a.name.toLowerCase()
       const second = b.name.toLowerCase()
       if (first < second) {
@@ -290,6 +289,10 @@ export default class App extends React.Component {
     const { items } = this.state
     const newArr = items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => { return parseInt(a.aisle, 10) - parseInt(b.aisle, 10) });
     this.setState({ items: newArr });
+  }
+
+  sortItems = (arr: Array<Object>): void => {
+    this.sortAlpha(arr)
   }
 
   toggleInCart = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, }): void => {
