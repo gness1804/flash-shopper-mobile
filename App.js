@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Image,
   Modal,
+  AsyncStorage,
 } from 'react-native';
 import { _ , some } from 'lodash'; // eslint-disable-line
 import * as firebase from 'firebase';
@@ -35,7 +36,6 @@ export default class App extends React.Component {
       showAuthScreen: true,
       userEmail: '',
       userId: '',
-      sortState: 'alpha',
     }
     this.itemsRef = {}
   }
@@ -48,7 +48,6 @@ export default class App extends React.Component {
   showAuthScreen: boolean,
   userEmail: string,
   userId: string,
-  sortState: string,
 }
 
   componentDidMount = (): void => {
@@ -90,6 +89,7 @@ export default class App extends React.Component {
   }
 
   deleteAllInCart = ():void => {
+    const { items } = this.state
     Alert.alert(
       'Warning',
       'Do you really want to delete all items in your cart? This cannot be undone!',
@@ -97,7 +97,7 @@ export default class App extends React.Component {
         {
           text: 'OK',
           onPress: ():void => {
-            this.state.items.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
+            items.forEach((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
               if (item.inCart) {
                 this.itemsRef.child(item.id).remove()
               }
@@ -264,7 +264,7 @@ export default class App extends React.Component {
   }
 
   sortAlpha = (arr: Array<Object>): void => {
-    this.setState({ sortState: 'alpha' })
+    AsyncStorage.setItem('sortMethod', 'alpha')
     const newArr = arr.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
       const first = a.name.toLowerCase()
       const second = b.name.toLowerCase()
@@ -281,18 +281,21 @@ export default class App extends React.Component {
   }
 
   sortByAisle = (arr: Array<Object>): void => {
-    this.setState({ sortState: 'aisle' })
+    AsyncStorage.setItem('sortMethod', 'aisle')
     const newArr = arr.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => { return parseInt(a.aisle, 10) - parseInt(b.aisle, 10) });
     this.setState({ items: newArr });
   }
 
   sortItems = (arr: Array<Object>): void => {
-    const { sortState } = this.state
-    if (sortState === 'alpha') {
-      this.sortAlpha(arr)
-    } else {
-      this.sortByAisle(arr)
-    }
+    AsyncStorage.getItem('sortMethod')
+    .then((value: string): void => {
+      if (value === 'alpha' || !value) {
+        this.sortAlpha(arr)
+      } else {
+        this.sortByAisle(arr)
+      }
+    })
+    .catch(() => {})
   }
 
   toggleInCart = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, }): void => {
