@@ -35,6 +35,7 @@ export default class App extends React.Component {
       showAuthScreen: true,
       userEmail: '',
       userId: '',
+      sortState: 'alpha',
     }
     this.itemsRef = {}
   }
@@ -47,6 +48,7 @@ export default class App extends React.Component {
   showAuthScreen: boolean,
   userEmail: string,
   userId: string,
+  sortState: string,
 }
 
   componentDidMount = (): void => {
@@ -270,6 +272,7 @@ export default class App extends React.Component {
   }
 
   sortAlpha = (arr: Array<Object>): void => {
+    this.setState({ sortState: 'alpha' })
     const newArr = arr.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
       const first = a.name.toLowerCase()
       const second = b.name.toLowerCase()
@@ -286,12 +289,18 @@ export default class App extends React.Component {
   }
 
   sortByAisle = (arr: Array<Object>): void => {
+    this.setState({ sortState: 'aisle' })
     const newArr = arr.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => { return parseInt(a.aisle, 10) - parseInt(b.aisle, 10) });
     this.setState({ items: newArr });
   }
 
   sortItems = (arr: Array<Object>): void => {
-    this.sortAlpha(arr)
+    const { sortState } = this.state
+    if (sortState === 'alpha') {
+      this.sortAlpha(arr)
+    } else {
+      this.sortByAisle(arr)
+    }
   }
 
   toggleInCart = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean, }): void => {
