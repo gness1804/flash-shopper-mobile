@@ -102,6 +102,7 @@ export default class App extends React.Component {
                 this.itemsRef.child(item.id).remove()
               }
             });
+            this.showDeleteItemsInCartMicrointeraction()
           },
         },
         {
@@ -257,7 +258,13 @@ export default class App extends React.Component {
     }
   }
 
-  showLogOutMicrointeraction = ():void => {
+  showDeleteItemsInCartMicrointeraction = (): void => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show('Cart emptied.', ToastAndroid.SHORT)
+    }
+  }
+
+  showLogOutMicrointeraction = (): void => {
     if (Platform.OS === 'android') {
       ToastAndroid.show('You have successfully logged out.', ToastAndroid.SHORT)
     }
