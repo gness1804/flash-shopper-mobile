@@ -65,7 +65,7 @@ export default class App extends React.Component {
     });
     promise
             .then(() => { this.showAddedItemMicrointeraction() })
-            // .catch((err) => { throw new Error(err) })
+            .catch((err: string) => { throw new Error(err) })
   }
 
   checkItemsInCart = (): boolean => {
@@ -132,23 +132,8 @@ export default class App extends React.Component {
   }
 
   deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
-    Alert.alert(
-     'Warning',
-     'You are about to delete this item! This cannot be undone!',
-      [
-        {
-          text: 'OK',
-          onPress: ():void => {
-            this.itemsRef.child(item.id).remove()
-            this.showDeleteItemMicrointeraction()
-          },
-        },
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-      ],
-   )
+    this.itemsRef.child(item.id).remove()
+    this.showDeleteItemMicrointeraction()
   }
 
   goToPantry = (): void => {
