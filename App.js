@@ -140,6 +140,7 @@ export default class App extends React.Component {
           text: 'OK',
           onPress: ():void => {
             this.itemsRef.child(item.id).remove()
+            this.showDeleteItemMicrointeraction()
           },
         },
         {
@@ -263,6 +264,12 @@ export default class App extends React.Component {
 
   showButtons = (): void => {
     this.setState({ showButtons: true })
+  }
+
+  showDeleteItemMicrointeraction = (): void => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show('Item deleted.', ToastAndroid.SHORT)
+    }
   }
 
   showLogOutMicrointeraction = ():void => {
