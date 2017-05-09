@@ -270,7 +270,8 @@ export default class App extends React.Component {
   }
 
   sortAlpha = ():void => {
-    const newArr = this.state.items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
+    const { items } = this.state
+    const newArr = items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
       const first = a.name.toLowerCase()
       const second = b.name.toLowerCase()
       if (first < second) {
@@ -286,7 +287,8 @@ export default class App extends React.Component {
   }
 
   sortByAisle = ():void => {
-    const newArr = this.state.items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => { return parseInt(a.aisle, 10) - parseInt(b.aisle, 10) });
+    const { items } = this.state
+    const newArr = items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => { return parseInt(a.aisle, 10) - parseInt(b.aisle, 10) });
     this.setState({ items: newArr });
   }
 
