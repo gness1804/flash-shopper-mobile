@@ -67,7 +67,22 @@ class Main extends Component {
   }
 
   deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }): void => {
-    this.props.deleteItem(item);
+    Alert.alert(
+      'Warning',
+      `Are you sure you want to delete ${item.name}?`,
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            this.props.deleteItem(item)
+          },
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+      ],
+    );
   }
 
   editItem = (name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean): void => {
