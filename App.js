@@ -56,6 +56,11 @@ export default class App extends React.Component {
 
   itemsRef: Object
 
+  addItemToCart = (item: Object) => {
+    const newItem = Object.assign(item, { inCart: true })
+    this.itemsRef.child(item.id).update(newItem)
+  }
+
   addNewItem = (newItem: { name: string, aisle: string, note: string, quantity: string, inCart: boolean }): void => { // eslint-disable-line
     const promise = new Promise((resolve) => {
       resolve(this.itemsRef.push(
@@ -449,6 +454,7 @@ export default class App extends React.Component {
           saveChanges={this.saveChanges.bind(this)}
           toggleInCart={this.toggleInCart.bind(this)}
           showAddItem={this.showAddItem.bind(this)}
+          addItemToCart={this.addItemToCart.bind(this)}
         />
 
         <TouchableOpacity

@@ -59,6 +59,7 @@ class Main extends Component {
     saveChanges: Function,
     toggleInCart: Function,
     showAddItem: Function,
+    addItemToCart: Function,
   }
 
   cancelOutOfModal = (): void => {
@@ -69,6 +70,7 @@ class Main extends Component {
 
   addItemToAmazonPrimeNow = (item: Object): void => {
     Linking.openURL(`https://primenow.amazon.com/search?k=${item.name}`);
+    this.props.addItemToCart(item);
   }
 
   deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }): void => {
