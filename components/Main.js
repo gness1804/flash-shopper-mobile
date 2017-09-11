@@ -12,6 +12,7 @@ import {
   ToastAndroid,
   Image,
   Platform,
+  Linking,
 } from 'react-native';
 import styles from '../styles/Main-styles';
 import NoItemsDisplay from './NoItemsDisplay';
@@ -64,6 +65,10 @@ class Main extends Component {
     this.resetItemStates()
     this.setState({ showEditView: false })
     this.resetTempStates()
+  }
+
+  addItemToAmazonPrimeNow = (item: Object): void => {
+    Linking.openURL(`https://primenow.amazon.com/search?k=${item.name}`);
   }
 
   deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }): void => {
@@ -265,6 +270,14 @@ class Main extends Component {
             >
               <Image
                 source={require('../images/cart.png')}
+                style={styles.cartIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => { this.addItemToAmazonPrimeNow(item) }}
+            >
+              <Image
+                source={require('../images/amazon-prime-now.png')}
                 style={styles.cartIcon}
               />
             </TouchableOpacity>
