@@ -36,7 +36,18 @@ class Search extends Component {
   }
 
   doSearch = (searchString: string): void => {
-    this.setState({ searchString })
+    const { items } = this.props;
+    const filteredItems = [];
+    this.setState({ searchString });
+    const keyTerm = searchString.toLowerCase();
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].name.toLowerCase().includes(keyTerm)) {
+        filteredItems.push(items[i]);
+      }
+    }
+
+    this.setState({ filteredItems });
   }
 
   saveChanges = (name: string, aisle: string, quantity: string, note: string, id: number, inCart: boolean): void => {
