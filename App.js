@@ -34,6 +34,7 @@ export default class App extends React.Component {
       isPantryVisible: false,
       showButtons: true,
       showAuthScreen: true,
+      showSearch: false,
       userEmail: '',
       userId: '',
     }
@@ -46,6 +47,7 @@ export default class App extends React.Component {
   isPantryVisible: boolean,
   showButtons: boolean,
   showAuthScreen: boolean,
+  showSearch: boolean,
   userEmail: string,
   userId: string,
 }
