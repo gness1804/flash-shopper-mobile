@@ -12,12 +12,14 @@ class Search extends Component {
   constructor(props: Object) {
     super(props);
     this.state = {
-      search: '',
+      searchString: '',
+      filteredItems: [],
     }
   }
 
   state: {
-    search: string,
+    searchString: string,
+    filteredItems: Array<Object>,
   };
 
   props: {
@@ -31,6 +33,10 @@ class Search extends Component {
 
   deleteItem = (item: Object): void => {
     this.props.deleteItem(item)
+  }
+
+  doSearch = (searchString: string): void => {
+    this.setState({ searchString })
   }
 
   saveChanges = (name: string, aisle: string, quantity: string, note: string, id: number, inCart: boolean): void => {
@@ -51,16 +57,25 @@ class Search extends Component {
 
   render() {
     const { items } = this.props;
+    const { searchString, filteredItems } = this.state;
+    let itemsToSearch;
+
+    if (searchString) {
+      itemsToSearch = filteredItems;
+    } else {
+      itemsToSearch = items;
+    }
+
     return (
       <View>
         <TextInput
           id="search-input"
-          value={this.state.search || ''}
+          value={searchString || ''}
           placeholder="Search"
-          onChangeText={search => this.setState({ search })}
+          onChangeText={search => this.doSearch(search)}
         />
         <Main
-          items={items}
+          items={itemsToSearch}
           deleteItem={this.deleteItem}
           saveChanges={this.saveChanges.bind(this)}
           toggleInCart={this.toggleInCart.bind(this)}
