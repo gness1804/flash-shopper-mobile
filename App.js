@@ -22,6 +22,7 @@ import Main from './components/Main';
 import AddItem from './components/AddItem';
 import Pantry from './components/Pantry';
 import AuthScreen from './components/AuthScreen';
+import Search from './components/Search';
 import cleanUpUserEmail from './helpers/cleanUpUserEmail';
 
 export default class App extends React.Component {
@@ -160,6 +161,10 @@ export default class App extends React.Component {
     this.setState({ showButtons: false })
   }
 
+  hideSearch = (): void => {
+    this.setState({ showSearch: false })
+  }
+
   informUser = ():void => {
     Alert.alert(
       'Warning',
@@ -277,6 +282,10 @@ export default class App extends React.Component {
     }
   }
 
+  showSearch = (): void => {
+    this.setState({ showSearch: true });
+  }
+
   sortAlpha = (arr: Array<Object>): void => {
     AsyncStorage.setItem('sortMethod', 'alpha')
     const newArr = arr.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
@@ -342,6 +351,15 @@ export default class App extends React.Component {
           />
         </Modal>
 
+        <Modal
+          animationType={'slide'}
+          transparent={false}
+          visible={this.state.showSearch}
+          onRequestClose={this.hideSearch}
+        >
+          <Search />
+        </Modal>
+
         <Pantry
           isPantryVisible={isPantryVisible}
           makePantryInvisible={this.makePantryInvisible.bind(this)}
@@ -388,6 +406,14 @@ export default class App extends React.Component {
                 <Image
                   source={require('./images/delete_forever.png')}
                   style={styles.deleteDBIcon}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => { this.showSearch() }}
+                disabled={this.state.items.length === 0}
+              >
+                <Image
+                  source={require('./images/search.png')}
                 />
               </TouchableOpacity>
             </View>
