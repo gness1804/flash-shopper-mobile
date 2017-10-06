@@ -359,6 +359,11 @@ export default class App extends React.Component {
         >
           <Search
             items={items}
+            deleteItem={this.deleteItem}
+            saveChanges={this.saveChanges.bind(this)}
+            toggleInCart={this.toggleInCart.bind(this)}
+            showAddItem={this.showAddItem.bind(this)}
+            addItemToCart={this.addItemToCart.bind(this)}
           />
         </Modal>
 
