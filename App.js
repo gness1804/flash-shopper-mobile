@@ -357,7 +357,9 @@ export default class App extends React.Component {
           visible={this.state.showSearch}
           onRequestClose={this.hideSearch}
         >
-          <Search />
+          <Search
+            items={items}
+          />
         </Modal>
 
         <Pantry
@@ -414,6 +416,7 @@ export default class App extends React.Component {
               >
                 <Image
                   source={require('./images/search.png')}
+                  style={styles.searchIcon}
                 />
               </TouchableOpacity>
             </View>
