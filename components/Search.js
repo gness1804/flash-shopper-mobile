@@ -5,6 +5,8 @@ import {
   TextInput,
   Text,
   View,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
 import Main from './Main';
 import styles from '../styles/Search-styles';
@@ -30,6 +32,7 @@ class Search extends Component {
     toggleInCart: Function,
     showAddItem: Function,
     addItemToCart: Function,
+    hideSearch: Function,
   };
 
   deleteItem = (item: Object): void => {
@@ -49,6 +52,10 @@ class Search extends Component {
     }
 
     this.setState({ filteredItems });
+  }
+
+  hideSearch = (): void => {
+    this.props.hideSearch();
   }
 
   saveChanges = (name: string, aisle: string, quantity: string, note: string, id: number, inCart: boolean): void => {
@@ -96,6 +103,16 @@ class Search extends Component {
           showAddItem={this.showAddItem.bind(this)}
           addItemToCart={this.addItemToCart.bind(this)}
         />
+        <View style={styles.bottomIconContainer}>
+          <TouchableOpacity
+            onPress={this.hideSearch}
+          >
+            <Image
+              source={require('../images/arrow-left.png')}
+              style={styles.backIcon}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

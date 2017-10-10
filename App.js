@@ -360,6 +360,7 @@ export default class App extends React.Component {
           <Search
             items={items}
             deleteItem={this.deleteItem}
+            hideSearch={this.hideSearch}
             saveChanges={this.saveChanges.bind(this)}
             toggleInCart={this.toggleInCart.bind(this)}
             showAddItem={this.showAddItem.bind(this)}
