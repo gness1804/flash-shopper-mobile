@@ -100,6 +100,12 @@ const styles = StyleSheet.create({
     height: 70,
     width: 70,
   },
+  searchIcon: {
+    height: 40,
+    marginRight: headerIcon.marginRight,
+    marginTop: 10,
+    width: 40,
+  },
   toggleButtonViewIcon: {
     height: 50,
     marginTop: 20,

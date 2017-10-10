@@ -22,6 +22,7 @@ import Main from './components/Main';
 import AddItem from './components/AddItem';
 import Pantry from './components/Pantry';
 import AuthScreen from './components/AuthScreen';
+import Search from './components/Search';
 import cleanUpUserEmail from './helpers/cleanUpUserEmail';
 
 export default class App extends React.Component {
@@ -34,6 +35,7 @@ export default class App extends React.Component {
       isPantryVisible: false,
       showButtons: true,
       showAuthScreen: true,
+      showSearch: false,
       userEmail: '',
       userId: '',
     }
@@ -46,6 +48,7 @@ export default class App extends React.Component {
   isPantryVisible: boolean,
   showButtons: boolean,
   showAuthScreen: boolean,
+  showSearch: boolean,
   userEmail: string,
   userId: string,
 }
@@ -156,6 +159,10 @@ export default class App extends React.Component {
 
   hideButtons = (): void => {
     this.setState({ showButtons: false })
+  }
+
+  hideSearch = (): void => {
+    this.setState({ showSearch: false })
   }
 
   informUser = ():void => {
@@ -275,6 +282,10 @@ export default class App extends React.Component {
     }
   }
 
+  showSearch = (): void => {
+    this.setState({ showSearch: true });
+  }
+
   sortAlpha = (arr: Array<Object>): void => {
     AsyncStorage.setItem('sortMethod', 'alpha')
     const newArr = arr.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
@@ -340,6 +351,23 @@ export default class App extends React.Component {
           />
         </Modal>
 
+        <Modal
+          animationType={'slide'}
+          transparent={false}
+          visible={this.state.showSearch}
+          onRequestClose={this.hideSearch}
+        >
+          <Search
+            items={items}
+            deleteItem={this.deleteItem}
+            hideSearch={this.hideSearch}
+            saveChanges={this.saveChanges.bind(this)}
+            toggleInCart={this.toggleInCart.bind(this)}
+            showAddItem={this.showAddItem.bind(this)}
+            addItemToCart={this.addItemToCart.bind(this)}
+          />
+        </Modal>
+
         <Pantry
           isPantryVisible={isPantryVisible}
           makePantryInvisible={this.makePantryInvisible.bind(this)}
@@ -386,6 +414,15 @@ export default class App extends React.Component {
                 <Image
                   source={require('./images/delete_forever.png')}
                   style={styles.deleteDBIcon}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => { this.showSearch() }}
+                disabled={this.state.items.length === 0}
+              >
+                <Image
+                  source={require('./images/search.png')}
+                  style={styles.searchIcon}
                 />
               </TouchableOpacity>
             </View>
