@@ -131,6 +131,11 @@ const styles = StyleSheet.create({
   name: {
     marginRight: 20,
   },
+  searchIcon: {
+    height: 40,
+    marginTop: 20,
+    width: 40,
+  },
 })
 
 export default styles
