@@ -17,12 +17,14 @@ class Search extends Component {
     this.state = {
       searchString: '',
       filteredItems: [],
+      showBottomModal: true,
     }
   }
 
   state: {
     searchString: string,
     filteredItems: Array<Object>,
+    showBottomModal: boolean,
   };
 
   props: {
@@ -43,6 +45,13 @@ class Search extends Component {
     const { items } = this.props;
     const filteredItems = [];
     this.setState({ searchString });
+
+    if (searchString.length > 0) {
+      this.hideBottomModal();
+    } else {
+      this.showBottomModal();
+    }
+
     const keyTerm = searchString.toLowerCase();
 
     for (let i = 0; i < items.length; i++) {
@@ -52,6 +61,10 @@ class Search extends Component {
     }
 
     this.setState({ filteredItems });
+  }
+
+  hideBottomModal = (): void => {
+    this.setState({ showBottomModal: false });
   }
 
   hideSearch = (): void => {
@@ -70,13 +83,17 @@ class Search extends Component {
     this.props.showAddItem();
   }
 
+  showBottomModal = (): void => {
+    this.setState({ showBottomModal: true });
+  }
+
   addItemToCart = (item: Object): void => {
     this.props.addItemToCart(item);
   }
 
   render() {
     const { items } = this.props;
-    const { searchString, filteredItems } = this.state;
+    const { searchString, filteredItems, showBottomModal } = this.state;
     let itemsToSearch;
 
     if (searchString) {
@@ -103,7 +120,7 @@ class Search extends Component {
           showAddItem={this.showAddItem.bind(this)}
           addItemToCart={this.addItemToCart.bind(this)}
         />
-        <View style={styles.bottomIconContainer}>
+        {showBottomModal && <View style={styles.bottomIconContainer}>
           <TouchableOpacity
             onPress={this.hideSearch}
           >
@@ -112,7 +129,7 @@ class Search extends Component {
               style={styles.backIcon}
             />
           </TouchableOpacity>
-        </View>
+        </View>}
       </View>
     );
   }
