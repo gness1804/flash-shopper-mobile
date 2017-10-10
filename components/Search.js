@@ -3,10 +3,11 @@
 import React, { Component } from 'react';
 import {
   TextInput,
+  Text,
   View,
 } from 'react-native';
 import Main from './Main';
-//import styles...
+import styles from '../styles/Search-styles';
 
 class Search extends Component {
   constructor(props: Object) {
@@ -78,10 +79,12 @@ class Search extends Component {
     }
 
     return (
-      <View>
+      <View style={styles.editViewContainer}>
+        <Text style={styles.editViewHeadline}>Search</Text>
         <TextInput
           id="search-input"
           value={searchString || ''}
+          style={styles.inputField}
           placeholder="Search"
           onChangeText={search => this.doSearch(search)}
         />
