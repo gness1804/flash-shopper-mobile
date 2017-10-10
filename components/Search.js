@@ -29,6 +29,7 @@ class Search extends Component {
 
   props: {
     items: Array<Object>,
+    name: string,
     deleteItem: Function,
     saveChanges: Function,
     toggleInCart: Function,
@@ -92,7 +93,7 @@ class Search extends Component {
   }
 
   render() {
-    const { items } = this.props;
+    const { items, name } = this.props;
     const { searchString, filteredItems, showBottomModal } = this.state;
     let itemsToSearch;
 
@@ -104,7 +105,7 @@ class Search extends Component {
 
     return (
       <View style={styles.editViewContainer}>
-        <Text style={styles.editViewHeadline}>Search</Text>
+        <Text style={styles.editViewHeadline}>Search {name}</Text>
         <TextInput
           id="search-input"
           value={searchString || ''}

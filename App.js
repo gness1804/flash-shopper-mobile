@@ -359,6 +359,7 @@ export default class App extends React.Component {
         >
           <Search
             items={items}
+            name="Main List"
             deleteItem={this.deleteItem}
             hideSearch={this.hideSearch}
             saveChanges={this.saveChanges.bind(this)}
