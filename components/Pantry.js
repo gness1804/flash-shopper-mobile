@@ -26,6 +26,7 @@ class Pantry extends Component {
       items: [],
       showAddView: false,
       showEditView: false,
+      showSearch: false,
       name: '',
       aisle: '',
       note: '',
@@ -43,6 +44,7 @@ class Pantry extends Component {
     items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }>,
     showAddView: boolean,
     showEditView: boolean,
+    showSearch: boolean,
     name: string,
     aisle: string,
     note: string,
@@ -218,6 +220,10 @@ class Pantry extends Component {
     if (Platform.OS === 'android') {
       ToastAndroid.show('Item saved!', ToastAndroid.SHORT)
     }
+  }
+
+  showSearch = (): void => {
+    this.setState({ showSearch: true });
   }
 
   sortAlpha = (items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }>): Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }> => {
@@ -417,6 +423,17 @@ class Pantry extends Component {
         >
           <View style={styles.container}>
             <Text style={styles.headline}>Pantry</Text>
+
+            <TouchableOpacity
+              onPress={() => { this.showSearch() }}
+              disabled={this.state.items.length === 0}
+            >
+              <Image
+                source={require('../images/search.png')}
+                style={styles.searchIcon}
+              />
+            </TouchableOpacity>
+
             <ScrollView style={styles.itemList}>
               {itemList}
             </ScrollView>
