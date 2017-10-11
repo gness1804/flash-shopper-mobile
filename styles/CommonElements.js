@@ -14,6 +14,11 @@ const commonElements = {
     padding: 10,
     width: 350,
   },
+  smallIcon: {
+    height: 30,
+    marginLeft: 60,
+    width: 30,
+  },
 }
 
 export default commonElements

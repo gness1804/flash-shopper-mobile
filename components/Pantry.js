@@ -16,6 +16,8 @@ import {
 import { _ , some } from 'lodash'; // eslint-disable-line
 import * as firebase from 'firebase';
 import firebaseApp from '../firebaseConfig';  // eslint-disable-line
+import PantryItem from './PantryItem';
+import Search from './Search';
 import styles from '../styles/Pantry-styles';
 import cleanUpUserEmail from '../helpers/cleanUpUserEmail';
 
@@ -26,6 +28,7 @@ class Pantry extends Component {
       items: [],
       showAddView: false,
       showEditView: false,
+      showSearch: false,
       name: '',
       aisle: '',
       note: '',
@@ -43,6 +46,7 @@ class Pantry extends Component {
     items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }>,
     showAddView: boolean,
     showEditView: boolean,
+    showSearch: boolean,
     name: string,
     aisle: string,
     note: string,
@@ -118,6 +122,10 @@ class Pantry extends Component {
 
   hideEditView = (): void => {
     this.setState({ showEditView: false })
+  }
+
+  hideSearch = (): void => {
+    this.setState({ showSearch: false });
   }
 
   initializeApp = ():void => {
@@ -220,6 +228,10 @@ class Pantry extends Component {
     }
   }
 
+  showSearch = (): void => {
+    this.setState({ showSearch: true });
+  }
+
   sortAlpha = (items: Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }>): Array<{ name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }> => {
     const newArr = items.sort((a: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }, b: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
       const first = a.name.toLowerCase()
@@ -249,42 +261,14 @@ class Pantry extends Component {
       const sortedItems = this.sortAlpha(items)
       itemList = sortedItems.map((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
         return (
-          <View key={item.id} style={styles.itemContainer}>
-            <Text style={styles.name}>{item.name}</Text>
-            <TouchableOpacity
-              onPress={() => { this.transferItemToMainList(item) }}
-            >
-              <Image
-                source={require('../images/plus-icon-small.png')}
-                style={styles.addIconSmall}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => { this.removeItem(item) }}
-            >
-              <Image
-                source={require('../images/cancel-circle.png')}
-                style={styles.deleteIconSmall}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.editItem(
-                item.name,
-                item.aisle,
-                item.note,
-                item.quantity,
-                item.id,
-                item.inCart,
-                )
-              }}
-            >
-              <Image
-                source={require('../images/pencil.png')}
-                style={styles.editIconSmall}
-              />
-            </TouchableOpacity>
-          </View>
+          <PantryItem
+            key={item.id}
+            item={item}
+            transferItemToMainList={this.transferItemToMainList.bind(this)}
+            removeItem={this.removeItem.bind(this)}
+            editItem={this.editItem.bind(this)}
+            {...item}
+          />
         )
       })
     } else {
@@ -412,11 +396,39 @@ class Pantry extends Component {
         <Modal
           animationType={'slide'}
           transparent={false}
+          visible={this.state.showSearch}
+          onRequestClose={this.hideSearch}
+        >
+          <Search
+            items={items}
+            name="Pantry"
+            hideSearch={this.hideSearch}
+            isPantry
+            transferItemToMainList={this.transferItemToMainList.bind(this)}
+            removeItem={this.removeItem.bind(this)}
+            editItem={this.editItem.bind(this)}
+          />
+        </Modal>
+
+        <Modal
+          animationType={'slide'}
+          transparent={false}
           visible={this.props.isPantryVisible}
           onRequestClose={this.cancelOutOfModal}
         >
           <View style={styles.container}>
             <Text style={styles.headline}>Pantry</Text>
+
+            <TouchableOpacity
+              onPress={() => { this.showSearch() }}
+              disabled={this.state.items.length === 0}
+            >
+              <Image
+                source={require('../images/search.png')}
+                style={styles.searchIcon}
+              />
+            </TouchableOpacity>
+
             <ScrollView style={styles.itemList}>
               {itemList}
             </ScrollView>

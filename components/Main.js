@@ -60,6 +60,7 @@ class Main extends Component {
     toggleInCart: Function,
     showAddItem: Function,
     addItemToCart: Function,
+    isSearch: boolean,
   }
 
   cancelOutOfModal = (): void => {
@@ -226,7 +227,7 @@ class Main extends Component {
   }
 
   render() {
-    const { items } = this.props
+    const { items, isSearch } = this.props
 
     let itemsDisplay;
 
@@ -286,6 +287,8 @@ class Main extends Component {
           </View>
         </View>)
       })
+    } else if (isSearch) {
+      itemsDisplay = <Text>Oops, no items matched your search. Please try again.</Text>
     } else {
       itemsDisplay = (
         <NoItemsDisplay
