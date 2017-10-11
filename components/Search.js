@@ -142,6 +142,7 @@ class Search extends Component {
         toggleInCart={this.toggleInCart.bind(this)}
         showAddItem={this.showAddItem.bind(this)}
         addItemToCart={this.addItemToCart.bind(this)}
+        isSearch
       />)
     }
 
