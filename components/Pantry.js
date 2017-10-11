@@ -403,6 +403,10 @@ class Pantry extends Component {
             items={items}
             name="Pantry"
             hideSearch={this.hideSearch}
+            isPantry
+            transferItemToMainList={this.transferItemToMainList.bind(this)}
+            removeItem={this.removeItem.bind(this)}
+            editItem={this.editItem.bind(this)}
           />
         </Modal>
 
