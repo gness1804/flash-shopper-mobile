@@ -16,6 +16,7 @@ import {
 import { _ , some } from 'lodash'; // eslint-disable-line
 import * as firebase from 'firebase';
 import firebaseApp from '../firebaseConfig';  // eslint-disable-line
+import PantryItem from './PantryItem';
 import styles from '../styles/Pantry-styles';
 import cleanUpUserEmail from '../helpers/cleanUpUserEmail';
 
@@ -255,42 +256,14 @@ class Pantry extends Component {
       const sortedItems = this.sortAlpha(items)
       itemList = sortedItems.map((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
         return (
-          <View key={item.id} style={styles.itemContainer}>
-            <Text style={styles.name}>{item.name}</Text>
-            <TouchableOpacity
-              onPress={() => { this.transferItemToMainList(item) }}
-            >
-              <Image
-                source={require('../images/plus-icon-small.png')}
-                style={styles.addIconSmall}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => { this.removeItem(item) }}
-            >
-              <Image
-                source={require('../images/cancel-circle.png')}
-                style={styles.deleteIconSmall}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.editItem(
-                item.name,
-                item.aisle,
-                item.note,
-                item.quantity,
-                item.id,
-                item.inCart,
-                )
-              }}
-            >
-              <Image
-                source={require('../images/pencil.png')}
-                style={styles.editIconSmall}
-              />
-            </TouchableOpacity>
-          </View>
+          <PantryItem
+            key={item.id}
+            item={item}
+            transferItemToMainList={this.transferItemToMainList.bind(this)}
+            removeItem={this.removeItem.bind(this)}
+            editItem={this.editItem.bind(this)}
+            {...item}
+          />
         )
       })
     } else {
