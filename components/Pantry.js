@@ -17,6 +17,7 @@ import { _ , some } from 'lodash'; // eslint-disable-line
 import * as firebase from 'firebase';
 import firebaseApp from '../firebaseConfig';  // eslint-disable-line
 import PantryItem from './PantryItem';
+import Search from './Search';
 import styles from '../styles/Pantry-styles';
 import cleanUpUserEmail from '../helpers/cleanUpUserEmail';
 
@@ -121,6 +122,10 @@ class Pantry extends Component {
 
   hideEditView = (): void => {
     this.setState({ showEditView: false })
+  }
+
+  hideSearch = (): void => {
+    this.setState({ showSearch: false });
   }
 
   initializeApp = ():void => {
@@ -386,6 +391,19 @@ class Pantry extends Component {
               </TouchableOpacity>
             </View>
           </ScrollView>
+        </Modal>
+
+        <Modal
+          animationType={'slide'}
+          transparent={false}
+          visible={this.state.showSearch}
+          onRequestClose={this.hideSearch}
+        >
+          <Search
+            items={items}
+            name="Pantry"
+            hideSearch={this.hideSearch}
+          />
         </Modal>
 
         <Modal
