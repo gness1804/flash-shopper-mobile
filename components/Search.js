@@ -7,24 +7,13 @@ import {
   View,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from 'react-native';
 import Main from './Main';
 import PantryItem from './PantryItem';
 import styles from '../styles/Search-styles';
 
 class Search extends Component {
-  // static defaultProps = {
-  //   deleteItem: undefined,
-  //   saveChanges: undefined,
-  //   toggleInCart: undefined,
-  //   showAddItem: undefined,
-  //   addItemToCart: undefined,
-  //   isPantry: false,
-  //   transferItemToMainList: undefined,
-  //   editItem: undefined,
-  //   removeItem: undefined,
-  // }
-
   constructor(props: Object) {
     super(props);
     this.state = {
@@ -158,7 +147,7 @@ class Search extends Component {
     }
 
     if (isPantry) {
-      listElement = itemsToSearch.map((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
+      const pantryItems = itemsToSearch.map((item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }) => {
         return (
           <PantryItem
             key={item.id}
@@ -170,6 +159,9 @@ class Search extends Component {
           />
         )
       })
+      listElement = (<ScrollView>
+        {pantryItems}
+      </ScrollView>);
     } else {
       listElement = (<Main
         items={itemsToSearch}
