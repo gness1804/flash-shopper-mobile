@@ -18,6 +18,10 @@ import styles from '../styles/Main-styles';
 import NoItemsDisplay from './NoItemsDisplay';
 
 class Main extends Component {
+  static defaultProps = {
+    isSearch: false,
+  }
+
   constructor(props: Object) {
     super(props);
     this.state = {
@@ -60,7 +64,7 @@ class Main extends Component {
     toggleInCart: Function,
     showAddItem: Function,
     addItemToCart: Function,
-    isSearch: boolean,
+    isSearch?: boolean,
   }
 
   cancelOutOfModal = (): void => {
