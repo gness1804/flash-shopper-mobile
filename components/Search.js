@@ -13,6 +13,18 @@ import PantryItem from './PantryItem';
 import styles from '../styles/Search-styles';
 
 class Search extends Component {
+  static defaultProps = {
+    deleteItem: undefined,
+    saveChanges: undefined,
+    toggleInCart: undefined,
+    showAddItem: undefined,
+    addItemToCart: undefined,
+    isPantry: false,
+    transferItemToMainList: undefined,
+    editItem: undefined,
+    removeItem: undefined,
+  }
+
   constructor(props: Object) {
     super(props);
     this.state = {
@@ -31,20 +43,23 @@ class Search extends Component {
   props: {
     items: Array<Object>,
     name: string,
-    deleteItem: Function,
-    saveChanges: Function,
-    toggleInCart: Function,
-    showAddItem: Function,
-    addItemToCart: Function,
+    deleteItem?: Function,
+    saveChanges?: Function,
+    toggleInCart?: Function,
+    showAddItem?: Function,
+    addItemToCart?: Function,
     hideSearch: Function,
-    isPantry: boolean,
-    transferItemToMainList: Function,
-    editItem: Function,
-    removeItem: Function,
+    isPantry?: boolean,
+    transferItemToMainList?: Function,
+    editItem?: Function,
+    removeItem?: Function,
   };
 
   deleteItem = (item: Object): void => {
-    this.props.deleteItem(item)
+    const { deleteItem } = this.props;
+    if (deleteItem && typeof deleteItem === 'function') {
+      deleteItem(item)
+    }
   }
 
   doSearch = (searchString: string): void => {
@@ -70,7 +85,10 @@ class Search extends Component {
   }
 
   editItem = (name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean): void => {
-    this.props.editItem(name, aisle, note, quantity, id, inCart);
+    const { editItem } = this.props;
+    if (editItem && typeof editItem === 'function') {
+      editItem(name, aisle, note, quantity, id, inCart);
+    }
   }
 
   hideBottomModal = (): void => {
@@ -82,19 +100,31 @@ class Search extends Component {
   }
 
   removeItem = (item: Object): void => {
-    this.props.removeItem(item);
+    const { removeItem } = this.props;
+    if (removeItem && typeof removeItem === 'function') {
+      removeItem(item);
+    }
   }
 
   saveChanges = (name: string, aisle: string, quantity: string, note: string, id: number, inCart: boolean): void => {
-    this.props.saveChanges(name, aisle, quantity, note, id, inCart);
+    const { saveChanges } = this.props;
+    if (saveChanges && typeof saveChanges === 'function') {
+      saveChanges(name, aisle, quantity, note, id, inCart);
+    }
   }
 
   toggleInCart = (item: Object): void => {
-    this.props.toggleInCart(item);
+    const { toggleInCart } = this.props;
+    if (toggleInCart && typeof toggleInCart === 'function') {
+      toggleInCart(item);
+    }
   }
 
   showAddItem = (): void => {
-    this.props.showAddItem();
+    const { showAddItem } = this.props;
+    if (showAddItem && typeof showAddItem === 'function') {
+      showAddItem();
+    }
   }
 
   showBottomModal = (): void => {
@@ -102,11 +132,17 @@ class Search extends Component {
   }
 
   transferItemToMainList = (item: Object): void => {
-    this.props.transferItemToMainList(item);
+    const { transferItemToMainList } = this.props;
+    if (transferItemToMainList && typeof transferItemToMainList === 'function') {
+      transferItemToMainList(item);
+    }
   }
 
   addItemToCart = (item: Object): void => {
-    this.props.addItemToCart(item);
+    const { addItemToCart } = this.props;
+    if (addItemToCart && typeof addItemToCart === 'function') {
+      addItemToCart(item);
+    }
   }
 
   render() {
