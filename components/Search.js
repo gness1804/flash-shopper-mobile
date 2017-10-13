@@ -13,17 +13,17 @@ import PantryItem from './PantryItem';
 import styles from '../styles/Search-styles';
 
 class Search extends Component {
-  static defaultProps = {
-    deleteItem: undefined,
-    saveChanges: undefined,
-    toggleInCart: undefined,
-    showAddItem: undefined,
-    addItemToCart: undefined,
-    isPantry: false,
-    transferItemToMainList: undefined,
-    editItem: undefined,
-    removeItem: undefined,
-  }
+  // static defaultProps = {
+  //   deleteItem: undefined,
+  //   saveChanges: undefined,
+  //   toggleInCart: undefined,
+  //   showAddItem: undefined,
+  //   addItemToCart: undefined,
+  //   isPantry: false,
+  //   transferItemToMainList: undefined,
+  //   editItem: undefined,
+  //   removeItem: undefined,
+  // }
 
   constructor(props: Object) {
     super(props);

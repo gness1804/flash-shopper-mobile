@@ -25,7 +25,8 @@
     "no-plusplus": "off",
     "react/forbid-prop-types": "off",
     "max-len": "off",
-    "spaced-comment": "off"
+    "spaced-comment": "off",
+    "react/require-default-props": "off"
   },
   "parser": "babel-eslint"
 }
