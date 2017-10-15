@@ -78,6 +78,11 @@ class Main extends Component {
     this.props.addItemToCart(item);
   }
 
+  addItemToInstacart = (item: Object): void => {
+    Linking.openURL(`https://www.instacart.com/store/h-e-b/search_v3/${item.name}`);
+    this.props.addItemToCart(item);
+  }
+
   deleteItem = (item: { name: string, aisle: string, note: string, quantity: string, id: string, inCart: boolean }): void => {
     Alert.alert(
       'Warning',
@@ -285,6 +290,14 @@ class Main extends Component {
             >
               <Image
                 source={require('../images/amazon-prime-now.png')}
+                style={styles.cartIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => { this.addItemToInstacart(item) }}
+            >
+              <Image
+                source={require('../images/instacart.png')}
                 style={styles.cartIcon}
               />
             </TouchableOpacity>
